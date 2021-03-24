@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\devpi\AppData\Local\JetBrains\Rider2020.3\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\devpi\AppData\Local\JetBrains\Rider2020.3\resharper-host\Local\Transient\Rider\v203\SolutionCaches\_VR Tower Defense 20.3.-1099818769.00" t="ExcludeRecursive" />
+    <e p="C:\Users\devpi\Documents\projects\automatic-adventure\VR Tower Defense 20.3" t="IncludeRecursive">
+      <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
+      <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
+      <e p="Assets" t="Include">
+        <e p="Samples" t="Include">
+          <e p="OpenXR Plugin" t="Include">
+            <e p="1.0.3" t="Include">
+              <e p="Controller" t="Include">
+                <e p="Scripts" t="Include">
+                  <e p="ActionAssetEnabler.cs" t="Include" />
+                  <e p="ActionToButtonISX.cs" t="Include" />
+                  <e p="ActionToSliderISX.cs" t="Include" />
+                  <e p="ActionToVector2SliderISX.cs" t="Include" />
+                  <e p="ActionToVisibilityISX.cs" t="Include" />
+                  <e p="AutomaticTrackingModeChanger.cs" t="Include" />
+                  <e p="ControllerSample.asmdef" t="Include" />
+                  <e p="DisplayDeviceInfoFromActionISX.cs" t="Include" />
+                  <e p="TrackingModeOrigin.cs" t="Include" />
+                </e>
+              </e>
+            </e>
+          </e>
+        </e>
+        <e p="Scripts" t="Include">
+          <e p="SimpleCameraController.cs" t="Include" />
+          <e p="Weapons" t="Include">
+            <e p="MachineGunController.cs" t="Include" />
+          </e>
+        </e>
+        <e p="TutorialInfo" t="Include">
+          <e p="Scripts" t="Include">
+            <e p="Editor" t="Include">
+              <e p="ReadmeEditor.cs" t="Include" />
+            </e>
+            <e p="Readme.cs" t="Include" />
+          </e>
+        </e>
+      </e>
+      <e p="ControllerSample.csproj" t="IncludeRecursive" />
+      <e p="obj" t="ExcludeRecursive" />
+      <e p="Packages" t="ExcludeRecursive" />
+      <e p="Temp\Bin" t="ExcludeRecursive" />
+      <e p="VR Tower Defense 20.3.sln" t="IncludeFlat" />
+    </e>
+  </component>
+</project>
