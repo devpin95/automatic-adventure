@@ -15,7 +15,7 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637520349167693762
+      ticks: 637522266964330105
     m_Hash: 2400755824
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
@@ -1212,9 +1212,11 @@ m_PackageAssets:
         - 1.7.0
         - 1.8.1
         - 1.9.0-preview.1
+        - 1.9.0
         compatible:
         - 1.8.1
         - 1.9.0-preview.1
+        - 1.9.0
         verified: 1.8.1
       dependencies:
       - name: com.unity.xr.management

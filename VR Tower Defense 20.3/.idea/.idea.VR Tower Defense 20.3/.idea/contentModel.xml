@@ -27,6 +27,15 @@
           </e>
         </e>
         <e p="Scripts" t="Include">
+          <e p="Controllers" t="Include">
+            <e p="HandController.cs" t="Include" />
+          </e>
+          <e p="Enemies" t="Include">
+            <e p="BasicEnemyController.cs" t="Include" />
+          </e>
+          <e p="Projectiles" t="Include">
+            <e p="BulletController.cs" t="Include" />
+          </e>
           <e p="SimpleCameraController.cs" t="Include" />
           <e p="Weapons" t="Include">
             <e p="MachineGunController.cs" t="Include" />
