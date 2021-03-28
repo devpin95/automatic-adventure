@@ -9,12 +9,13 @@ using UnityEngine;
 public class BulletController : MonoBehaviour
 {
     public GameObject bulletPrefab;
+    public GameObject particles;
+    public bool canRicochet;
     private float live = 0.0f;
     private float killBy = 4.0f;
     private float ricochetChance = 0.175f;
     private float ricochetSpeed = 40f;
     private bool ricocheting = false;
-    public GameObject particles;
 
     private Rigidbody rb;
     // Start is called before the first frame update
@@ -51,7 +52,7 @@ public class BulletController : MonoBehaviour
             if (!ricocheting)
             {
                 float chance = UnityEngine.Random.Range(0.0f, 1.0f);
-                if (chance < ricochetChance)
+                if (canRicochet && chance < ricochetChance)
                 {
                     ricocheting = true;
                     rb.velocity = Vector3.zero;
@@ -73,14 +74,16 @@ public class BulletController : MonoBehaviour
 
                     // GameObject bullet = Instantiate(bulletPrefab, transform.position, transform.rotation);
                     // bullet.GetComponent<Rigidbody>().AddForce(transform.forward * ricochetSpeed, ForceMode.Impulse);
-
-                    print("Ricochet!");
                 }
                 else
                 {
                     Destroy(gameObject);
                 }
             }
+        }
+        else if (other.gameObject.CompareTag("Wall") || other.gameObject.CompareTag("Enemy"))
+        {
+            Destroy(gameObject);
         }
     }
 }

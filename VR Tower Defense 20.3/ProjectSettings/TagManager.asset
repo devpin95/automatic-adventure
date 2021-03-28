@@ -6,6 +6,11 @@ TagManager:
   tags:
   - Ground
   - Projectile
+  - Enemy
+  - Ball Launcher
+  - Right Hand Interactor
+  - Left Hand Interactor
+  - Wall
   layers:
   - Default
   - TransparentFX
@@ -13,8 +18,8 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
+  - Hands
+  - Weapons
   - 
   - 
   - 

@@ -1,32 +1,51 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.XR;
 using UnityEngine.XR.Interaction.Toolkit;
 
 public class MachineGunController : MonoBehaviour
 {
+    [Header("Meta Objects")]
     public Transform fireLocation;
     public Transform pivotPoint;
     public GameObject tempHand;
+    
+    [Header("Shooting")]
     public GameObject tracerPrefab;
     public GameObject bulletPrefab;
+    public float shotDelay = 0.05f;
     public int tracerSpacing;
+    public float bulletSpeedModifier = 400f;
+
+    [Header("Rotation")]
+    public GameObject playerRig;
+    public GameObject towerTrans;
+
+    public float rotateSpeed;
+    
     private int shotCount = 0;
-    public float bulletSpeedModifier = 100f;
     private Vector3 startingPosition;
     private Vector3 centerPosition;
     private bool selected = false;
     private bool firing = false;
-    public float shotDelay = 0.05f;
     private float timeSinceLastShot = 0.0f;
     private XRBaseInteractor _currentInteractor;
-    
+
+    private InputDevice _rightHand;
+    private InputDevice _leftHand;
+    private bool _rightHandSupportsHaptics = false;
+    private bool _leftHandSupportsHaptics = false;
+
+
     // Start is called before the first frame update
     void Start()
     {
         tempHand.SetActive(false);
         startingPosition = pivotPoint.transform.position;
+        InputDevices.deviceConnected += OnDeviceConnected;
     }
 
     // Update is called once per frame
@@ -40,8 +59,6 @@ public class MachineGunController : MonoBehaviour
             transform.rotation = Quaternion.LookRotation(-centerToHand);
             Vector3 angles = transform.rotation.eulerAngles;
             transform.rotation = Quaternion.Euler(angles.x + 90, angles.y, angles.z);
-            
-            Debug.DrawRay(centerPosition, centerToHand, Color.green);
 
             if (firing)
             {
@@ -68,7 +85,28 @@ public class MachineGunController : MonoBehaviour
                     }
                     
                     bullet.GetComponent<Rigidbody>().AddForce(randDir * bulletSpeedModifier, ForceMode.Impulse);
+
+                    // if (_rightHandSupportsHaptics || _leftHandSupportsHaptics)
+                    // {
+                    //     if (_currentInteractor.CompareTag("Right Hand Interactor"))
+                    //     {
+                    //         _rightHand.SendHapticImpulse(1, 0.5f, 0.1f);
+                    //     } 
+                    //     else if (_currentInteractor.CompareTag("Left Hand Interactor"))
+                    //     {
+                    //         _leftHand.SendHapticImpulse(1, 0.5f, 0.1f);
+                    //     }
+                    // }
                 }
+            }
+
+            Vector2 joystickVal;
+            if (_rightHand.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxis, out joystickVal))
+            {
+                // print(joystickVal);
+                // playerRig.transform.Rotate(0, joystickVal.x * rotateSpeed * Time.deltaTime, 0);
+                towerTrans.transform.RotateAround(playerRig.transform.position, playerRig.transform.up, joystickVal.x * rotateSpeed * Time.deltaTime);
+                transform.RotateAround(playerRig.transform.position, playerRig.transform.up, joystickVal.x * rotateSpeed * Time.deltaTime);
             }
         }
     }
@@ -78,6 +116,7 @@ public class MachineGunController : MonoBehaviour
         selected = true;
         tempHand.SetActive(true);
         _currentInteractor = interactor;
+        print(_currentInteractor.tag);
     }
 
     public void OnSelectExit(XRBaseInteractor interactor)
@@ -95,5 +134,48 @@ public class MachineGunController : MonoBehaviour
     public void OnDeactivate(XRBaseInteractor interactor)
     {
         firing = false;
+    }
+
+    public void OnDeviceConnected(InputDevice device)
+    {
+        InitDevice();
+    }
+    
+    private void InitDevice()
+    {
+        List<InputDevice> devices = new List<InputDevice>();
+        var baseChara = InputDeviceCharacteristics.Controller | 
+                        InputDeviceCharacteristics.TrackedDevice |
+                        InputDeviceCharacteristics.HeldInHand;
+        var rightCtrlChara = (baseChara | InputDeviceCharacteristics.Right);
+        var leftCtrlChara  = (baseChara | InputDeviceCharacteristics.Left);
+        
+        InputDevices.GetDevicesWithCharacteristics(rightCtrlChara, devices);
+        if (devices.Count > 0)
+        {
+            _rightHand = devices[0];
+            HapticCapabilities hapcap = new HapticCapabilities();
+            _rightHand.TryGetHapticCapabilities(out hapcap);
+
+            if (hapcap.supportsImpulse)
+            {
+                print("Right hand can impulse");
+                _rightHandSupportsHaptics = true;
+            }
+        }
+        
+        InputDevices.GetDevicesWithCharacteristics(leftCtrlChara, devices);
+        if (devices.Count > 0)
+        {
+            _leftHand = devices[0];
+            HapticCapabilities hapcap = new HapticCapabilities();
+            _leftHand.TryGetHapticCapabilities(out hapcap);
+
+            if (hapcap.supportsImpulse)
+            {
+                print("Left hand can impulse");
+                _leftHandSupportsHaptics = true;
+            }
+        }
     }
 }

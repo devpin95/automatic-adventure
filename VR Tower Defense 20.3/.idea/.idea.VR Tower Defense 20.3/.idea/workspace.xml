@@ -10,6 +10,14 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Controllers/HandController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Enemies/BasicEnemyController.cs" root0="FORCE_HIGHLIGHTING" />
@@ -18,10 +26,11 @@
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
+      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/SpawnManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Enemies/BasicEnemyController.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Controllers/HandController.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Projectiles/BulletController.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Weapons/MachineGunController.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Enemies/BasicEnemyController.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1qAjXvpSU2oaNzLI36rOGSlDllV" />
@@ -50,10 +59,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="11928">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="11928" />
+      <option name="pid" />
       <option name="selectedOptions">
         <list />
       </option>
@@ -70,6 +79,8 @@
       <updated>1616529375581</updated>
       <workItem from="1616529631622" duration="7517000" />
       <workItem from="1616610819506" duration="20721000" />
+      <workItem from="1616779518675" duration="12624000" />
+      <workItem from="1616905098686" duration="9843000" />
     </task>
     <servers />
   </component>
@@ -88,6 +99,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
