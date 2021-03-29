@@ -19,18 +19,31 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Weapons/RocketLauncherController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Controllers/HandController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Enemies/BasicEnemyController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Weapons/Common/TowerRotateController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Projectiles/BulletController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Weapons/Common/AimController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@1.0.2/InputSystem/Devices/InputDeviceBuilder.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/GameManager.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
-      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/SpawnManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Enemies/BasicEnemyController.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Controllers/HandController.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Projectiles/BulletController.cs" />
+      <option value="$PROJECT_DIR$/Assets/Events/DevicesReadyEventListener.cs" />
+      <option value="$PROJECT_DIR$/Assets/Events/DevicesReadyEvent.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/ScriptableObjects/Devices.cs" />
+      <option value="$PROJECT_DIR$/Assets/ScriptableObjects/Data/Devices.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/SpawnManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Managers/PlayerTowerManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Weapons/Common/AimController.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Weapons/MachineGunController.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Weapons/Common/TowerRotateController.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Weapons/RocketLauncherController.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1qAjXvpSU2oaNzLI36rOGSlDllV" />
@@ -81,6 +94,7 @@
       <workItem from="1616610819506" duration="20721000" />
       <workItem from="1616779518675" duration="12624000" />
       <workItem from="1616905098686" duration="9843000" />
+      <workItem from="1616968566487" duration="14124000" />
     </task>
     <servers />
   </component>

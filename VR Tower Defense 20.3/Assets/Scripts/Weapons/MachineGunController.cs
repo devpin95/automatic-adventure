@@ -23,9 +23,11 @@ public class MachineGunController : MonoBehaviour
     [Header("Rotation")]
     public GameObject playerRig;
     public GameObject towerTrans;
-
     public float rotateSpeed;
-    
+
+    [Header("Scriptable Objects")] 
+    [SerializeField] private Devices _devices;
+
     private int shotCount = 0;
     private Vector3 startingPosition;
     private Vector3 centerPosition;
@@ -34,10 +36,13 @@ public class MachineGunController : MonoBehaviour
     private float timeSinceLastShot = 0.0f;
     private XRBaseInteractor _currentInteractor;
 
-    private InputDevice _rightHand;
-    private InputDevice _leftHand;
+    // private InputDevice _rightHand;
+    // private InputDevice _leftHand;
     private bool _rightHandSupportsHaptics = false;
     private bool _leftHandSupportsHaptics = false;
+
+    private AimController _aimController;
+    private TowerRotateController _towerRotateController;
 
 
     // Start is called before the first frame update
@@ -45,20 +50,17 @@ public class MachineGunController : MonoBehaviour
     {
         tempHand.SetActive(false);
         startingPosition = pivotPoint.transform.position;
-        InputDevices.deviceConnected += OnDeviceConnected;
+        _aimController = GetComponent<AimController>();
+        _towerRotateController = GetComponent<TowerRotateController>();
     }
 
     // Update is called once per frame
     void Update()
     {
         centerPosition = transform.position;
-        if (selected)
+        if (selected && _devices.isReady)
         {
-            Vector3 handPos = _currentInteractor.transform.position;
-            Vector3 centerToHand = handPos - centerPosition;
-            transform.rotation = Quaternion.LookRotation(-centerToHand);
-            Vector3 angles = transform.rotation.eulerAngles;
-            transform.rotation = Quaternion.Euler(angles.x + 90, angles.y, angles.z);
+            _aimController.AimWeapon(_currentInteractor, centerPosition);
 
             if (firing)
             {
@@ -66,25 +68,7 @@ public class MachineGunController : MonoBehaviour
 
                 if (timeSinceLastShot > shotDelay)
                 {
-                    ++shotCount;
-                    timeSinceLastShot = 0;
-                    float ranXrot = UnityEngine.Random.Range(-1.0f, 1.0f);
-                    float ranYrot = UnityEngine.Random.Range(-1.0f, 1.0f);
-                    Vector3 randDir = Quaternion.Euler(ranXrot, ranYrot,  0) * fireLocation.forward;
-
-                    GameObject bullet;
-                    if (shotCount % tracerSpacing == 0)
-                    {
-                        // shoot a tracer
-                        bullet = Instantiate(tracerPrefab, fireLocation.position, transform.rotation);
-                    }
-                    else
-                    {
-                        // shoot a regular bullet
-                        bullet = Instantiate(bulletPrefab, fireLocation.position, transform.rotation);
-                    }
-                    
-                    bullet.GetComponent<Rigidbody>().AddForce(randDir * bulletSpeedModifier, ForceMode.Impulse);
+                    ShootMachinegun();
 
                     // if (_rightHandSupportsHaptics || _leftHandSupportsHaptics)
                     // {
@@ -99,15 +83,8 @@ public class MachineGunController : MonoBehaviour
                     // }
                 }
             }
-
-            Vector2 joystickVal;
-            if (_rightHand.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxis, out joystickVal))
-            {
-                // print(joystickVal);
-                // playerRig.transform.Rotate(0, joystickVal.x * rotateSpeed * Time.deltaTime, 0);
-                towerTrans.transform.RotateAround(playerRig.transform.position, playerRig.transform.up, joystickVal.x * rotateSpeed * Time.deltaTime);
-                transform.RotateAround(playerRig.transform.position, playerRig.transform.up, joystickVal.x * rotateSpeed * Time.deltaTime);
-            }
+            
+            _towerRotateController.RotateTower();
         }
     }
 
@@ -136,46 +113,32 @@ public class MachineGunController : MonoBehaviour
         firing = false;
     }
 
-    public void OnDeviceConnected(InputDevice device)
+    public void OnDeviceConnectedResponse()
     {
-        InitDevice();
+        Debug.Log("Machine gun ready for device!");
     }
     
-    private void InitDevice()
+    private void ShootMachinegun()
     {
-        List<InputDevice> devices = new List<InputDevice>();
-        var baseChara = InputDeviceCharacteristics.Controller | 
-                        InputDeviceCharacteristics.TrackedDevice |
-                        InputDeviceCharacteristics.HeldInHand;
-        var rightCtrlChara = (baseChara | InputDeviceCharacteristics.Right);
-        var leftCtrlChara  = (baseChara | InputDeviceCharacteristics.Left);
-        
-        InputDevices.GetDevicesWithCharacteristics(rightCtrlChara, devices);
-        if (devices.Count > 0)
-        {
-            _rightHand = devices[0];
-            HapticCapabilities hapcap = new HapticCapabilities();
-            _rightHand.TryGetHapticCapabilities(out hapcap);
+        ++shotCount;
+        timeSinceLastShot = 0;
+        float ranXrot = UnityEngine.Random.Range(-1.0f, 1.0f);
+        float ranYrot = UnityEngine.Random.Range(-1.0f, 1.0f);
+        Vector3 randDir = Quaternion.Euler(ranXrot, ranYrot,  0) * fireLocation.forward;
 
-            if (hapcap.supportsImpulse)
-            {
-                print("Right hand can impulse");
-                _rightHandSupportsHaptics = true;
-            }
-        }
-        
-        InputDevices.GetDevicesWithCharacteristics(leftCtrlChara, devices);
-        if (devices.Count > 0)
+        GameObject bullet;
+        if (shotCount % tracerSpacing == 0)
         {
-            _leftHand = devices[0];
-            HapticCapabilities hapcap = new HapticCapabilities();
-            _leftHand.TryGetHapticCapabilities(out hapcap);
-
-            if (hapcap.supportsImpulse)
-            {
-                print("Left hand can impulse");
-                _leftHandSupportsHaptics = true;
-            }
+            // shoot a tracer
+            bullet = Instantiate(tracerPrefab, fireLocation.position, transform.rotation);
         }
+        else
+        {
+            // shoot a regular bullet
+            bullet = Instantiate(bulletPrefab, fireLocation.position, transform.rotation);
+        }
+                    
+        bullet.GetComponent<Rigidbody>().AddForce(randDir * bulletSpeedModifier, ForceMode.Impulse);
     }
+    
 }

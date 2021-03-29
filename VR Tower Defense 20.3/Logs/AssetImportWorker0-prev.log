@@ -15,12 +15,12 @@ C:/Users/devpi/Documents/projects/automatic-adventure/VR Tower Defense 20.3
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-57909
+58115
 Successfully changed project path to: C:/Users/devpi/Documents/projects/automatic-adventure/VR Tower Defense 20.3
 C:/Users/devpi/Documents/projects/automatic-adventure/VR Tower Defense 20.3
 Using Asset Import Pipeline V2.
-Refreshing native plugins compatible for Editor in 98.60 ms, found 14 plugins.
-Preloading 2 native plugins for Editor in 2.10 ms.
+Refreshing native plugins compatible for Editor in 92.17 ms, found 14 plugins.
+Preloading 2 native plugins for Editor in 1.97 ms.
 Initialize engine version: 2020.3.0f1 (c7b5465681fb)
 [Subsystems] Discovering subsystems at path Z:/Apps/UnityEditor/2020.3.0f1/Editor/Data/Resources/UnitySubsystems
 [Subsystems] Discovering subsystems at path C:/Users/devpi/Documents/projects/automatic-adventure/VR Tower Defense 20.3/Assets
@@ -35,29 +35,29 @@ Initialize mono
 Mono path[0] = 'Z:/Apps/UnityEditor/2020.3.0f1/Editor/Data/Managed'
 Mono path[1] = 'Z:/Apps/UnityEditor/2020.3.0f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
 Mono config path = 'Z:/Apps/UnityEditor/2020.3.0f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56368
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56360
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: Z:/Apps/UnityEditor/2020.3.0f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
 Register platform support module: Z:/Apps/UnityEditor/2020.3.0f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.001385 seconds.
+Registered in 0.001479 seconds.
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 69.81 ms, found 14 plugins.
-Preloading 2 native plugins for Editor in 0.20 ms.
+Refreshing native plugins compatible for Editor in 108.05 ms, found 14 plugins.
+Preloading 2 native plugins for Editor in 0.18 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
 RoslynAnalysisRunner has terminated.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.257 seconds
+- Completed reload, in  1.281 seconds
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.013260 seconds.
+Registered in 0.014029 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 76.27 ms, found 14 plugins.
-Preloading 2 native plugins for Editor in 0.18 ms.
+Refreshing native plugins compatible for Editor in 134.13 ms, found 14 plugins.
+Preloading 2 native plugins for Editor in 0.21 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
 RoslynAnalysisRunner has terminated.
@@ -72,78 +72,38 @@ NullReferenceException: Object reference not set to an instance of an object
 (Filename: Library/PackageCache/com.unity.xr.oculus@1.8.1/Runtime/OculusLoader.cs Line: 243)
 
 Mono: successfully reloaded assembly
-- Completed reload, in  1.327 seconds
+- Completed reload, in  1.343 seconds
 Platform modules already initialized, skipping
 ========================================================================
 Worker process is ready to serve import requests
 Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
 Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.05 seconds
-Refreshing native plugins compatible for Editor in 1.46 ms, found 14 plugins.
-Preloading 2 native plugins for Editor in 0.16 ms.
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.07 seconds
+Refreshing native plugins compatible for Editor in 0.79 ms, found 14 plugins.
+Preloading 2 native plugins for Editor in 0.15 ms.
 Unloading 3214 Unused Serialized files (Serialized files now loaded: 0)
 System memory in use before: 148.6 MB.
 System memory in use after: 146.4 MB.
 
 Unloading 60 unused Assets to reduce memory usage. Loaded Objects now: 3631.
-Total: 3.843700 ms (FindLiveObjects: 0.301900 ms CreateObjectMapping: 0.151300 ms MarkObjects: 2.003700 ms  DeleteObjects: 1.385100 ms)
+Total: 5.225600 ms (FindLiveObjects: 0.604300 ms CreateObjectMapping: 0.375800 ms MarkObjects: 2.608200 ms  DeleteObjects: 1.634400 ms)
 
 ========================================================================
 Received Import Request.
-  path: Assets/Prefabs/GroundPuff.prefab
-  artifactKey: Guid(7fc09337252e072488afdf77b4ce4e29) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/GroundPuff.prefab using Guid(7fc09337252e072488afdf77b4ce4e29) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'df8fbe69495d4a2de260fcc0f6d1d692') in 0.073410 seconds
-  Import took 0.080350 seconds .
+  path: Assets/Prefabs/Tracer Bullet.prefab
+  artifactKey: Guid(d4121369b0a83f744ad3db3094858ba0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Tracer Bullet.prefab using Guid(d4121369b0a83f744ad3db3094858ba0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'dfa56245eb177f6083f17d35c47c7926') in 0.805853 seconds
+  Import took 0.813713 seconds .
 
 ========================================================================
 Received Prepare
 Registering precompiled user dll's ...
-Registered in 0.017991 seconds.
+Registered in 0.015745 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 1.04 ms, found 14 plugins.
-Preloading 2 native plugins for Editor in 0.51 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-NullReferenceException: Object reference not set to an instance of an object
-  at Unity.XR.Oculus.OculusLoader.AssetPathToAbsolutePath (System.String assetPath) [0x00048] in C:\Users\devpi\Documents\projects\automatic-adventure\VR Tower Defense 20.3\Library\PackageCache\com.unity.xr.oculus@1.8.1\Runtime\OculusLoader.cs:243 
-  at Unity.XR.Oculus.OculusLoader.EditorLoadOVRPlugin () [0x0007b] in C:\Users\devpi\Documents\projects\automatic-adventure\VR Tower Defense 20.3\Library\PackageCache\com.unity.xr.oculus@1.8.1\Runtime\OculusLoader.cs:228 
-
-(Filename: Library/PackageCache/com.unity.xr.oculus@1.8.1/Runtime/OculusLoader.cs Line: 243)
-
-Mono: successfully reloaded assembly
-- Completed reload, in  1.257 seconds
-Platform modules already initialized, skipping
-Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
-Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
 Refreshing native plugins compatible for Editor in 0.88 ms, found 14 plugins.
-Preloading 2 native plugins for Editor in 0.17 ms.
-Unloading 3102 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 144.1 MB.
-System memory in use after: 142.0 MB.
-
-Unloading 53 unused Assets to reduce memory usage. Loaded Objects now: 3635.
-Total: 4.395500 ms (FindLiveObjects: 0.386700 ms CreateObjectMapping: 0.262500 ms MarkObjects: 2.078000 ms  DeleteObjects: 1.666300 ms)
-
-========================================================================
-Received Import Request.
-  Time since last request: 503.971994 seconds.
-  path: Assets/Prefabs/Machine Gun.prefab
-  artifactKey: Guid(d3832d6a0ae6cec4a81191d02dc9c33e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/Machine Gun.prefab using Guid(d3832d6a0ae6cec4a81191d02dc9c33e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '029b30c8b159e7f923e5f9d03bf89dc8') in 0.324653 seconds
-  Import took 0.352036 seconds .
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.011136 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 0.96 ms, found 14 plugins.
-Preloading 2 native plugins for Editor in 0.19 ms.
+Preloading 2 native plugins for Editor in 0.21 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
 RoslynAnalysisRunner has terminated.
@@ -154,120 +114,17 @@ NullReferenceException: Object reference not set to an instance of an object
 (Filename: Library/PackageCache/com.unity.xr.oculus@1.8.1/Runtime/OculusLoader.cs Line: 243)
 
 Mono: successfully reloaded assembly
-- Completed reload, in  1.139 seconds
+- Completed reload, in  1.197 seconds
 Platform modules already initialized, skipping
 Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
 Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
-Refreshing native plugins compatible for Editor in 1.01 ms, found 14 plugins.
-Preloading 2 native plugins for Editor in 0.44 ms.
+Refreshing native plugins compatible for Editor in 1.13 ms, found 14 plugins.
+Preloading 2 native plugins for Editor in 0.16 ms.
 Unloading 3102 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 146.6 MB.
-System memory in use after: 144.5 MB.
+System memory in use before: 146.4 MB.
+System memory in use after: 144.4 MB.
 
-Unloading 53 unused Assets to reduce memory usage. Loaded Objects now: 3686.
-Total: 5.597500 ms (FindLiveObjects: 0.430300 ms CreateObjectMapping: 0.243300 ms MarkObjects: 2.533500 ms  DeleteObjects: 2.389000 ms)
+Unloading 53 unused Assets to reduce memory usage. Loaded Objects now: 3680.
+Total: 4.291100 ms (FindLiveObjects: 0.370700 ms CreateObjectMapping: 0.221600 ms MarkObjects: 2.268600 ms  DeleteObjects: 1.428200 ms)
 
-========================================================================
-Received Import Request.
-  Time since last request: 43.767596 seconds.
-  path: Assets/Prefabs/Bullet.prefab
-  artifactKey: Guid(33026c351ecbe1845933577d104745a4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/Bullet.prefab using Guid(33026c351ecbe1845933577d104745a4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e2fd1d5050117356ea9bd8d2f778122a') in 0.215042 seconds
-  Import took 0.220911 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000184 seconds.
-  path: Assets/Prefabs/Tracer Bullet.prefab
-  artifactKey: Guid(d4121369b0a83f744ad3db3094858ba0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/Tracer Bullet.prefab using Guid(d4121369b0a83f744ad3db3094858ba0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '95cace96c5b4a50c2c75346ef1bfb0d8') in 0.062726 seconds
-  Import took 0.080646 seconds .
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.016238 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 1.24 ms, found 14 plugins.
-Preloading 2 native plugins for Editor in 0.36 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-NullReferenceException: Object reference not set to an instance of an object
-  at Unity.XR.Oculus.OculusLoader.AssetPathToAbsolutePath (System.String assetPath) [0x00048] in C:\Users\devpi\Documents\projects\automatic-adventure\VR Tower Defense 20.3\Library\PackageCache\com.unity.xr.oculus@1.8.1\Runtime\OculusLoader.cs:243 
-  at Unity.XR.Oculus.OculusLoader.EditorLoadOVRPlugin () [0x0007b] in C:\Users\devpi\Documents\projects\automatic-adventure\VR Tower Defense 20.3\Library\PackageCache\com.unity.xr.oculus@1.8.1\Runtime\OculusLoader.cs:228 
-
-(Filename: Library/PackageCache/com.unity.xr.oculus@1.8.1/Runtime/OculusLoader.cs Line: 243)
-
-Mono: successfully reloaded assembly
-- Completed reload, in  1.279 seconds
-Platform modules already initialized, skipping
-Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
-Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
-Refreshing native plugins compatible for Editor in 1.93 ms, found 14 plugins.
-Preloading 2 native plugins for Editor in 0.20 ms.
-Unloading 3102 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 146.7 MB.
-System memory in use after: 144.7 MB.
-
-Unloading 53 unused Assets to reduce memory usage. Loaded Objects now: 3726.
-Total: 7.061000 ms (FindLiveObjects: 1.525600 ms CreateObjectMapping: 0.384800 ms MarkObjects: 3.378000 ms  DeleteObjects: 1.769800 ms)
-
-========================================================================
-Received Import Request.
-  Time since last request: 31.537674 seconds.
-  path: Assets/Prefabs/Bullet.prefab
-  artifactKey: Guid(33026c351ecbe1845933577d104745a4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/Bullet.prefab using Guid(33026c351ecbe1845933577d104745a4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '030b887c38845c63154e4413a878a6fd') in 0.334876 seconds
-  Import took 0.341896 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.003340 seconds.
-  path: Assets/Prefabs/Bullet.prefab
-  artifactKey: Guid(33026c351ecbe1845933577d104745a4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/Bullet.prefab using Guid(33026c351ecbe1845933577d104745a4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd24d1f6c3f26bbeaf002fd4063189b15') in 0.015210 seconds
-  Import took 0.021458 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 2.255508 seconds.
-  path: Assets/Prefabs/Tracer Bullet.prefab
-  artifactKey: Guid(d4121369b0a83f744ad3db3094858ba0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/Tracer Bullet.prefab using Guid(d4121369b0a83f744ad3db3094858ba0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '69695a93686f787a86a3030a065e18ed') in 0.013149 seconds
-  Import took 0.058060 seconds .
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.013480 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 2.52 ms, found 14 plugins.
-Preloading 2 native plugins for Editor in 0.22 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-NullReferenceException: Object reference not set to an instance of an object
-  at Unity.XR.Oculus.OculusLoader.AssetPathToAbsolutePath (System.String assetPath) [0x00048] in C:\Users\devpi\Documents\projects\automatic-adventure\VR Tower Defense 20.3\Library\PackageCache\com.unity.xr.oculus@1.8.1\Runtime\OculusLoader.cs:243 
-  at Unity.XR.Oculus.OculusLoader.EditorLoadOVRPlugin () [0x0007b] in C:\Users\devpi\Documents\projects\automatic-adventure\VR Tower Defense 20.3\Library\PackageCache\com.unity.xr.oculus@1.8.1\Runtime\OculusLoader.cs:228 
-
-(Filename: Library/PackageCache/com.unity.xr.oculus@1.8.1/Runtime/OculusLoader.cs Line: 243)
-
-Mono: successfully reloaded assembly
-- Completed reload, in  1.225 seconds
-Platform modules already initialized, skipping
-Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
-Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
-Refreshing native plugins compatible for Editor in 0.85 ms, found 14 plugins.
-Preloading 2 native plugins for Editor in 0.15 ms.
-Unloading 3102 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 146.9 MB.
-System memory in use after: 144.8 MB.
-
-Unloading 53 unused Assets to reduce memory usage. Loaded Objects now: 3766.
-Total: 4.966900 ms (FindLiveObjects: 1.057900 ms CreateObjectMapping: 0.266800 ms MarkObjects: 2.286100 ms  DeleteObjects: 1.354200 ms)
-
+AssetImportWorkerClient::OnTransportError - code=2 error=End of file

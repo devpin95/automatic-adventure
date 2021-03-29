@@ -54,12 +54,19 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\SimpleCameraController.cs" />
      <Compile Include="Assets\Scripts\Enemies\BasicEnemyController.cs" />
-     <Compile Include="Assets\Events\DevicesReadyEvent.cs" />
+     <Compile Include="Assets\ScriptableObjects\Events\DevicesReadyEvent.cs" />
      <Compile Include="Assets\Scripts\Managers\SpawnManager.cs" />
      <Compile Include="Assets\Scripts\Controllers\HandController.cs" />
      <Compile Include="Assets\Scripts\Projectiles\BulletController.cs" />
      <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
      <Compile Include="Assets\Scripts\Weapons\MachineGunController.cs" />
+     <Compile Include="Assets\Scripts\Managers\PlayerTowerManager.cs" />
+     <Compile Include="Assets\ScriptableObjects\Data\Devices.cs" />
+     <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
+     <Compile Include="Assets\ScriptableObjects\Events\DevicesReadyEventListener.cs" />
+     <Compile Include="Assets\Scripts\Weapons\Common\AimController.cs" />
+     <Compile Include="Assets\Scripts\Weapons\RocketLauncherController.cs" />
+     <Compile Include="Assets\Scripts\Weapons\Common\TowerRotateController.cs" />
  <Reference Include="UnityEngine">
  <HintPath>Z:/Apps/UnityEditor/2020.3.0f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>

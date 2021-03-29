@@ -11,6 +11,7 @@ TagManager:
   - Right Hand Interactor
   - Left Hand Interactor
   - Wall
+  - Tower
   layers:
   - Default
   - TransparentFX

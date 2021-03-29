@@ -24,9 +24,7 @@ public class SpawnManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        InputDevices.deviceConnected += OnDeviceConnected;
-        InputDevices.deviceDisconnected += OnDeviceDisconnected;
-        SpawnEnemies();
+        // SpawnEnemies();
     }
 
     // Update is called once per frame
@@ -63,13 +61,8 @@ public class SpawnManager : MonoBehaviour
         Gizmos.DrawWireCube(spawnCenter, new Vector3(spawnAreaMajorWidth * 2, 1, spawnAreaMinorWidth * 2));
     }
 
-    public void OnDeviceConnected(InputDevice d)
+    public void OnDeviceConnectedResponse()
     {
         _playerDeviceReady = true;
-    }
-
-    public void OnDeviceDisconnected(InputDevice d)
-    {
-        _playerDeviceReady = false;
     }
 }

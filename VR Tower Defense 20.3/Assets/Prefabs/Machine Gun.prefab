@@ -421,6 +421,9 @@ GameObject:
   - component: {fileID: 1699986221}
   - component: {fileID: 1699986223}
   - component: {fileID: 1699986225}
+  - component: {fileID: 8143201113432203768}
+  - component: {fileID: 6843961710497837877}
+  - component: {fileID: 5153676684722263225}
   m_Layer: 7
   m_Name: Machine Gun
   m_TagString: Untagged
@@ -626,7 +629,52 @@ MonoBehaviour:
   bulletSpeedModifier: 150
   playerRig: {fileID: 0}
   towerTrans: {fileID: 0}
-  rotateSpeed: 0
+  rotateSpeed: 12
+  _devices: {fileID: 0}
+--- !u!114 &8143201113432203768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1586378496551145507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 244921ba16aa6364ba8d5834160315ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 0}
+  Response:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &6843961710497837877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1586378496551145507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c178d88c77416d34bafe6e060319017a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5153676684722263225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1586378496551145507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6497023a41978614d92c05838433ae37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _devices: {fileID: 11400000, guid: fc17e951e66ee6f45b322aa8ad13f53f, type: 2}
+  rotateSpeed: 10
+  towerTrans: {fileID: 0}
+  playerRig: {fileID: 0}
 --- !u!1 &4392728492837650065
 GameObject:
   m_ObjectHideFlags: 0
