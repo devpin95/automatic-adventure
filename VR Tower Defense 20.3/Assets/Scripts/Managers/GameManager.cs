@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!_devices.isReady)
+        if (!_devices.IsReady)
         {
             Debug.Log("Device Not Ready");
         }

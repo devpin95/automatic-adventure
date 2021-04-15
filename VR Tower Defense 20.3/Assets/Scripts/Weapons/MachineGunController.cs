@@ -18,49 +18,53 @@ public class MachineGunController : MonoBehaviour
     public GameObject bulletPrefab;
     public float shotDelay = 0.05f;
     public int tracerSpacing;
-    public float bulletSpeedModifier = 400f;
+    public float bulletSpeedModifier = 100f;
 
     [Header("Rotation")]
     public GameObject playerRig;
     public GameObject towerTrans;
     public float rotateSpeed;
 
+    private HapticsManager _haptics;
+
     [Header("Scriptable Objects")] 
     [SerializeField] private Devices _devices;
 
     private int shotCount = 0;
-    private Vector3 startingPosition;
+    private Vector3 restingPosition;
+    private Quaternion restingRotation;
     private Vector3 centerPosition;
     private bool selected = false;
     private bool firing = false;
     private float timeSinceLastShot = 0.0f;
     private XRBaseInteractor _currentInteractor;
-
-    // private InputDevice _rightHand;
-    // private InputDevice _leftHand;
-    private bool _rightHandSupportsHaptics = false;
-    private bool _leftHandSupportsHaptics = false;
+    private InputDevice _currentDevice;
 
     private AimController _aimController;
     private TowerRotateController _towerRotateController;
+    private AudioSource _shootingSound;
 
 
     // Start is called before the first frame update
     void Start()
     {
         tempHand.SetActive(false);
-        startingPosition = pivotPoint.transform.position;
+        restingPosition = transform.position;
+        restingRotation = transform.rotation;
         _aimController = GetComponent<AimController>();
         _towerRotateController = GetComponent<TowerRotateController>();
+        _shootingSound = GetComponent<AudioSource>();
+        _haptics = GameObject.Find("HapticsManager").GetComponent<HapticsManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
         centerPosition = transform.position;
-        if (selected && _devices.isReady)
+        if (selected && _devices.IsReady)
         {
             _aimController.AimWeapon(_currentInteractor, centerPosition);
+            restingRotation = transform.rotation;
 
             if (firing)
             {
@@ -69,22 +73,17 @@ public class MachineGunController : MonoBehaviour
                 if (timeSinceLastShot > shotDelay)
                 {
                     ShootMachinegun();
-
-                    // if (_rightHandSupportsHaptics || _leftHandSupportsHaptics)
-                    // {
-                    //     if (_currentInteractor.CompareTag("Right Hand Interactor"))
-                    //     {
-                    //         _rightHand.SendHapticImpulse(1, 0.5f, 0.1f);
-                    //     } 
-                    //     else if (_currentInteractor.CompareTag("Left Hand Interactor"))
-                    //     {
-                    //         _leftHand.SendHapticImpulse(1, 0.5f, 0.1f);
-                    //     }
-                    // }
                 }
             }
             
             _towerRotateController.RotateTower();
+            restingPosition = transform.position;
+        }
+        else
+        {
+            transform.rotation = restingRotation;
+            transform.position = restingPosition;
+
         }
     }
 
@@ -93,24 +92,35 @@ public class MachineGunController : MonoBehaviour
         selected = true;
         tempHand.SetActive(true);
         _currentInteractor = interactor;
-        print(_currentInteractor.tag);
+
+        if (_currentInteractor.CompareTag("Left Hand Interactor")) _currentDevice = _devices.LeftHand;
+        else _currentDevice = _devices.RightHand;
+        
     }
 
     public void OnSelectExit(XRBaseInteractor interactor)
     {
         selected = false;
+        firing = false;
+        _haptics.StopIndefiniteRumble(_currentDevice);
         tempHand.SetActive(false);
         _currentInteractor = null;
+        _shootingSound.Stop();
     }
 
     public void OnActivate(XRBaseInteractor interactor)
     {
         firing = true;
+
+        // _haptics.RequestIndefiniteRumble(_currentDevice, 0.5f);
+        _shootingSound.Play();
     }
     
     public void OnDeactivate(XRBaseInteractor interactor)
     {
         firing = false;
+        // _haptics.StopIndefiniteRumble(_currentDevice);
+        _shootingSound.Stop();
     }
 
     public void OnDeviceConnectedResponse()

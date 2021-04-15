@@ -8,13 +8,13 @@ using UnityEngine;
 
 public class BulletController : MonoBehaviour
 {
-    public GameObject bulletPrefab;
+    public ProjectileAttributes attributes;
     public GameObject particles;
     public bool canRicochet;
     private float live = 0.0f;
     private float killBy = 4.0f;
     private float ricochetChance = 0.175f;
-    private float ricochetSpeed = 40f;
+    private float ricochetSpeed = 10f;
     private bool ricocheting = false;
 
     private Rigidbody rb;
@@ -40,15 +40,7 @@ public class BulletController : MonoBehaviour
         if (other.gameObject.CompareTag("Ground"))
         {
             GameObject puff = Instantiate(particles, transform.position, particles.transform.rotation);
-            ParticleSystem ps = puff.GetComponent<ParticleSystem>();
-            
-            ParticleSystem.ShapeModule sm = ps.shape;
-            sm.radius = UnityEngine.Random.Range(0.05f, 0.1f);
-            
-            ps.startSpeed = UnityEngine.Random.Range(0.1f, 3.0f);
-            
-            ps.Play();
-            
+
             if (!ricocheting)
             {
                 float chance = UnityEngine.Random.Range(0.0f, 1.0f);
@@ -58,12 +50,7 @@ public class BulletController : MonoBehaviour
                     rb.velocity = Vector3.zero;
                     rb.angularDrag = 0.0F;
 
-                    // Vector3 pos = transform.position;
-                    // pos.y += 0.1f;
-                    // transform.position = pos;
-
                     float randXrot = UnityEngine.Random.Range(0, 45);
-                    // float randYrot = UnityEngine.Random.Range(45f, 135f);
                     float randZrot = UnityEngine.Random.Range(-45f, 45f);
                     transform.rotation = Quaternion.Euler(randXrot, 0, randZrot);
                     
@@ -71,9 +58,7 @@ public class BulletController : MonoBehaviour
 
                     live = 0.0f;
                     killBy = 2.5f;
-
-                    // GameObject bullet = Instantiate(bulletPrefab, transform.position, transform.rotation);
-                    // bullet.GetComponent<Rigidbody>().AddForce(transform.forward * ricochetSpeed, ForceMode.Impulse);
+                    
                 }
                 else
                 {
@@ -81,7 +66,15 @@ public class BulletController : MonoBehaviour
                 }
             }
         }
-        else if (other.gameObject.CompareTag("Wall") || other.gameObject.CompareTag("Enemy"))
+        else if (other.gameObject.CompareTag("Enemy"))
+        {
+            EnemyEventController eventController = other.gameObject.GetComponent<EnemyEventController>();
+            if (eventController)
+            {
+                eventController.directHitEvent.Invoke(attributes.damage);
+            }
+        }
+        else
         {
             Destroy(gameObject);
         }

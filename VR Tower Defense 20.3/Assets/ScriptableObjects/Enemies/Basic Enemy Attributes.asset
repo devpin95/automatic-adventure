@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87e2d894297d60c40ba1343a6da8e308, type: 3}
+  m_Name: Basic Enemy Attributes
+  m_EditorClassIdentifier: 
+  enemyName: Basic Enemy
+  rotation: {x: 0, y: 0, z: 0}
+  randomRotation: 1
+  prefab: {fileID: 1003792831708347097, guid: 9879a16f515bbd34391f1f260f38c7db, type: 3}
+  enemyValue: 10
+  waveSpawnModifier: 10
+  countPer10WavesModifier: 1
