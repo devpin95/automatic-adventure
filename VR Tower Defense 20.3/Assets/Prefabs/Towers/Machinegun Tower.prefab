@@ -64,6 +64,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6612468406883134769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2855314035638275603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f22e31400d0575d4893a366b66194b16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pooledObject: {fileID: 1767047804854388849, guid: d4121369b0a83f744ad3db3094858ba0, type: 3}
+  _poolCapacity: 1000
 --- !u!1 &2855314036284829325
 GameObject:
   m_ObjectHideFlags: 0
@@ -195,6 +209,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1699986225, guid: d3832d6a0ae6cec4a81191d02dc9c33e, type: 3}
+      propertyPath: shotDelay
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 1699986225, guid: d3832d6a0ae6cec4a81191d02dc9c33e, type: 3}
       propertyPath: towerTrans
       value: 
       objectReference: {fileID: 2855314035518397061}
@@ -203,8 +221,12 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1699986225, guid: d3832d6a0ae6cec4a81191d02dc9c33e, type: 3}
+      propertyPath: machineGunUpgrades
+      value: 
+      objectReference: {fileID: 11400000, guid: af6b88992814005429704d0474036c2c, type: 2}
+    - target: {fileID: 1699986225, guid: d3832d6a0ae6cec4a81191d02dc9c33e, type: 3}
       propertyPath: bulletSpeedModifier
-      value: 25
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 1586378496551145506, guid: d3832d6a0ae6cec4a81191d02dc9c33e, type: 3}
       propertyPath: m_RootOrder
@@ -265,7 +287,7 @@ PrefabInstance:
     - target: {fileID: 8143201113432203768, guid: d3832d6a0ae6cec4a81191d02dc9c33e, type: 3}
       propertyPath: Event
       value: 
-      objectReference: {fileID: 11400000, guid: 20461a5f21ae18f44837a7c5ac6c6223, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 8143201113432203768, guid: d3832d6a0ae6cec4a81191d02dc9c33e, type: 3}
       propertyPath: Response.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -294,8 +316,14 @@ PrefabInstance:
       propertyPath: Response.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8143201113432203768, guid: d3832d6a0ae6cec4a81191d02dc9c33e, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d3832d6a0ae6cec4a81191d02dc9c33e, type: 3}
+--- !u!1 &2855314035638275603 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1586378496551145507, guid: d3832d6a0ae6cec4a81191d02dc9c33e, type: 3}
+  m_PrefabInstance: {fileID: 3576964396143337008}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2855314035638275602 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1586378496551145506, guid: d3832d6a0ae6cec4a81191d02dc9c33e, type: 3}
@@ -306,7 +334,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1699986225, guid: d3832d6a0ae6cec4a81191d02dc9c33e, type: 3}
   m_PrefabInstance: {fileID: 3576964396143337008}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 2855314035638275603}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e6d54211283406545b8011667321e574, type: 3}

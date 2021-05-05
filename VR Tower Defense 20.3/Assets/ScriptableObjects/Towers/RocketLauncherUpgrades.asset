@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0866dad28883cf548bcb6031b36bf9e6, type: 3}
+  m_Name: RocketLauncherUpgrades
+  m_EditorClassIdentifier: 
+  initialized: 0
+  rocketAttributes: {fileID: 11400000, guid: dd5c5e37713940142a68160e99fa3bf9, type: 2}
+  gameData: {fileID: 11400000, guid: e7db0cc7dc0715249b5a90702fd87cef, type: 2}
+  defaultDamage: 100
+  damageUpgradeStep: 0
+  damageUpgradeValues:
+  - 150
+  - 200
+  - 300
+  damageUpgradeCosts: 88130000983a0000a8610000
+  defaultExplosionRadius: 5
+  radiusUpgradeStep: 0
+  radiusUpgradeValues:
+  - 6
+  - 7
+  - 10
+  - 12
+  radiusUpgradeCosts: e80300008813000010270000204e0000
+  defaultVelocity: 100
+  velocityUpgradeStep: 0
+  velocityUpgradeValues:
+  - 125
+  - 150
+  - 175
+  velocityUpgradeCosts: 88130000204e0000409c0000
+  defaultReloadSpeed: 2.5
+  reloadSpeedUpgradeStep: 0
+  reloadSpeedUpgradeValues:
+  - 2.25
+  - 2
+  - 1.5
+  reloadSpeedUpgradeCosts: 10270000983a0000204e0000
+  defaultNumberOfShots: 1
+  twoRocketUpgradePurchased: 0
+  twoRocketUpgradeCost: 25000

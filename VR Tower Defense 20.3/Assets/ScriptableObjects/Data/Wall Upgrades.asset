@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   costToRepair100: 100
   wallUpgradeCount: 0
-  wallUpgradeHealthValues: 8813000010270000204e0000409c00008038010000710200
+  wallUpgradeHealthValues: 64000000c80000002c010000f4010000e803000088130000
   wallUpgradeHealthCosts: 8813000010270000204e000030750000409c000050c30000
   numUpgrades: 6

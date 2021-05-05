@@ -6,8 +6,16 @@ using UnityEngine;
 public class CanonBallController : MonoBehaviour
 {
     public GameObject impactParticles;
-    public float hitDamage;
-    
+    public CEvent_Float hitWall;
+    public EnemyAttributes attributes;
+
+    private Rigidbody _rb;
+
+    private void Awake()
+    {
+        _rb = GetComponent<Rigidbody>();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,13 +33,16 @@ public class CanonBallController : MonoBehaviour
         if (other.transform.CompareTag("Enemy")) return;
         else if (other.transform.CompareTag("Wall"))
         {
-            other.transform.GetComponent<WallManager>().HitWall(hitDamage);
+            // other.transform.GetComponent<WallManager>().HitWall(hitDamage);
+            hitWall.Raise(attributes.wallHitDamage);
         }
         
         var impact = Instantiate(impactParticles, transform.position,
             impactParticles.transform.rotation * Quaternion.Euler(90, 0, 0));
         impact.transform.localScale = new Vector3(4f, 9f, 4f);
         
-        Destroy(gameObject);
+        _rb.velocity = Vector3.zero;
+        _rb.angularVelocity = Vector3.zero;
+        gameObject.SetActive(false);
     }
 }

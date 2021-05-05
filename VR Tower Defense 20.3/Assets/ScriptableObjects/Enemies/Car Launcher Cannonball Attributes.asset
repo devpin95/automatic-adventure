@@ -13,11 +13,13 @@ MonoBehaviour:
   m_Name: Car Launcher Cannonball Attributes
   m_EditorClassIdentifier: 
   enemyName: Cannonball
-  wallHitDamage: 20
-  rotation: {x: 0, y: 0, z: 0}
+  wallHitDamage: 5
   randomRotation: 0
-  startingHealth: 0
+  rotation: {x: 0, y: 0, z: 0}
+  isFixed: 0
+  fixedPosition: {x: 0, y: 0, z: 0, w: 0}
+  pool: {fileID: 0}
+  countAsEnemy: 0
   prefab: {fileID: 4902516484522899609, guid: 8ff3dacf7b808874e9a2952eee6beac0, type: 3}
   enemyValue: 0
-  waveSpawnModifier: 0
-  countPer10WavesModifier: 0
+  startingHealth: 0

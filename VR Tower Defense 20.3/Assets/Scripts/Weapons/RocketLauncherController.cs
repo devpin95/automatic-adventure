@@ -1,12 +1,16 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.XR.Interaction.Toolkit;
 
 public class RocketLauncherController : MonoBehaviour
 {
+    public RocketLauncherUpgrades upgrades;
+    
     [Header("Interaction Variables")]
     public float shotDelay;
     public float majorRotationSpeed;
@@ -19,14 +23,17 @@ public class RocketLauncherController : MonoBehaviour
     public Color reloadingColor;
     public TextMeshProUGUI rangeText;
     // private TextMeshPro tmp_rangeText;
-    public TextMeshProUGUI readyText;
+    public TextMeshProUGUI[] readyTexts;
     // private TextMeshPro tmp_readyText;
     
     private float timeSinceLastShot;
     private Vector3 centerPosition;
     private bool selected = false;
-    private bool firing = false;
+    private bool triggerPulled = false;
     private bool _shotReady = true;
+
+    private bool[] _chambers;
+    
     [SerializeField] private Devices _devices;
     private XRBaseInteractor _currentInteractor;
     [SerializeField] private GameObject tempHand;
@@ -37,7 +44,23 @@ public class RocketLauncherController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SetReadyText(true);
+        _chambers = new bool[upgrades.NumberOfShots];
+
+        for (int i = 0; i < _chambers.Length; ++i)
+        {
+            _chambers[i] = true;
+        }
+        
+        SetReadyText();
+
+        if (upgrades.NumberOfShots < readyTexts.Length)
+        {
+            for (int i = upgrades.NumberOfShots - 1; i < readyTexts.Length; ++i)
+            {
+                readyTexts[i].text = "N/A";
+                readyTexts[i].color = reloadingColor;
+            }
+        }
     }
 
     // Update is called once per frame
@@ -73,16 +96,10 @@ public class RocketLauncherController : MonoBehaviour
                 transform.Rotate(-transform.eulerAngles.x, 0, 0);
             }
 
-            if (firing)
+            if (triggerPulled)
             {
-                if (_shotReady && validHit)
-                {
-                    GameObject rocket = Instantiate(_rocketPrefab, _firingPoint.position, _firingPoint.transform.rotation);
-                    rocket.transform.RotateAround(rocket.transform.position, rocket.transform.right, 90);
-                    _shotReady = false;
-                    SetReadyText(false);
-                    StartCoroutine(ReloadShot());
-                }
+                if (_shotReady && validHit) Fire();
+                triggerPulled = false;
             }
         }
     }
@@ -104,32 +121,64 @@ public class RocketLauncherController : MonoBehaviour
     
     public void OnActivate(XRBaseInteractor interactor)
     {
-        firing = true;
+        triggerPulled = true;
     }
     
     public void OnDeactivate(XRBaseInteractor interactor)
     {
-        firing = false;
+        triggerPulled = false;
     }
 
-    IEnumerator ReloadShot()
+    private void SetReadyText()
     {
-        yield return new WaitForSeconds(shotDelay);
-        _shotReady = true;
-        SetReadyText(true);
+        for (int i = 0; i < _chambers.Length; ++i)
+        {
+            if (_chambers[i])
+            {
+                readyTexts[i].color = readyColor;
+                readyTexts[i].text = "READY";
+            }
+            else
+            {
+                readyTexts[i].color = reloadingColor;
+                readyTexts[i].text = "LOADING";
+            }
+        }
     }
 
-    private void SetReadyText(bool state)
+    private void Fire()
     {
-        if (state)
+        int readyChamber = CheckChambers();
+
+        if (readyChamber >= 0)
         {
-            readyText.color = readyColor;
-            readyText.text = "READY";
+            GameObject rocket = Instantiate(_rocketPrefab, _firingPoint.position, _firingPoint.transform.rotation);
+            rocket.transform.RotateAround(rocket.transform.position, rocket.transform.right, 90);
+
+            _chambers[readyChamber] = false;
+            StartCoroutine(ReloadShot(readyChamber));
+            SetReadyText();
         }
-        else
+    }
+
+    private int CheckChambers()
+    {
+       
+        for (int i = 0; i < _chambers.Length; ++i)
         {
-            readyText.color = reloadingColor;
-            readyText.text = "LOADING";
+            if (_chambers[i])
+            {
+                return i;
+            }
         }
+
+        return -1;
+    }
+    
+    IEnumerator ReloadShot(int chamber)
+    {
+        yield return new WaitForSeconds(upgrades.ReloadSpeed);
+        _chambers[chamber] = true;
+        SetReadyText();
     }
 }

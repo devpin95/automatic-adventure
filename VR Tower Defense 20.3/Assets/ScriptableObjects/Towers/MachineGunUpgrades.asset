@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84ccddd21112f55428c08571a8464125, type: 3}
+  m_Name: MachineGunUpgrades
+  m_EditorClassIdentifier: 
+  initialized: 0
+  bulletAttributes: {fileID: 11400000, guid: 8db54df5aa628d24cb48a3729c4cbf79, type: 2}
+  gameData: {fileID: 11400000, guid: e7db0cc7dc0715249b5a90702fd87cef, type: 2}
+  defaultDamage: 1
+  damage: 1
+  damageUpgradeStep: 0
+  damageUpgradeCosts: 8813000010270000204e0000409c0000
+  damageUpgradeValues:
+  - 2
+  - 4
+  - 6
+  - 10
+  defaultTowerRotationSpeed: 12
+  towerRotationSpeed: 12
+  rotationUpgradeStep: 0
+  rotationUpgradeCosts: e8030000d00700008813000010270000
+  rotationUpgradeValues: 0f000000110000001400000019000000
+  defaultBulletVelocityModifier: 15
+  bulletVelocityModifier: 15
+  bulletVelocityUpgradeStep: 0
+  bulletVelocityUpgradeCosts: 88130000204e0000
+  bulletVelocityUpgradeValues: 1100000014000000

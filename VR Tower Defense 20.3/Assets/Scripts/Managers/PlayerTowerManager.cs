@@ -16,6 +16,7 @@ public class PlayerTowerManager : MonoBehaviour
     private List<GameObject> _towers = new List<GameObject>();
 
     [SerializeField] private Devices _devices;
+    [SerializeField] private GameData _gameData;
     private int _currentTower;
     private bool deviceReady = false;
     private bool previousPrimaryButtonDown = false;
@@ -40,6 +41,8 @@ public class PlayerTowerManager : MonoBehaviour
         xrRig.transform.rotation = towerAnchor.rotation;
 
         _playerCamera = xrRig.transform.Find("Camera Offset").transform.Find("Main Camera");
+        
+        deviceReady = _devices.IsReady;
     }
 
     // Update is called once per frame
@@ -90,17 +93,26 @@ public class PlayerTowerManager : MonoBehaviour
         deviceReady = true;
     }
 
-    private void ChangeTowers()
+    public void ChangeTowers(int tower = -1)
     {
-        ++_currentTower;
-        if (_currentTower >= _towers.Count)
+        if (tower >= 0)
         {
-            _currentTower = 0;
+            _currentTower = tower;
         }
+        else
+        {
+            ++_currentTower;
+            if (_currentTower >= _towers.Count)
+            {
+                _currentTower = 0;
+            }
+        }
+
+        _gameData.currentActiveTower = _currentTower;
         
         Transform towerAnchor = _towers[_currentTower].gameObject.transform.Find("XRRig Anchor");
         xrRig.transform.position = towerAnchor.position;
         xrRig.transform.rotation = towerAnchor.rotation;
     }
-
+    
 }

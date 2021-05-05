@@ -63,7 +63,7 @@ public class Devices : ScriptableObject
         private set => leftHandSupportsHaptics = value;
     }
 
-    [SerializeField] private DevicesReadyEvent _devicesReadyEvent;
+    [SerializeField] private CEvent _devicesReadyEvent;
     
     public void InitDevices(InputDevice inputDevice)
     {
@@ -105,5 +105,12 @@ public class Devices : ScriptableObject
         {
             LeftHandActive = state;
         }
+    }
+
+    public void ResetObject()
+    {
+        IsReady = false;
+        RightHandActive = false;
+        LeftHandActive = false;
     }
 }

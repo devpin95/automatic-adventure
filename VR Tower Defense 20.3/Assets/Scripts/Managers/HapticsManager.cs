@@ -7,7 +7,7 @@ public class HapticsManager : MonoBehaviour
 {
     public Devices _devices;
 
-    private bool _waitingOnOneShot = false;
+    // private bool _waitingOnOneShot = false;
 
     private float _indefiniteRumbleTimeout = 0.1f;
 

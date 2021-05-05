@@ -12,5 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b239a1c5f522d3447bfe52db787fa44f, type: 3}
   m_Name: so_devices
   m_EditorClassIdentifier: 
-  isReady: 0
-  _devicesReadyEvent: {fileID: 11400000, guid: 20461a5f21ae18f44837a7c5ac6c6223, type: 2}
+  _devicesReadyEvent: {fileID: 11400000, guid: 4a1d4fec37588d24b8f32a4ceb8dae03, type: 2}

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Experimental.XR.Interaction;
 
-[CreateAssetMenu(menuName = "ScriptableObjects/Towers")]
+[CreateAssetMenu(menuName = "Towers/Attributes")]
 public class TowerAttributes : ScriptableObject
 {
     public string towerName;

@@ -17,7 +17,7 @@ public class CarLauncherController : MonoBehaviour
     public float shotRate;
     public float shotVelocityModifier;
 
-    public EnemyKilledEvent killed;
+    public CEvent_Int_Bool killed;
     
     public EnemyAttributes attributes;
     public float currentHealth;
@@ -39,11 +39,7 @@ public class CarLauncherController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.forward, out hit, Mathf.Infinity, _targetLayers))
-        {
-            _target = hit.point;
-        }
+        FindTarget();
 
         currentHealth = attributes.startingHealth;
     }
@@ -91,8 +87,15 @@ public class CarLauncherController : MonoBehaviour
     private void Fire()
     {
         float randomVelocity = UnityEngine.Random.Range(shotVelocityModifier - 500, shotVelocityModifier + 500);
-        var canonball = Instantiate(canonBallPrefab, firePoint.position, canonBallPrefab.transform.rotation);
-        canonball.GetComponent<Rigidbody>().AddForce(firePoint.forward * randomVelocity, ForceMode.Impulse);
+        GameObject canonBall = CanonBallPool.Instance.GetPooledObject();
+
+        if (canonBall)
+        {
+            canonBall.SetActive(true);
+            canonBall.transform.position = firePoint.position;
+            canonBall.transform.rotation = canonBall.transform.rotation;
+            canonBall.GetComponent<Rigidbody>().AddForce(firePoint.forward * randomVelocity, ForceMode.Impulse);
+        }
     }
 
     public void TakeIndirectHit(float damage)
@@ -113,7 +116,26 @@ public class CarLauncherController : MonoBehaviour
 
     private void Die()
     {
-        killed.Raise(attributes.EnemyValue);
-        Destroy(gameObject);
+        killed.Raise(attributes.EnemyValue, attributes.countAsEnemy);
+        shotCounter = 0f;
+        _state_approaching = true;
+        _state_at_distance = false;
+        damagedSmokeParticleSystem.Stop();
+        gameObject.SetActive(false);
+    }
+
+    private void OnEnable()
+    {
+        currentHealth = attributes.startingHealth;
+        FindTarget();
+    }
+
+    private void FindTarget()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, transform.forward, out hit, Mathf.Infinity, _targetLayers))
+        {
+            _target = hit.point;
+        }
     }
 }

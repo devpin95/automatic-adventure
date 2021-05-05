@@ -10,6 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 8361635675441092570}
   - component: {fileID: 8361635675441092573}
+  - component: {fileID: 15521176}
+  - component: {fileID: 15521172}
+  - component: {fileID: 15521173}
+  - component: {fileID: 15521174}
   m_Layer: 0
   m_Name: PoolManager
   m_TagString: Untagged
@@ -44,4 +48,58 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pooledObject: {fileID: 1767047804854388849, guid: d4121369b0a83f744ad3db3094858ba0, type: 3}
-  _poolCapacity: 1000
+  _poolCapacity: 200
+--- !u!114 &15521176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8361635675441092571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14ef419bf73e7934b96316d84ad3f6fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &15521172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8361635675441092571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bcbbb4c142f01d499c485bd83d12fde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pooledObject: {fileID: 7636584778449873288, guid: 40cfb5f5733a29d418c5cd4bf9819143, type: 3}
+  _poolCapacity: 100
+--- !u!114 &15521173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8361635675441092571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48b50ec12afa3724487ffcafc6aef256, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pooledObject: {fileID: 1003792831708347097, guid: 9879a16f515bbd34391f1f260f38c7db, type: 3}
+  _poolCapacity: 500
+--- !u!114 &15521174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8361635675441092571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4139e966d828b0843b4132beee0b3836, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pooledObject: {fileID: 1383990150047030044, guid: f62dddef2e507854a80a2dee31359aff, type: 3}
+  _poolCapacity: 4

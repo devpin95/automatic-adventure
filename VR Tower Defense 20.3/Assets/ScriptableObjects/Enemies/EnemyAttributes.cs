@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,18 +8,36 @@ using UnityEngine.Serialization;
 public class EnemyAttributes : ScriptableObject
 {
     public string enemyName;
-    public Vector3 rotation;
+    
+    [Space(10)]
+    
+    public float wallHitDamage;
     public bool randomRotation;
-    public float startingHealth;
+    public Vector3 rotation;
+
+    [Space(10)]
+    
+    public bool isFixed = false;
+    [Tooltip("A fixed spawn area. Center X, Center Z, width (x direction), height (z direction)")]
+    public Vector4 fixedPosition;
+
+    [Space(10)]
+    
+    [Tooltip("Enemy Pool set in pool startup. Pass this object to the script that creates the pool.")]
+    public ObjectPool pool;
+    [Tooltip("If true, the SpawnManager will wait for this object to be killed before moving on to the next wave.")]
+    public bool countAsEnemy;
+    
+    [Space(10)]
 
     [SerializeField] private GameObject prefab;
     [SerializeField] private int enemyValue;
-    [SerializeField] private int waveSpawnModifier;
-    [FormerlySerializedAs("waveMod10Modifier")] [SerializeField] private bool countPer10WavesModifier;
+    public float startingHealth;
 
-    public int WaveSpawnModifier => waveSpawnModifier;
+    [Space(10)]
+    [Tooltip("Width x Depth for spawning in a 2d grid")]
+    public Vector2 spawnGridDimensions;
+    
     public GameObject Prefab => prefab;
     public int EnemyValue => enemyValue;
-    public bool CountPer10WavesModifier => countPer10WavesModifier;
-    
 }

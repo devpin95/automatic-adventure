@@ -13,9 +13,14 @@ MonoBehaviour:
   m_Name: Basic Enemy Attributes
   m_EditorClassIdentifier: 
   enemyName: Basic Enemy
-  rotation: {x: 0, y: 0, z: 0}
+  wallHitDamage: 0.1
   randomRotation: 1
+  rotation: {x: 0, y: 0, z: 0}
+  isFixed: 0
+  fixedPosition: {x: 0, y: 0, z: 0, w: 0}
+  pool: {fileID: 0}
+  countAsEnemy: 1
   prefab: {fileID: 1003792831708347097, guid: 9879a16f515bbd34391f1f260f38c7db, type: 3}
-  enemyValue: 10
-  waveSpawnModifier: 10
-  countPer10WavesModifier: 1
+  enemyValue: 20
+  startingHealth: 0
+  spawnGridDimensions: {x: 2, y: 2}

@@ -8,6 +8,8 @@ public class ApplicationManager : MonoBehaviour
     public static ApplicationManager Instance;
     public GameData gameData;
     public Devices devices;
+    public MachineGunUpgrades machineGunUpgrades;
+    public RocketLauncherUpgrades rocketLauncherUpgrades;
     private void Awake()
     {
         if (Instance == null)
@@ -25,5 +27,7 @@ public class ApplicationManager : MonoBehaviour
     {
         gameData.ResetObject();
         devices.ResetObject();
+        machineGunUpgrades.ResetObject();
+        rocketLauncherUpgrades.ResetObject();
     }
 }

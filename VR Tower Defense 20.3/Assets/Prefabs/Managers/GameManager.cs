@@ -7,9 +7,28 @@ using UnityEngine.XR;
 
 public class GameManager : MonoBehaviour
 {
+    private static GameManager Instance;
     [SerializeField] private Devices _devices;
     [SerializeField] private GameData _gameData;
-    
+    [SerializeField] private MachineGunUpgrades _machineGunUpgrades;
+    [SerializeField] private RocketLauncherUpgrades _rocketLauncherUpgrades;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(this);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+        
+        _machineGunUpgrades.Init();
+        _rocketLauncherUpgrades.Init();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,7 +61,7 @@ public class GameManager : MonoBehaviour
         _gameData.wallCurrentHealth -= damage;
     }
 
-    public void EnemyKilledHandler(int val)
+    public void EnemyKilledHandler(int val, bool s = true)
     {
         _gameData.gold += val;
     }

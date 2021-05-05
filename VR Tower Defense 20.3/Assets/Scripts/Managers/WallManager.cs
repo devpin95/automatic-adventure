@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class WallManager : MonoBehaviour
 {
+    public GameData _gameData;
     public TextMeshProUGUI mainWallHealthText;
     public Gradient healthTextGradient;
     
@@ -20,6 +21,8 @@ public class WallManager : MonoBehaviour
     {
         currentHealth = startingHealth;
         HitWall(0f);
+        UpdateWave(_gameData.Wave);
+        UpdateMoney(0);
     }
 
     // Update is called once per frame
@@ -30,20 +33,17 @@ public class WallManager : MonoBehaviour
 
     public void HitWall(float damage)
     {
-        currentHealth -= damage;
-        var val = (int) currentHealth;
-        mainWallHealthText.text = val.ToString();
-        mainWallHealthText.color = healthTextGradient.Evaluate((currentHealth / startingHealth));
+        mainWallHealthText.text = _gameData.wallCurrentHealth.ToString();
+        mainWallHealthText.color = healthTextGradient.Evaluate((_gameData.wallCurrentHealth / _gameData.wallMaxHealth));
     }
 
-    public void UpdateMoney(float value)
+    public void UpdateMoney(int value, bool s = false)
     {
-        currentMoney += value;
-        wallMoneyValue.text = currentMoney.ToString();
+        wallMoneyValue.text = _gameData.gold.ToString();
     }
 
     public void UpdateWave(int wave)
     {
-        wallWaveValue.text = wave.ToString();
+        wallWaveValue.text = _gameData.Wave.ToString();
     }
 }

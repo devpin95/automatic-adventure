@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87e2d894297d60c40ba1343a6da8e308, type: 3}
+  m_Name: Ball Launcher Attributes
+  m_EditorClassIdentifier: 
+  enemyName: Ball Launcher
+  wallHitDamage: 0
+  randomRotation: 0
+  rotation: {x: -90, y: 90, z: 0}
+  isFixed: 1
+  fixedPosition: {x: -43, y: 210, z: 42, w: 4}
+  pool: {fileID: 0}
+  countAsEnemy: 0
+  prefab: {fileID: 7885698057586138010, guid: 96b3b710981a4544196e0a7a789614a5, type: 3}
+  enemyValue: 1000
+  startingHealth: 75

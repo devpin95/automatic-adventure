@@ -13,10 +13,14 @@ MonoBehaviour:
   m_Name: Car Launcher Attributes
   m_EditorClassIdentifier: 
   enemyName: Car Launcher
-  rotation: {x: 0, y: 180, z: 0}
+  wallHitDamage: 0
   randomRotation: 0
-  startingHealth: 100
+  rotation: {x: 0, y: 180, z: 0}
+  isFixed: 0
+  fixedPosition: {x: 0, y: 0, z: 0, w: 0}
+  pool: {fileID: 0}
+  countAsEnemy: 1
   prefab: {fileID: 3951258521747940342, guid: fab365e0296acae4495ffdf60a0cc89b, type: 3}
-  enemyValue: 25
-  waveSpawnModifier: 1
-  countPer10WavesModifier: 1
+  enemyValue: 100
+  startingHealth: 50
+  spawnGridDimensions: {x: 4, y: 5}

@@ -111,9 +111,9 @@ Rigidbody:
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 1
+  m_CollisionDetection: 2
 --- !u!114 &6472382843625805434
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -132,10 +132,10 @@ MonoBehaviour:
   _targetLayers:
     serializedVersion: 2
     m_Bits: 256
-  wallDamage: 0.1
   numberOfHitsBeforeDestroy: 10
-  killed: {fileID: 11400000, guid: a364b894f115a9c4e86feb6e0fcefef9, type: 2}
+  killed: {fileID: 11400000, guid: 5f0ced62a1eb5b4458d678edd5321b15, type: 2}
   attributes: {fileID: 11400000, guid: cf868ba1c553d0e45998b92cd6295f14, type: 2}
+  hitWall: {fileID: 11400000, guid: b561b0d4de5429847b70c2724aba67bf, type: 2}
 --- !u!114 &3379327279497768639
 MonoBehaviour:
   m_ObjectHideFlags: 0

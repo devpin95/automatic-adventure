@@ -11,17 +11,21 @@ public class BulletController : MonoBehaviour
     public ProjectileAttributes attributes;
     public GameObject particles;
     public bool canRicochet;
+    public bool isTracer;
     private float live = 0.0f;
     private float killBy = 4.0f;
     private float ricochetChance = 0.175f;
-    private float ricochetSpeed = 10f;
+    private float ricochetSpeed = 5f;
     private bool ricocheting = false;
+    private TrailRenderer _trailRenderer;
 
     private Rigidbody rb;
+    
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        _trailRenderer = GameObject.Find("Trail").GetComponent<TrailRenderer>();
     }
 
     // Update is called once per frame
@@ -31,7 +35,8 @@ public class BulletController : MonoBehaviour
 
         if (live > killBy)
         {
-            Destroy(gameObject);
+            // this is a pooled object, so set active to false instead of destroying
+            DeactivatePooledObject();
         }
     }
 
@@ -39,7 +44,16 @@ public class BulletController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Ground"))
         {
-            GameObject puff = Instantiate(particles, transform.position, particles.transform.rotation);
+            GameObject puff = BulletImpactPool.Instance.GetPooledObject();
+
+            if (puff != null)
+            {
+                puff.transform.position = transform.position;
+                ParticleSystem ps = puff.transform.Find("Puff").GetComponent<ParticleSystem>();
+                ps.Clear();
+                ps.Play();
+                puff.SetActive(true);
+            }
 
             if (!ricocheting)
             {
@@ -62,11 +76,16 @@ public class BulletController : MonoBehaviour
                 }
                 else
                 {
-                    Destroy(gameObject);
+                    // this is a pooled object, so set active to false instead of destroying
+                    DeactivatePooledObject();
                 }
             }
+            else
+            {
+                DeactivatePooledObject();
+            }
         }
-        else if (other.gameObject.CompareTag("Enemy"))
+        else if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("Ball Launcher"))
         {
             EnemyEventController eventController = other.gameObject.GetComponent<EnemyEventController>();
             if (eventController)
@@ -76,7 +95,41 @@ public class BulletController : MonoBehaviour
         }
         else
         {
-            Destroy(gameObject);
+            // this is a pooled object, so set active to false instead of destroying
+            DeactivatePooledObject();
         }
+    }
+
+    private void DeactivatePooledObject()
+    {
+        live = 0.0f;
+        killBy = 4.0f;
+        ricocheting = false;
+        transform.position = Vector3.zero;
+        transform.rotation = Quaternion.identity;
+        rb.velocity = Vector3.zero;
+        // rb.angularDrag = 0.0F;
+        rb.angularVelocity = Vector3.zero;
+        _trailRenderer.enabled = false;
+        isTracer = false;
+        gameObject.SetActive(false);
+    }
+
+    private void OnEnable()
+    {
+        _trailRenderer.Clear();
+        if (isTracer)
+        {
+            StartCoroutine(DelayedTracerTrail());
+        }
+    }
+
+    IEnumerator DelayedTracerTrail()
+    {
+        // float randDelay = UnityEngine.Random.Range(0.01f, 0.05f);
+        float randDelay = 0.01f;
+        yield return new WaitForSeconds(randDelay);
+        _trailRenderer.Clear();
+        _trailRenderer.enabled = true;
     }
 }

@@ -127,3 +127,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   impactParticles: {fileID: 637595636101606060, guid: 46ed4d4b4a72ae842b3d232835eecb30, type: 3}
   hitDamage: 20
+  hitWall: {fileID: 11400000, guid: b561b0d4de5429847b70c2724aba67bf, type: 2}
+  attributes: {fileID: 11400000, guid: 34e61083aabd270489e4d70342b58c99, type: 2}

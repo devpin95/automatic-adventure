@@ -10,11 +10,12 @@ public class BasicEnemyController : MonoBehaviour
     public float movementSpeed;
     public float maxVelocity;
     public LayerMask _targetLayers;
-    public float wallDamage;
     public int numberOfHitsBeforeDestroy;
 
-    public EnemyKilledEvent killed;
+    public CEvent_Int_Bool killed;
     public EnemyAttributes attributes;
+
+    public CEvent_Float hitWall;
 
     private int hitCount = 0;
     private Vector3 _targetDir;
@@ -22,25 +23,24 @@ public class BasicEnemyController : MonoBehaviour
     private Rigidbody _rb;
     private Vector3 _spawnPos;
     private bool isLaunched = false;
+
+    private float health;
     
     // Start is called before the first frame update
     void Start()
     {
         _spawnPos = transform.position;
         _rb = GetComponent<Rigidbody>();
-        
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, -Vector3.forward, out hit, Mathf.Infinity, _targetLayers))
-        {
-            _targetPoint = hit.point;
-        }
 
-        _targetDir = _targetPoint - transform.position;
-        _targetDir = _targetDir.normalized;
+        movementSpeed += UnityEngine.Random.Range(-1, 1);
+
+        GetTarget();
+
+        health = attributes.startingHealth;
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         // Vector3 targetPos = new Vector3(target.position.x, 0, target.position.z);
         // _targetDir = targetPos - transform.position;
@@ -58,11 +58,6 @@ public class BasicEnemyController : MonoBehaviour
             movementSpeed /= 2;
             isLaunched = false;
         }
-        else if (other.gameObject.CompareTag("Projectile"))
-        {
-            killed.Raise(attributes.EnemyValue);
-            Destroy(gameObject);
-        } 
         else if (other.gameObject.CompareTag("Ball Launcher"))
         {
             maxVelocity *= 2;
@@ -72,17 +67,14 @@ public class BasicEnemyController : MonoBehaviour
         } 
         else if (other.gameObject.CompareTag("Wall"))
         {
-            WallManager wm = other.transform.GetComponent<WallManager>();
-            if (!wm) return;
-            
-            wm.HitWall(wallDamage);
+            hitWall.Raise(attributes.wallHitDamage);
             
             ++hitCount;
             if (hitCount >= numberOfHitsBeforeDestroy)
             {
-                Destroy(gameObject);
+                killed.Raise(0, attributes.countAsEnemy);
+                DisablePooledObject();
             }
-            
         }
     }
 
@@ -90,12 +82,50 @@ public class BasicEnemyController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Wall"))
         {
-            _rb.AddForce(-_targetDir, ForceMode.Impulse);
+            _rb.AddForce(-_targetDir * 1.2f, ForceMode.Impulse);
         }
     }
 
     public void TakeIndirectHit(float damage)
     {
-        killed.Raise(attributes.EnemyValue);   
+        health -= damage;
+
+        if (health <= 0)
+        {
+            killed.Raise(attributes.EnemyValue, attributes.countAsEnemy);
+            DisablePooledObject();
+        }
+    }
+
+    private void GetTarget()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, -Vector3.forward, out hit, Mathf.Infinity, _targetLayers))
+        {
+            _targetPoint = hit.point;
+        }
+
+        _targetDir = _targetPoint - transform.position;
+        _targetDir = _targetDir.normalized;
+    }
+
+    private void DisablePooledObject()
+    {
+        hitCount = 0;
+        if (isLaunched)
+        {
+            isLaunched = false;
+            movementSpeed /= 2;
+            maxVelocity /= 2;
+        }
+        _rb.angularVelocity = Vector3.zero;
+        _rb.velocity = Vector3.zero;
+        gameObject.SetActive(false);
+    }
+
+    private void OnEnable()
+    {
+        GetTarget();
+        health = attributes.startingHealth;
     }
 }

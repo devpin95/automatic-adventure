@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.XR;
@@ -8,6 +9,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class MachineGunController : MonoBehaviour
 {
+    public MachineGunUpgrades machineGunUpgrades;
     [Header("Meta Objects")]
     public Transform fireLocation;
     public Transform pivotPoint;
@@ -18,11 +20,13 @@ public class MachineGunController : MonoBehaviour
     public GameObject bulletPrefab;
     public float shotDelay = 0.05f;
     public int tracerSpacing;
+    [Tooltip("Overwritten by MachineGunUpdates")]
     public float bulletSpeedModifier = 100f;
 
     [Header("Rotation")]
     public GameObject playerRig;
     public GameObject towerTrans;
+    [Tooltip("Overwritten by MachineGunUpdates")]
     public float rotateSpeed;
 
     private HapticsManager _haptics;
@@ -44,6 +48,10 @@ public class MachineGunController : MonoBehaviour
     private TowerRotateController _towerRotateController;
     private AudioSource _shootingSound;
 
+    // private ObjectPool _bulletPool;
+
+    // private Vector3 fireDebug;
+
 
     // Start is called before the first frame update
     void Start()
@@ -55,13 +63,14 @@ public class MachineGunController : MonoBehaviour
         _towerRotateController = GetComponent<TowerRotateController>();
         _shootingSound = GetComponent<AudioSource>();
         _haptics = GameObject.Find("HapticsManager").GetComponent<HapticsManager>();
+        // _bulletPool = GetComponent<ObjectPool>();
     }
 
     // Update is called once per frame
     void Update()
     {
         centerPosition = transform.position;
-        if (selected && _devices.IsReady)
+        if (selected && _devices.IsReady && machineGunUpgrades.initialized)
         {
             _aimController.AimWeapon(_currentInteractor, centerPosition);
             restingRotation = transform.rotation;
@@ -76,7 +85,7 @@ public class MachineGunController : MonoBehaviour
                 }
             }
             
-            _towerRotateController.RotateTower();
+            _towerRotateController.RotateTower(machineGunUpgrades.TowerRotationSpeed);
             restingPosition = transform.position;
         }
         else
@@ -130,25 +139,43 @@ public class MachineGunController : MonoBehaviour
     
     private void ShootMachinegun()
     {
+        GameObject bullet = MachineGunBulletPool.SharedInstance.GetPooledObject();
+
+        if (bullet == null) return;
+        
+        var trail = bullet.transform.Find("Trail").GetComponent<TrailRenderer>();
+        trail.enabled = false;
+        
+        bullet.transform.position = fireLocation.position;
+        bullet.transform.rotation = transform.rotation;
+        // bullet.transform.rotation = Quaternion.AngleAxis(90, bullet.transform.right);
+
         ++shotCount;
         timeSinceLastShot = 0;
         float ranXrot = UnityEngine.Random.Range(-1.0f, 1.0f);
         float ranYrot = UnityEngine.Random.Range(-1.0f, 1.0f);
         Vector3 randDir = Quaternion.Euler(ranXrot, ranYrot,  0) * fireLocation.forward;
+        
+        BulletController bulletController = bullet.GetComponent<BulletController>();
 
-        GameObject bullet;
+        //GameObject bullet;
         if (shotCount % tracerSpacing == 0)
         {
             // shoot a tracer
-            bullet = Instantiate(tracerPrefab, fireLocation.position, transform.rotation);
+            trail.enabled = true;
+            bulletController.canRicochet = true;
+            bulletController.isTracer = true;
+            // bullet = Instantiate(tracerPrefab, fireLocation.position, transform.rotation);
         }
         else
         {
             // shoot a regular bullet
-            bullet = Instantiate(bulletPrefab, fireLocation.position, transform.rotation);
+            bulletController.canRicochet = false;
+            bulletController.isTracer = false;
+            // bullet = Instantiate(bulletPrefab, fireLocation.position, transform.rotation);
         }
-                    
-        bullet.GetComponent<Rigidbody>().AddForce(randDir * bulletSpeedModifier, ForceMode.Impulse);
+        
+        bullet.SetActive(true);
+        bullet.GetComponent<Rigidbody>().AddForce(randDir.normalized * machineGunUpgrades.BulletVelocityModifier, ForceMode.Impulse);
     }
-    
 }
