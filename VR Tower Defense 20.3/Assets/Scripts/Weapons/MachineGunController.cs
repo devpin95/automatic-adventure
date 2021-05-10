@@ -21,13 +21,6 @@ public class MachineGunController : MonoBehaviour
     public float shotDelay = 0.05f;
     public int tracerSpacing;
     [Tooltip("Overwritten by MachineGunUpdates")]
-    public float bulletSpeedModifier = 100f;
-
-    [Header("Rotation")]
-    public GameObject playerRig;
-    public GameObject towerTrans;
-    [Tooltip("Overwritten by MachineGunUpdates")]
-    public float rotateSpeed;
 
     private HapticsManager _haptics;
 

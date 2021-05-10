@@ -70,6 +70,16 @@ public class HapticsManager : MonoBehaviour
         }
     }
 
+    public bool RequestOneOffRumble(string deviceTag, float amplitude, float duration)
+    {
+        if (deviceTag == Constants.RIGHT_HAND_TAGNAME)
+            return RequestOneOffRumble(_devices.RightHand, amplitude, duration);
+        else if (deviceTag == Constants.LEFT_HAND_TAGNAME) 
+            return RequestOneOffRumble(_devices.LeftHand, amplitude, duration);
+
+        return false;
+    }
+    
     public bool RequestOneOffRumble(UnityEngine.XR.InputDevice device, float amplitude, float duration)
     {
         if (!supportedDevices.Contains(device)) return false;
@@ -77,29 +87,23 @@ public class HapticsManager : MonoBehaviour
         if (device.Equals(_devices.RightHand) && !_indefiniteRumbleRight)
         {
             if (_rumbleRight) return false;
-            else
-            {
-                _currentRightDuration = duration;
-                _currentRightAmplitude = amplitude;
-                StartCoroutine(StartRightRumble());
-                return true;
-            }
+            
+            _currentRightDuration = duration;
+            _currentRightAmplitude = amplitude;
+            StartCoroutine(StartRightRumble());
+            return true;
         }
         else if (device.Equals(_devices.LeftHand) && !_indefiniteRumbleLeft)
         {
             if (_rumbleLeft) return false;
-            else
-            {
-                _currentLeftDuration = duration;
-                _currentLeftAmplitude = amplitude;
-                StartCoroutine(StartLeftRumble());
-                return true;
-            }
+            
+            _currentLeftDuration = duration;
+            _currentLeftAmplitude = amplitude;
+            StartCoroutine(StartLeftRumble());
+            return true;
         }
-        else
-        {
-            return false;
-        }
+        
+        return false;
     }
 
     public void StopIndefiniteRumble(UnityEngine.XR.InputDevice device)

@@ -10,6 +10,8 @@ public class TowerRotateController : MonoBehaviour
     public GameObject towerTrans;
     public GameObject playerRig;
     public Transform towerAnchorPoint;
+    private float lastAngle = 0;
+    private bool firstRotationCall = true;
     
     // Start is called before the first frame update
     void Start()
@@ -29,8 +31,22 @@ public class TowerRotateController : MonoBehaviour
         if (_devices.RightHand.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxis, out joystickVal))
         {
             float angle = joystickVal.x * rotationSpeed * Time.deltaTime;
-            towerTrans.transform.RotateAround(towerAnchorPoint.position, towerAnchorPoint.up, angle);
-            transform.RotateAround(towerAnchorPoint.position, towerAnchorPoint.up, angle);
+
+            if (Mathf.Abs(angle) <= Mathf.Abs(lastAngle))
+            {
+                angle = Mathf.Lerp(lastAngle, angle, Time.deltaTime * 5);
+            }
+            
+            if (Mathf.Abs(angle) >= Mathf.Abs(lastAngle))
+            {
+                angle = Mathf.Lerp(angle, lastAngle, Time.deltaTime * 5);
+            }
+            
+            lastAngle = angle;
+
+            towerTrans.transform.RotateAround(playerRig.transform.position, towerAnchorPoint.up, angle);
+            transform.RotateAround(playerRig.transform.position, towerAnchorPoint.up, angle);
+            playerRig.transform.RotateAround(playerRig.transform.position, playerRig.transform.up, angle);
         }
     }
 }

@@ -48,15 +48,16 @@ public class PlayerTowerManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!deviceReady) return;
-
-        bool primaryButtonDown;
-        if (_devices.RightHand.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out primaryButtonDown) && primaryButtonDown && primaryButtonDown != previousPrimaryButtonDown && !_devices.RightHandActive && !_devices.LeftHandActive)
-        {
-            ChangeTowers();
-        }
-        previousPrimaryButtonDown = primaryButtonDown;
-
+        // if (!deviceReady) return;
+        //
+        // bool primaryButtonDown;
+        // if (_devices.RightHand.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out primaryButtonDown) && primaryButtonDown && primaryButtonDown != previousPrimaryButtonDown && !_devices.RightHandActive && !_devices.LeftHandActive)
+        // {
+        //     ChangeTowers();
+        // }
+        // previousPrimaryButtonDown = primaryButtonDown;
+        //
+        
         if (!_devices.RightHandActive && !_devices.LeftHandActive)
         {
             Vector2 joystickVal;
@@ -64,27 +65,28 @@ public class PlayerTowerManager : MonoBehaviour
             {
                 Vector3 translation = new Vector3(joystickVal.x, 0, joystickVal.y);
                 translation = Quaternion.AngleAxis(_playerCamera.transform.eulerAngles.y, Vector3.up) * translation;
-
+        
                 xrRig.transform.Translate(translation * Time.deltaTime * movementSpeed, Space.World);
-
+        
                 Vector3 pos = xrRig.transform.position;
                 pos.y = _towers[_currentTower].gameObject.transform.Find("Tower Anchor Point").position.y;
                 xrRig.transform.position = pos;
             }
         }
         
-        bool secondaryButtonDown;
-        if (_devices.RightHand.TryGetFeatureValue(UnityEngine.XR.CommonUsages.secondaryButton, out secondaryButtonDown) && secondaryButtonDown && secondaryButtonDown != previousSecondaryButtonDown)
-        {
-            // reset the player's anchor point to their current position
-            Transform towerAnchor = _towers[_currentTower].gameObject.transform.Find("XRRig Anchor");
-            towerAnchor.position = new Vector3(_playerCamera.position.x, towerAnchor.position.y, _playerCamera.position.z);
-            Vector3 playerRotation = new Vector3( 0, towerAnchor.eulerAngles.y, 0 );
-            towerAnchor.transform.eulerAngles = playerRotation;
-            // towerAnchor.rotation = Quaternion.Euler(playerRotation);
-        }
-
-        previousSecondaryButtonDown = secondaryButtonDown;
+        //
+        // bool secondaryButtonDown;
+        // if (_devices.RightHand.TryGetFeatureValue(UnityEngine.XR.CommonUsages.secondaryButton, out secondaryButtonDown) && secondaryButtonDown && secondaryButtonDown != previousSecondaryButtonDown)
+        // {
+        //     // reset the player's anchor point to their current position
+        //     Transform towerAnchor = _towers[_currentTower].gameObject.transform.Find("XRRig Anchor");
+        //     towerAnchor.position = new Vector3(_playerCamera.position.x, towerAnchor.position.y, _playerCamera.position.z);
+        //     Vector3 playerRotation = new Vector3( 0, towerAnchor.eulerAngles.y, 0 );
+        //     towerAnchor.transform.eulerAngles = playerRotation;
+        //     // towerAnchor.rotation = Quaternion.Euler(playerRotation);
+        // }
+        //
+        // previousSecondaryButtonDown = secondaryButtonDown;
 
     }
 
