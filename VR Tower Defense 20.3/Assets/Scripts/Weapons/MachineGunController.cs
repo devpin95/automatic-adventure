@@ -12,12 +12,9 @@ public class MachineGunController : MonoBehaviour
     public MachineGunUpgrades machineGunUpgrades;
     [Header("Meta Objects")]
     public Transform fireLocation;
-    public Transform pivotPoint;
     public GameObject tempHand;
     
     [Header("Shooting")]
-    public GameObject tracerPrefab;
-    public GameObject bulletPrefab;
     public float shotDelay = 0.05f;
     public int tracerSpacing;
     [Tooltip("Overwritten by MachineGunUpdates")]

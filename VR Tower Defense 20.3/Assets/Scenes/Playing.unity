@@ -1737,7 +1737,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.05889859
+  m_Radius: 0.06
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1063167660
 MonoBehaviour:
@@ -2174,7 +2174,7 @@ MonoBehaviour:
   m_InteractionManager: {fileID: 1054865563}
   m_InteractionLayerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4294967295
   m_AttachTransform: {fileID: 1227926016}
   m_StartingSelectedInteractable: {fileID: 0}
   m_OnHoverEntered:
@@ -2357,7 +2357,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.055337906
+  m_Radius: 0.06
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1227926022
 MonoBehaviour:
@@ -4529,6 +4529,38 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 228544532246837286, guid: 6eeafc0d0c354aa47b675a877d27a869, type: 3}
+      propertyPath: m_ConnectedAnchor.x
+      value: -2.983237
+      objectReference: {fileID: 0}
+    - target: {fileID: 228544532246837286, guid: 6eeafc0d0c354aa47b675a877d27a869, type: 3}
+      propertyPath: m_ConnectedAnchor.y
+      value: 6.093112
+      objectReference: {fileID: 0}
+    - target: {fileID: 228544532246837286, guid: 6eeafc0d0c354aa47b675a877d27a869, type: 3}
+      propertyPath: m_ConnectedAnchor.z
+      value: -0.13197511
+      objectReference: {fileID: 0}
+    - target: {fileID: 590623769749099020, guid: 6eeafc0d0c354aa47b675a877d27a869, type: 3}
+      propertyPath: startState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 590623769749099020, guid: 6eeafc0d0c354aa47b675a877d27a869, type: 3}
+      propertyPath: hapticsManager
+      value: 
+      objectReference: {fileID: 2066227134}
+    - target: {fileID: 1484571501851828324, guid: 6eeafc0d0c354aa47b675a877d27a869, type: 3}
+      propertyPath: m_ConnectedAnchor.x
+      value: -2.9748409
+      objectReference: {fileID: 0}
+    - target: {fileID: 1484571501851828324, guid: 6eeafc0d0c354aa47b675a877d27a869, type: 3}
+      propertyPath: m_ConnectedAnchor.y
+      value: 6.09478
+      objectReference: {fileID: 0}
+    - target: {fileID: 1484571501851828324, guid: 6eeafc0d0c354aa47b675a877d27a869, type: 3}
+      propertyPath: m_ConnectedAnchor.z
+      value: -0.19509205
+      objectReference: {fileID: 0}
     - target: {fileID: 1755052634175441664, guid: 6eeafc0d0c354aa47b675a877d27a869, type: 3}
       propertyPath: hapticsManager
       value: 

@@ -10,6 +10,13 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class RocketLauncherController : MonoBehaviour
 {
     public RocketLauncherUpgrades upgrades;
+
+    public GameObject mainTower;
+    private HeavyWeaponController _heavyWeaponController;
+    public Camera cameraFeed;
+
+    public float minZoom;
+    public float maxZoom;
     
     [Header("Interaction Variables")]
     public float shotDelay;
@@ -31,6 +38,7 @@ public class RocketLauncherController : MonoBehaviour
     private bool selected = false;
     private bool triggerPulled = false;
     private bool _shotReady = true;
+    private bool validHit = false;
 
     private bool[] _chambers;
     
@@ -44,6 +52,8 @@ public class RocketLauncherController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _heavyWeaponController = mainTower.transform.Find("Heavy Weapon Terminal").GetComponent<HeavyWeaponController>();
+        
         _chambers = new bool[upgrades.NumberOfShots];
 
         for (int i = 0; i < _chambers.Length; ++i)
@@ -51,7 +61,7 @@ public class RocketLauncherController : MonoBehaviour
             _chambers[i] = true;
         }
         
-        SetReadyText();
+        // SetReadyText();
 
         if (upgrades.NumberOfShots < readyTexts.Length)
         {
@@ -69,18 +79,17 @@ public class RocketLauncherController : MonoBehaviour
         centerPosition = transform.position;
         if (selected && _devices.IsReady)
         {
-            
             RaycastHit hit;
-            bool validHit = false;
+            validHit = false;
             if (Physics.Raycast(_firingPoint.position, _firingPoint.forward, out hit, Mathf.Infinity, shootableLayers))
             {
                 Vector3 impactPoint = hit.point;
-                rangeText.text = Vector3.Distance(_firingPoint.position, impactPoint).ToString("F2") + "m";
+                // rangeText.text = Vector3.Distance(_firingPoint.position, impactPoint).ToString("F2") + "m";
                 validHit = true;
             }
             else
             {
-                rangeText.text = "--";
+                // rangeText.text = "--";
             }
             
             Vector2 joystickVal;
@@ -90,43 +99,17 @@ public class RocketLauncherController : MonoBehaviour
                 transform.RotateAround(rotationCenter.transform.position, transform.up, angle);
                 
                 angle = -joystickVal.y * minorRotationSpeed * Time.deltaTime;
-                transform.RotateAround(rotationCenter.transform.position, transform.forward, angle);
+                transform.RotateAround(rotationCenter.transform.position, transform.right, angle);
 
                 // cancel out any rotation on the x, there's probably a better way to do this
-                transform.Rotate(-transform.eulerAngles.x, 0, 0);
-            }
-
-            if (triggerPulled)
-            {
-                if (_shotReady && validHit) Fire();
-                triggerPulled = false;
+                transform.Rotate(0, 0, -transform.eulerAngles.z);
             }
         }
     }
-    
-    public void OnSelectEnter(XRBaseInteractor interactor)
-    {
-        selected = true;
-        tempHand.SetActive(true);
-        _currentInteractor = interactor;
-        print(_currentInteractor.tag);
-    }
 
-    public void OnSelectExit(XRBaseInteractor interactor)
+    public void OnSelectEvent(bool s)
     {
-        selected = false;
-        tempHand.SetActive(false);
-        _currentInteractor = null;
-    }
-    
-    public void OnActivate(XRBaseInteractor interactor)
-    {
-        triggerPulled = true;
-    }
-    
-    public void OnDeactivate(XRBaseInteractor interactor)
-    {
-        triggerPulled = false;
+        selected = s;
     }
 
     private void SetReadyText()
@@ -146,8 +129,11 @@ public class RocketLauncherController : MonoBehaviour
         }
     }
 
-    private void Fire()
+    public void Fire()
     {
+        if (_shotReady && validHit);
+        triggerPulled = false;
+        
         int readyChamber = CheckChambers();
 
         if (readyChamber >= 0)
@@ -157,7 +143,7 @@ public class RocketLauncherController : MonoBehaviour
 
             _chambers[readyChamber] = false;
             StartCoroutine(ReloadShot(readyChamber));
-            SetReadyText();
+            // SetReadyText();
         }
     }
 
@@ -179,6 +165,30 @@ public class RocketLauncherController : MonoBehaviour
     {
         yield return new WaitForSeconds(upgrades.ReloadSpeed);
         _chambers[chamber] = true;
-        SetReadyText();
+        // SetReadyText();
+    }
+
+    public void CameraFeedZoomChange(float zoom)
+    {
+        Debug.Log("Rocket Launcher Zoom " + zoom);
+        
+        float clampedZoom = Mathf.Lerp(maxZoom, minZoom, zoom);
+        cameraFeed.fieldOfView = clampedZoom;
+        Debug.Log(clampedZoom);
+    }
+
+    private void CameraFeedLookAtPoint()
+    {
+        RaycastHit hit;
+        validHit = false;
+        if (Physics.Raycast(_firingPoint.position, _firingPoint.forward, out hit, Mathf.Infinity, shootableLayers))
+        {  
+            cameraFeed.transform.LookAt(hit.point);
+        }
+        else
+        {
+            cameraFeed.transform.rotation = Quaternion.LookRotation(_firingPoint.forward, _firingPoint.up);
+            // rangeText.text = "--";
+        }
     }
 }

@@ -11,13 +11,12 @@ public class SwitchController : MonoBehaviour
     
     public bool startState = false;
     private bool currentState;
-    public string triggerTagName;
     public CEvent_Bool flip;
 
     public float onStateAngle = 30;
     public float offStateAngle = -30;
 
-    private float delayBetweenFlips = 1;
+    private float delayBetweenFlips = 0.15f;
     private bool canFlip = true;
     
     // Start is called before the first frame update
@@ -27,10 +26,12 @@ public class SwitchController : MonoBehaviour
         
         Vector3 angles = transform.rotation.eulerAngles;
         
-        if (currentState) angles.x = onStateAngle;
-        else angles.x = offStateAngle;
+        if (currentState) angles.x = offStateAngle;
+        else angles.x = onStateAngle;
         
         transform.rotation = Quaternion.Euler(angles);
+        
+        // flip?.Raise(currentState);
     }
 
     // Update is called once per frame
@@ -56,8 +57,8 @@ public class SwitchController : MonoBehaviour
 
         Vector3 angles = transform.rotation.eulerAngles;
         
-        if (currentState) angles.x = onStateAngle;
-        else angles.x = offStateAngle;
+        if (currentState) angles.x = offStateAngle;
+        else angles.x = onStateAngle;
         
         transform.rotation = Quaternion.Euler(angles);
         

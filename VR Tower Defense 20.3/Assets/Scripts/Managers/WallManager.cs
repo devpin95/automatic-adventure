@@ -40,7 +40,7 @@ public class WallManager : MonoBehaviour
 
     public void UpdateMoney(int value, bool s = false)
     {
-        wallMoneyValue.text = "Gold " + _gameData.gold;
+        wallMoneyValue.text = "Credit " + _gameData.gold;
     }
 
     public void UpdateWave(int wave)
