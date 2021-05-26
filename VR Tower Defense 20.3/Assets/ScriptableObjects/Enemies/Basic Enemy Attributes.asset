@@ -21,6 +21,6 @@ MonoBehaviour:
   pool: {fileID: 0}
   countAsEnemy: 1
   prefab: {fileID: 1003792831708347097, guid: 9879a16f515bbd34391f1f260f38c7db, type: 3}
-  enemyValue: 20
+  enemyValue: 10
   startingHealth: 0
   spawnGridDimensions: {x: 2, y: 2}

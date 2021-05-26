@@ -320,8 +320,8 @@
     },
     "m_FragmentContext": {
         "m_Position": {
-            "x": 424.9999694824219,
-            "y": 12.99994945526123
+            "x": 441.0000915527344,
+            "y": 84.00003051757813
         },
         "m_Blocks": [
             {
@@ -756,7 +756,7 @@
     "m_ShaderOutputName": "B",
     "m_StageCapability": 3,
     "m_Value": {
-        "x": 0.5,
+        "x": 0.8999999761581421,
         "y": 0.0,
         "z": 0.0,
         "w": 0.0
@@ -1688,12 +1688,6 @@
 
 {
     "m_SGVersion": 0,
-    "m_Type": "UnityEditor.Rendering.Universal.ShaderGraph.UniversalUnlitSubTarget",
-    "m_ObjectId": "8e772b15653e43a8a9af941316e95159"
-}
-
-{
-    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
     "m_ObjectId": "938aad73faf54a7b94dc663c6d17de40",
     "m_Id": 4,
@@ -1870,11 +1864,11 @@
     "m_Type": "UnityEditor.Rendering.Universal.ShaderGraph.UniversalTarget",
     "m_ObjectId": "a9b5c30773ce42f6a86140bb0facf896",
     "m_ActiveSubTarget": {
-        "m_Id": "8e772b15653e43a8a9af941316e95159"
+        "m_Id": "f571f244a39f4ada868659f21128d7e2"
     },
     "m_SurfaceType": 0,
     "m_AlphaMode": 0,
-    "m_TwoSided": false,
+    "m_TwoSided": true,
     "m_AlphaClip": false,
     "m_CustomEditorGUI": ""
 }
@@ -2553,6 +2547,12 @@
     "m_CustomColors": {
         "m_SerializableColors": []
     }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.Rendering.Universal.ShaderGraph.UniversalUnlitSubTarget",
+    "m_ObjectId": "f571f244a39f4ada868659f21128d7e2"
 }
 
 {

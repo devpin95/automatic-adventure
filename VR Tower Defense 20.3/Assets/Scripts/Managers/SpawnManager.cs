@@ -7,6 +7,7 @@ public class SpawnManager : MonoBehaviour
     public Devices _devices;
     public GameData _gameData;
     public CEvent_Int waveStartedEvent;
+    public CEvent_Int stintStartedEvent;
     [Header("Spawn Area Attributes")] public Vector3 spawnCenter;
     [FormerlySerializedAs("spawnAreaMajorWidth")] public float spawnGridColumns;
     [FormerlySerializedAs("spawnAreaMinorWidth")] public float spawnGridRows;
@@ -42,26 +43,18 @@ public class SpawnManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // SpawnEnemies();
         _playerDeviceReady = _devices.IsReady;
         wave = _gameData.Wave;
         _waveOver = true;
         _poolManager = GameObject.Find("PoolManager").GetComponent<PoolManager>();
-
-        // Debug.Log("WAVE DATA:");
-        // foreach (var level in levelData.levels)
-        // {
-        //     foreach (var group in level.waveGroup)
-        //     {
-        //         Debug.Log("Spawning " + group.count + " " + group.enemy.enemyName + " (" + group.enemy.countAsEnemy.ToString() + ")");
-        //     }
-        // }
 
         _gridCols = (int) spawnGridColumns * 2;
         _gridRows = (int) spawnGridRows * 2;
         _grid = new bool[_gridRows, _gridCols];
         ResetGrid();
         _nextOpenSlot = Vector2.zero;
+        
+        stintStartedEvent.Raise(wave / 10); // int division
     }
 
     // Update is called once per frame

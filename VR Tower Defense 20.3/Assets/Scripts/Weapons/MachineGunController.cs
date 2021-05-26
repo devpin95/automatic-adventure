@@ -13,6 +13,9 @@ public class MachineGunController : MonoBehaviour
     [Header("Meta Objects")]
     public Transform fireLocation;
     public GameObject tempHand;
+    public Transform handleAnchor;
+    public GameObject handleInteractor;
+    public Transform gunCenter;
     
     [Header("Shooting")]
     public float shotDelay = 0.05f;
@@ -54,15 +57,22 @@ public class MachineGunController : MonoBehaviour
         _shootingSound = GetComponent<AudioSource>();
         _haptics = GameObject.Find("HapticsManager").GetComponent<HapticsManager>();
         // _bulletPool = GetComponent<ObjectPool>();
+
+        centerPosition = transform.localPosition;
     }
 
     // Update is called once per frame
     void Update()
     {
-        centerPosition = transform.position;
+        // centerPosition = transform.position;
+        
+        handleInteractor.transform.position = handleAnchor.position;
+        handleInteractor.transform.rotation = handleAnchor.rotation;
+
+        transform.localPosition = centerPosition;
         if (selected && _devices.IsReady && machineGunUpgrades.initialized)
         {
-            _aimController.AimWeapon(_currentInteractor, centerPosition);
+            _aimController.AimWeapon(_currentInteractor, gunCenter.position);
             restingRotation = transform.rotation;
 
             if (firing)
@@ -81,7 +91,7 @@ public class MachineGunController : MonoBehaviour
         else
         {
             transform.rotation = restingRotation;
-            transform.position = restingPosition;
+            // transform.position = restingPosition;
 
         }
     }

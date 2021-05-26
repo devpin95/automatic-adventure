@@ -13,8 +13,8 @@ public class SwitchController : MonoBehaviour
     private bool currentState;
     public CEvent_Bool flip;
 
-    public float onStateAngle = 30;
-    public float offStateAngle = -30;
+    public Vector3 onStateAngle;
+    public Vector3 offStateAngle;
 
     private float delayBetweenFlips = 0.15f;
     private bool canFlip = true;
@@ -23,14 +23,9 @@ public class SwitchController : MonoBehaviour
     void Start()
     {
         currentState = startState;
-        
-        Vector3 angles = transform.rotation.eulerAngles;
-        
-        if (currentState) angles.x = offStateAngle;
-        else angles.x = onStateAngle;
-        
-        transform.rotation = Quaternion.Euler(angles);
-        
+        if (currentState) transform.rotation = Quaternion.Euler(onStateAngle);
+        else transform.rotation = Quaternion.Euler(offStateAngle);
+        // FlipSwitch("", false);
         // flip?.Raise(currentState);
     }
 
@@ -48,24 +43,22 @@ public class SwitchController : MonoBehaviour
         }
     }
 
-    private void FlipSwitch(string tag)
+    private void FlipSwitch(string tag, bool raise = true)
     {
         if (!canFlip) return;
-        
-        hapticsManager.RequestOneOffRumble(tag, 0.1f, 0.1f);
+
         currentState = !currentState;
 
-        Vector3 angles = transform.rotation.eulerAngles;
-        
-        if (currentState) angles.x = offStateAngle;
-        else angles.x = onStateAngle;
-        
-        transform.rotation = Quaternion.Euler(angles);
-        
-        flip.Raise(currentState);
+        if (currentState) transform.rotation = Quaternion.Euler(onStateAngle);
+        else transform.rotation = Quaternion.Euler(offStateAngle);
 
-        canFlip = false;
-        StartCoroutine(SwitchDelay());
+        if (raise)
+        {
+            flip.Raise(currentState);
+            if (hapticsManager) hapticsManager.RequestOneOffRumble(tag, 0.1f, 0.1f);
+            canFlip = false;
+            StartCoroutine(SwitchDelay());
+        }
     }
 
     IEnumerator SwitchDelay()

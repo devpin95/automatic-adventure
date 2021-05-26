@@ -17,12 +17,16 @@ public class AimController : MonoBehaviour
         
     }
 
-    public void AimWeapon(XRBaseInteractor _currentInteractor, Vector3 center)
+    public void AimWeapon(XRBaseInteractor currentInteractor, Vector3 center)
     {
-        Vector3 handPos = _currentInteractor.transform.position;
+        Vector3 handPos = currentInteractor.transform.position;
         Vector3 centerToHand = handPos - center;
         transform.rotation = Quaternion.LookRotation(-centerToHand);
-        Vector3 angles = transform.rotation.eulerAngles;
-        transform.rotation = Quaternion.Euler(angles.x + 90, angles.y, angles.z);
+        // Vector3 angles = transform.localRotation.eulerAngles;
+        // transform.localRotation = Quaternion.Euler(angles.x, angles.y + 116.293f, angles.z);
+        
+        transform.Rotate(0, -90, -transform.eulerAngles.z);
+        
+        Debug.DrawLine(handPos, center);
     }
 }

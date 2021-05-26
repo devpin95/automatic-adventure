@@ -6,4 +6,5 @@ using UnityEngine;
 public class LevelData : ScriptableObject
 {
     public Level[] levels;
+    public CustomLightSettings[] stintLightSettings;
 }

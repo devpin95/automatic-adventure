@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
@@ -14,9 +15,19 @@ public class RocketLauncherController : MonoBehaviour
     public GameObject mainTower;
     private HeavyWeaponController _heavyWeaponController;
     public Camera cameraFeed;
+    public CinemachineVirtualCamera cinemachineVirtualCamera;
+    private CinemachineBasicMultiChannelPerlin _noise;
 
     public float minZoom;
     public float maxZoom;
+
+    public float cameraShakeMaxFrequency;
+    public float cameraShakeMaxAmplitude;
+    private float _cameraShakeFrequency = 0;
+    private float _cameraShakeAmplitude = 0;
+    // private float _cameraShakeFallRate = 0.001f;
+    private float _cameraShakeDuration = 0.5f;
+    private float _cameraShakeTime = 0.5f;
     
     [Header("Interaction Variables")]
     public float shotDelay;
@@ -28,11 +39,9 @@ public class RocketLauncherController : MonoBehaviour
     [Header("UI Variables")]
     public Color readyColor;
     public Color reloadingColor;
-    public TextMeshProUGUI rangeText;
-    // private TextMeshPro tmp_rangeText;
-    public TextMeshProUGUI[] readyTexts;
-    // private TextMeshPro tmp_readyText;
-    
+    private TextMeshProUGUI _rangeText;
+    private TextMeshProUGUI[] _readyTexts;
+
     private float timeSinceLastShot;
     private Vector3 centerPosition;
     private bool selected = false;
@@ -52,6 +61,8 @@ public class RocketLauncherController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GetGUIObjects();
+        
         _heavyWeaponController = mainTower.transform.Find("Heavy Weapon Terminal").GetComponent<HeavyWeaponController>();
         
         _chambers = new bool[upgrades.NumberOfShots];
@@ -61,16 +72,22 @@ public class RocketLauncherController : MonoBehaviour
             _chambers[i] = true;
         }
         
-        // SetReadyText();
+        SetReadyText();
 
-        if (upgrades.NumberOfShots < readyTexts.Length)
+        if (upgrades.NumberOfShots < _readyTexts.Length)
         {
-            for (int i = upgrades.NumberOfShots - 1; i < readyTexts.Length; ++i)
+            for (int i = upgrades.NumberOfShots; i < _readyTexts.Length; ++i)
             {
-                readyTexts[i].text = "N/A";
-                readyTexts[i].color = reloadingColor;
+                _readyTexts[i].text = "N/A";
+                _readyTexts[i].color = reloadingColor;
             }
         }
+        
+        _noise = cinemachineVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+        _noise.m_AmplitudeGain = 1;
+        _noise.m_FrequencyGain = 1;
+        
+        cinemachineVirtualCamera.m_Lens.FieldOfView = minZoom;
     }
 
     // Update is called once per frame
@@ -84,13 +101,10 @@ public class RocketLauncherController : MonoBehaviour
             if (Physics.Raycast(_firingPoint.position, _firingPoint.forward, out hit, Mathf.Infinity, shootableLayers))
             {
                 Vector3 impactPoint = hit.point;
-                // rangeText.text = Vector3.Distance(_firingPoint.position, impactPoint).ToString("F2") + "m";
+                _rangeText.text = Vector3.Distance(_firingPoint.position, impactPoint).ToString("F2") + "m";
                 validHit = true;
             }
-            else
-            {
-                // rangeText.text = "--";
-            }
+            else _rangeText.text = "--";
             
             Vector2 joystickVal;
             if (_devices.RightHand.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxis, out joystickVal))
@@ -101,10 +115,14 @@ public class RocketLauncherController : MonoBehaviour
                 angle = -joystickVal.y * minorRotationSpeed * Time.deltaTime;
                 transform.RotateAround(rotationCenter.transform.position, transform.right, angle);
 
-                // cancel out any rotation on the x, there's probably a better way to do this
+                // cancel out any rotation on the z, there's probably a better way to do this
                 transform.Rotate(0, 0, -transform.eulerAngles.z);
             }
         }
+
+        _cameraShakeTime += Time.deltaTime;
+        _noise.m_AmplitudeGain = Mathf.Lerp(cameraShakeMaxAmplitude, 0, _cameraShakeTime / _cameraShakeDuration);
+        _noise.m_FrequencyGain = Mathf.Lerp(cameraShakeMaxFrequency, 0, _cameraShakeTime / _cameraShakeDuration);
     }
 
     public void OnSelectEvent(bool s)
@@ -118,32 +136,38 @@ public class RocketLauncherController : MonoBehaviour
         {
             if (_chambers[i])
             {
-                readyTexts[i].color = readyColor;
-                readyTexts[i].text = "READY";
+                _readyTexts[i].color = readyColor;
+                _readyTexts[i].text = "READY";
             }
             else
             {
-                readyTexts[i].color = reloadingColor;
-                readyTexts[i].text = "LOADING";
+                _readyTexts[i].color = reloadingColor;
+                _readyTexts[i].text = "LOADING";
             }
         }
     }
 
     public void Fire()
     {
-        if (_shotReady && validHit);
-        triggerPulled = false;
-        
-        int readyChamber = CheckChambers();
-
-        if (readyChamber >= 0)
+        if (_shotReady && validHit)
         {
-            GameObject rocket = Instantiate(_rocketPrefab, _firingPoint.position, _firingPoint.transform.rotation);
-            rocket.transform.RotateAround(rocket.transform.position, rocket.transform.right, 90);
+            triggerPulled = false;
 
-            _chambers[readyChamber] = false;
-            StartCoroutine(ReloadShot(readyChamber));
-            // SetReadyText();
+            int readyChamber = CheckChambers();
+
+            if (readyChamber >= 0)
+            {
+                GameObject rocket = Instantiate(_rocketPrefab, _firingPoint.position, _firingPoint.transform.rotation);
+                rocket.transform.RotateAround(rocket.transform.position, rocket.transform.right, 90);
+
+                _chambers[readyChamber] = false;
+                StartCoroutine(ReloadShot(readyChamber));
+                SetReadyText();
+            }
+
+            _cameraShakeAmplitude = cameraShakeMaxAmplitude;
+            _cameraShakeFrequency = cameraShakeMaxFrequency;
+            _cameraShakeTime = 0.0f;
         }
     }
 
@@ -165,7 +189,7 @@ public class RocketLauncherController : MonoBehaviour
     {
         yield return new WaitForSeconds(upgrades.ReloadSpeed);
         _chambers[chamber] = true;
-        // SetReadyText();
+        SetReadyText();
     }
 
     public void CameraFeedZoomChange(float zoom)
@@ -173,7 +197,7 @@ public class RocketLauncherController : MonoBehaviour
         Debug.Log("Rocket Launcher Zoom " + zoom);
         
         float clampedZoom = Mathf.Lerp(maxZoom, minZoom, zoom);
-        cameraFeed.fieldOfView = clampedZoom;
+        cinemachineVirtualCamera.m_Lens.FieldOfView = clampedZoom;
         Debug.Log(clampedZoom);
     }
 
@@ -188,7 +212,21 @@ public class RocketLauncherController : MonoBehaviour
         else
         {
             cameraFeed.transform.rotation = Quaternion.LookRotation(_firingPoint.forward, _firingPoint.up);
-            // rangeText.text = "--";
+        }
+    }
+
+    private void GetGUIObjects()
+    {
+        HeavyWeaponGuiSearcher guiSearcher = GetComponent<HeavyWeapon>().gui.GetComponent<HeavyWeaponGuiSearcher>();
+        _rangeText = guiSearcher.FindSingleGUIElementByName("Distance").GetComponent<TextMeshProUGUI>();
+
+        List<GameObject> rstates = guiSearcher.FindGUIElementsByName("R State");
+        _readyTexts = new TextMeshProUGUI[rstates.Count];
+
+        for (int i = 0; i < rstates.Count; ++i)
+        {
+            _readyTexts[i] = rstates[i].GetComponent<TextMeshProUGUI>();
+            _readyTexts[i].SetText("PPPUPU " + i);
         }
     }
 }

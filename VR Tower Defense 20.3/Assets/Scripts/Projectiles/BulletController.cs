@@ -12,12 +12,14 @@ public class BulletController : MonoBehaviour
     public GameObject particles;
     public bool canRicochet;
     public bool isTracer;
+    public float tracerBrightness;
     private float live = 0.0f;
     private float killBy = 4.0f;
     private float ricochetChance = 0.175f;
     private float ricochetSpeed = 5f;
     private bool ricocheting = false;
     private TrailRenderer _trailRenderer;
+    private Light _tracerLight;
 
     private Rigidbody rb;
     
@@ -26,6 +28,7 @@ public class BulletController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         _trailRenderer = GameObject.Find("Trail").GetComponent<TrailRenderer>();
+        _tracerLight = GameObject.Find("Tracer Light").GetComponent<Light>();
     }
 
     // Update is called once per frame
@@ -111,6 +114,7 @@ public class BulletController : MonoBehaviour
         // rb.angularDrag = 0.0F;
         rb.angularVelocity = Vector3.zero;
         _trailRenderer.enabled = false;
+        _tracerLight.intensity = 0;
         isTracer = false;
         gameObject.SetActive(false);
     }
@@ -131,5 +135,6 @@ public class BulletController : MonoBehaviour
         yield return new WaitForSeconds(randDelay);
         _trailRenderer.Clear();
         _trailRenderer.enabled = true;
+        _tracerLight.intensity = tracerBrightness;
     }
 }

@@ -4,13 +4,20 @@ using UnityEngine;
 
 public class TowerLightController : MonoBehaviour
 {
+    [Header("Wave Indicators")] 
+    private bool showIndicatorLights = true;
     public GameObject greenLightObj;
     public GameObject redLightObj;
     public GameObject yellowLightObj;
 
+    [Header("Wave Indicator Materials")]
     public string greenLightMaterialTimerVariable;
     public string yellowLightMaterialTimerVariable;
     public string redLightMaterialTimerVariable;
+
+    [Header("Interior Lights")] 
+    public Light hudLight;
+    public float hudLightIntensity;
 
     private float timer = 0.0f;
     private Material greenLightM;
@@ -54,7 +61,7 @@ public class TowerLightController : MonoBehaviour
 
     public void WaveStarted()
     {
-        Debug.Log("Wave Started For Light");
+        if (!showIndicatorLights) return;
         StartCoroutine(TurnOnLight(greenLightM, greenLightMaterialTimerVariable));
         StartCoroutine(DelayTurnOffLight(greenLightM, greenLightMaterialTimerVariable, 5.0f));
     }
@@ -62,7 +69,7 @@ public class TowerLightController : MonoBehaviour
     public void WallUnderAttack()
     {
         wallHitCountdownTimer = wallHitCountdownStartTime;
-        if (wallHit) {return;}
+        if (wallHit || !showIndicatorLights) {return;}
         
         wallHit = true;
         StartCoroutine(TurnOnLight(yellowLightM, yellowLightMaterialTimerVariable));
@@ -88,6 +95,7 @@ public class TowerLightController : MonoBehaviour
 
         while (lerp < 1.0)
         {
+            if (!showIndicatorLights) break;
             m.SetFloat(prop, lerp);
             lerp += lightFadeSpeed;
             yield return null;
@@ -100,5 +108,23 @@ public class TowerLightController : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         StartCoroutine(TurnOffLight(m, prop));
+    }
+
+    public void MainHudInteriorLightSwitch(bool s)
+    {
+        if (s) hudLight.intensity = hudLightIntensity;
+        else hudLight.intensity = 0;
+    }
+
+    public void WaveIndicatorLightSwitch(bool s)
+    {
+        showIndicatorLights = s;
+
+        if (!showIndicatorLights)
+        {
+            StartCoroutine(TurnOffLight(greenLightM, greenLightMaterialTimerVariable));
+            StartCoroutine(TurnOffLight(yellowLightM, yellowLightMaterialTimerVariable));
+            StartCoroutine(TurnOffLight(redLightM, redLightMaterialTimerVariable));
+        }
     }
 }

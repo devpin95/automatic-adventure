@@ -37,10 +37,10 @@ public class TowerRotateController : MonoBehaviour
                 angle = Mathf.Lerp(lastAngle, angle, Time.deltaTime * 5);
             }
             
-            if (Mathf.Abs(angle) >= Mathf.Abs(lastAngle))
-            {
-                angle = Mathf.Lerp(angle, lastAngle, Time.deltaTime * 5);
-            }
+            // if (Mathf.Abs(angle) >= Mathf.Abs(lastAngle))
+            // {
+            //     angle = Mathf.Lerp(angle, lastAngle, Time.deltaTime * 5);
+            // }
             
             lastAngle = angle;
 
