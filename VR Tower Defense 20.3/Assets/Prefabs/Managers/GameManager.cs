@@ -85,8 +85,8 @@ public class GameManager : MonoBehaviour
             mainDirectionLight = GameObject.FindWithTag("Sun").GetComponent<Light>();
             _flareGuns = GameObject.FindWithTag("Flare Guns");
             _spotLights = GameObject.FindWithTag("Spot Lights");
-            Debug.Log(_flareGuns);
-            Debug.Log(_spotLights);
+            // Debug.Log(_flareGuns);
+            // Debug.Log(_spotLights);
             UpdateStintLightSettings(_gameData.Wave / 10);
             // FireFlare.Raise();
         }

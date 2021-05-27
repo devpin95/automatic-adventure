@@ -18,7 +18,7 @@ public class ParticleSystemController : MonoBehaviour
         if (_audioSource)
         {
             _hasAudioSource = true;
-            Debug.Log("Has Audio Source");
+            // Debug.Log("Has Audio Source");
         }
     }
 

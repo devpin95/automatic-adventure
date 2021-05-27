@@ -517,7 +517,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1699986225}
         m_TargetAssemblyTypeName: MachineGunController, Assembly-CSharp
-        m_MethodName: OnSelectEnter
+        m_MethodName: OnGripSelectEnter
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -532,7 +532,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1699986225}
         m_TargetAssemblyTypeName: MachineGunController, Assembly-CSharp
-        m_MethodName: OnSelectExit
+        m_MethodName: OnGripSelectExit
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -550,7 +550,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1699986225}
         m_TargetAssemblyTypeName: MachineGunController, Assembly-CSharp
-        m_MethodName: OnActivate
+        m_MethodName: OnGripActivate
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -565,7 +565,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1699986225}
         m_TargetAssemblyTypeName: MachineGunController, Assembly-CSharp
-        m_MethodName: OnDeactivate
+        m_MethodName: OnGripDeactivate
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

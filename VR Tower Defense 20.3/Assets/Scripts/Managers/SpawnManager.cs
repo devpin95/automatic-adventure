@@ -124,7 +124,7 @@ public class SpawnManager : MonoBehaviour
                 spacing = blockWidth / 2; // half the size of a block
             }
             
-            Debug.Log("Looking for " + group.count + " open slots in the grid");
+            // Debug.Log("Looking for " + group.count + " open slots in the grid");
             for (int i = 0; i < group.count; ++i)
             {
                 Quaternion rotation = group.enemy.Prefab.transform.rotation;

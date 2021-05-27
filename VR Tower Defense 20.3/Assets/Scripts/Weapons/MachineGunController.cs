@@ -9,6 +9,12 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class MachineGunController : MonoBehaviour
 {
+    private class ActiveAmmoBox
+    {
+        public int count = -1;
+        public int capacity = -1;
+    }
+    
     public MachineGunUpgrades machineGunUpgrades;
     [Header("Meta Objects")]
     public Transform fireLocation;
@@ -27,78 +33,84 @@ public class MachineGunController : MonoBehaviour
     [Header("Scriptable Objects")] 
     [SerializeField] private Devices _devices;
 
-    private int shotCount = 0;
-    private Vector3 restingPosition;
-    private Quaternion restingRotation;
-    private Vector3 centerPosition;
-    private bool selected = false;
-    private bool firing = false;
-    private float timeSinceLastShot = 0.0f;
-    private XRBaseInteractor _currentInteractor;
-    private InputDevice _currentDevice;
+    private int _shotCount = 0; // keeps track of when to shoot a tracer
+    private bool initialLoad = true;
+    private bool _ammoBoxInstalled = true;
+    // private MachineGunAmmoBox _activeAmmoBox; // the current ammo box to take ammo from
+    private ActiveAmmoBox _activeAmmoBox = new ActiveAmmoBox();
+    private Vector3 _restingPosition;
+    private Quaternion _restingRotation; // the rotation to keep when we let go of the gun
+    private Vector3 _centerPosition; // the center of the gun to rotate around when aiming
+    private bool _selected = false; // if the gun grip is being held or not
+    private bool _firing = false; // if the gun grip is being held and the trigger is being pulled
+    private float _timeSinceLastShot = 0.0f; // the elapsed time since the last shot was fired
+    private XRBaseInteractor _currentInteractor; // the interactor that is currently holding the gun grip
+    private InputDevice _currentDevice; // the device (controller) that is currently interacting with the gun
 
-    private AimController _aimController;
-    private TowerRotateController _towerRotateController;
-    private AudioSource _shootingSound;
+    private AimController _aimController; // script to aim the gun
+    private TowerRotateController _towerRotateController; // script to rotate the tower
+    private AudioSource _shootingSound; // sound to play when the gun is firing
 
     // private ObjectPool _bulletPool;
 
     // private Vector3 fireDebug;
 
-
     // Start is called before the first frame update
     void Start()
     {
         tempHand.SetActive(false);
-        restingPosition = transform.position;
-        restingRotation = transform.rotation;
+        _restingPosition = transform.position;
+        _restingRotation = transform.rotation;
         _aimController = GetComponent<AimController>();
         _towerRotateController = GetComponent<TowerRotateController>();
         _shootingSound = GetComponent<AudioSource>();
         _haptics = GameObject.Find("HapticsManager").GetComponent<HapticsManager>();
         // _bulletPool = GetComponent<ObjectPool>();
 
-        centerPosition = transform.localPosition;
+        _centerPosition = transform.localPosition;
     }
 
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("AMMO: " + _activeAmmoBox.count + "/" + _activeAmmoBox.capacity);
+        Debug.Log(this);
         // centerPosition = transform.position;
         
         handleInteractor.transform.position = handleAnchor.position;
         handleInteractor.transform.rotation = handleAnchor.rotation;
 
-        transform.localPosition = centerPosition;
-        if (selected && _devices.IsReady && machineGunUpgrades.initialized)
+        transform.localPosition = _centerPosition;
+        if (_selected && _devices.IsReady && machineGunUpgrades.initialized)
         {
             _aimController.AimWeapon(_currentInteractor, gunCenter.position);
-            restingRotation = transform.rotation;
+            _restingRotation = transform.rotation;
 
-            if (firing)
+            Debug.Log(_firing + " " + _ammoBoxInstalled);
+            if (_firing && _ammoBoxInstalled)
             {
-                timeSinceLastShot += Time.deltaTime;
+                _timeSinceLastShot += Time.deltaTime;
 
-                if (timeSinceLastShot > shotDelay)
+                if (_timeSinceLastShot > shotDelay)
                 {
+                    Debug.Log("Shooting");
                     ShootMachinegun();
                 }
             }
             
             _towerRotateController.RotateTower(machineGunUpgrades.TowerRotationSpeed);
-            restingPosition = transform.position;
+            _restingPosition = transform.position;
         }
         else
         {
-            transform.rotation = restingRotation;
+            transform.rotation = _restingRotation;
             // transform.position = restingPosition;
-
         }
     }
 
-    public void OnSelectEnter(XRBaseInteractor interactor)
+    public void OnGripSelectEnter(XRBaseInteractor interactor)
     {
-        selected = true;
+        _selected = true;
         tempHand.SetActive(true);
         _currentInteractor = interactor;
 
@@ -107,29 +119,50 @@ public class MachineGunController : MonoBehaviour
         
     }
 
-    public void OnSelectExit(XRBaseInteractor interactor)
+    public void OnGripSelectExit(XRBaseInteractor interactor)
     {
-        selected = false;
-        firing = false;
+        _selected = false;
+        _firing = false;
         _haptics.StopIndefiniteRumble(_currentDevice);
         tempHand.SetActive(false);
         _currentInteractor = null;
         _shootingSound.Stop();
     }
 
-    public void OnActivate(XRBaseInteractor interactor)
+    public void OnGripActivate(XRBaseInteractor interactor)
     {
-        firing = true;
-
-        // _haptics.RequestIndefiniteRumble(_currentDevice, 0.5f);
+        _firing = true;
         _shootingSound.Play();
     }
     
-    public void OnDeactivate(XRBaseInteractor interactor)
+    public void OnGripDeactivate(XRBaseInteractor interactor)
     {
-        firing = false;
+        _firing = false;
         // _haptics.StopIndefiniteRumble(_currentDevice);
         _shootingSound.Stop();
+    }
+
+    public void OnAmmoLoaded(XRBaseInteractable interactable)
+    {
+        Debug.Log("Ammo Loaded");
+        AmmoBoxController ammoBoxController = interactable.GetComponent<AmmoBoxController>();
+        if (ammoBoxController)
+        {
+            // _shotCount = ammoBoxController.ammoBox.count;
+            _activeAmmoBox.count = ammoBoxController.ammoBox.count;
+            _activeAmmoBox.capacity = ammoBoxController.ammoBox.capacity;
+            _ammoBoxInstalled = true;
+            Debug.Log("This ammo box has " + _activeAmmoBox.count + "/" + _activeAmmoBox.capacity + " rounds.");
+            Debug.Log(this);
+        }
+    }
+
+    public void OnAmmoUnloaded(XRBaseInteractable interactable)
+    {
+        _activeAmmoBox.count = 0;
+        _activeAmmoBox.capacity = 0;
+        _ammoBoxInstalled = false;
+        Debug.Log("Ammo unloaded");
     }
 
     public void OnDeviceConnectedResponse()
@@ -139,6 +172,15 @@ public class MachineGunController : MonoBehaviour
     
     private void ShootMachinegun()
     {
+        --_activeAmmoBox.count;
+
+        if (_activeAmmoBox.count < 0)
+        {
+            Debug.Log("The ammo box is empty");
+            _shootingSound.Stop();
+            return;
+        }
+        
         GameObject bullet = MachineGunBulletPool.SharedInstance.GetPooledObject();
 
         if (bullet == null) return;
@@ -150,8 +192,8 @@ public class MachineGunController : MonoBehaviour
         bullet.transform.rotation = transform.rotation;
         // bullet.transform.rotation = Quaternion.AngleAxis(90, bullet.transform.right);
 
-        ++shotCount;
-        timeSinceLastShot = 0;
+        ++_shotCount;
+        _timeSinceLastShot = 0;
         float ranXrot = UnityEngine.Random.Range(-1.0f, 1.0f);
         float ranYrot = UnityEngine.Random.Range(-1.0f, 1.0f);
         Vector3 randDir = Quaternion.Euler(ranXrot, ranYrot,  0) * fireLocation.forward;
@@ -159,7 +201,7 @@ public class MachineGunController : MonoBehaviour
         BulletController bulletController = bullet.GetComponent<BulletController>();
 
         //GameObject bullet;
-        if (shotCount % tracerSpacing == 0)
+        if (_shotCount % tracerSpacing == 0)
         {
             // shoot a tracer
             trail.enabled = true;
