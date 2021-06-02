@@ -9,12 +9,6 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class MachineGunController : MonoBehaviour
 {
-    private class ActiveAmmoBox
-    {
-        public int count = -1;
-        public int capacity = -1;
-    }
-    
     public MachineGunUpgrades machineGunUpgrades;
     [Header("Meta Objects")]
     public Transform fireLocation;
@@ -37,7 +31,7 @@ public class MachineGunController : MonoBehaviour
     private bool initialLoad = true;
     private bool _ammoBoxInstalled = true;
     // private MachineGunAmmoBox _activeAmmoBox; // the current ammo box to take ammo from
-    private ActiveAmmoBox _activeAmmoBox = new ActiveAmmoBox();
+    private AmmoBoxController _activeAmmoBox;
     private Vector3 _restingPosition;
     private Quaternion _restingRotation; // the rotation to keep when we let go of the gun
     private Vector3 _centerPosition; // the center of the gun to rotate around when aiming
@@ -73,8 +67,6 @@ public class MachineGunController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("AMMO: " + _activeAmmoBox.count + "/" + _activeAmmoBox.capacity);
-        Debug.Log(this);
         // centerPosition = transform.position;
         
         handleInteractor.transform.position = handleAnchor.position;
@@ -85,8 +77,7 @@ public class MachineGunController : MonoBehaviour
         {
             _aimController.AimWeapon(_currentInteractor, gunCenter.position);
             _restingRotation = transform.rotation;
-
-            Debug.Log(_firing + " " + _ammoBoxInstalled);
+            
             if (_firing && _ammoBoxInstalled)
             {
                 _timeSinceLastShot += Time.deltaTime;
@@ -131,8 +122,11 @@ public class MachineGunController : MonoBehaviour
 
     public void OnGripActivate(XRBaseInteractor interactor)
     {
-        _firing = true;
-        _shootingSound.Play();
+        if (_ammoBoxInstalled)
+        {
+            _firing = true;
+            _shootingSound.Play();
+        }
     }
     
     public void OnGripDeactivate(XRBaseInteractor interactor)
@@ -148,21 +142,18 @@ public class MachineGunController : MonoBehaviour
         AmmoBoxController ammoBoxController = interactable.GetComponent<AmmoBoxController>();
         if (ammoBoxController)
         {
-            // _shotCount = ammoBoxController.ammoBox.count;
-            _activeAmmoBox.count = ammoBoxController.ammoBox.count;
-            _activeAmmoBox.capacity = ammoBoxController.ammoBox.capacity;
+            _activeAmmoBox = ammoBoxController;
+            Debug.Log("AMMO: " + _activeAmmoBox.Count + "/" + _activeAmmoBox.Capacity);
             _ammoBoxInstalled = true;
-            Debug.Log("This ammo box has " + _activeAmmoBox.count + "/" + _activeAmmoBox.capacity + " rounds.");
-            Debug.Log(this);
         }
     }
 
     public void OnAmmoUnloaded(XRBaseInteractable interactable)
     {
-        _activeAmmoBox.count = 0;
-        _activeAmmoBox.capacity = 0;
+        _activeAmmoBox = null;
         _ammoBoxInstalled = false;
-        Debug.Log("Ammo unloaded");
+        _firing = false;
+        _shootingSound.Stop();
     }
 
     public void OnDeviceConnectedResponse()
@@ -172,14 +163,14 @@ public class MachineGunController : MonoBehaviour
     
     private void ShootMachinegun()
     {
-        --_activeAmmoBox.count;
-
-        if (_activeAmmoBox.count < 0)
+        if (_activeAmmoBox.Count <= 0)
         {
             Debug.Log("The ammo box is empty");
             _shootingSound.Stop();
             return;
         }
+        
+        --_activeAmmoBox.Count;
         
         GameObject bullet = MachineGunBulletPool.SharedInstance.GetPooledObject();
 
