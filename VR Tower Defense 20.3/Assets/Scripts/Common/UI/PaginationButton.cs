@@ -40,7 +40,9 @@ public class PaginationButton : MonoBehaviour
         if (_lerping)
         {
             _lerpCounter += Time.deltaTime * slideSpeed;
-            pager.transform.position = Vector3.Lerp(_oldPos, _newPos, _lerpCounter);
+            float smoothstepY = Mathf.SmoothStep(_oldPos.y, _newPos.y, _lerpCounter);
+            pager.transform.position = new Vector3(pager.transform.position.x, smoothstepY, pager.transform.position.z);
+            // pager.transform.position = Vector3.Lerp(_oldPos, _newPos, _lerpCounter);
             
             if (_lerpCounter >= 1)
             {

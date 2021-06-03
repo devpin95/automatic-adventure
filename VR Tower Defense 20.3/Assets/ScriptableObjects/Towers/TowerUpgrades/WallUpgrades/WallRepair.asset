@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 355323babc06fd64ab2b42eed492ebf0, type: 3}
+  m_Name: WallRepair
+  m_EditorClassIdentifier: 
+  buttonInstance: {fileID: 0}
+  upgradeName: Repair Wall (+10)
+  upgradeDescription: Repair 10 wall health
+  upgradeCost: 100
+  maxUpgradeReached: 1
+  maxUpgradeNotification: 
+  purchased:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: f6febd8af963b3146878e76a76e9b844, type: 2}
+        m_TargetAssemblyTypeName: WallUpgrades, Assembly-CSharp
+        m_MethodName: HealWall
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
