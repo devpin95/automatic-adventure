@@ -2,26 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-public class WallUpgradeController : MonoBehaviour
+public class MachinegunUpgradeController : MonoBehaviour
 {
-    public WallUpgrades wallUpgrades;
+    [FormerlySerializedAs("wallUpgrades")] public MachineGunUpgrades upgrades;
     public GameData gameData;
     public GameObject cardGrid;
     public GameObject buttonPrefab;
 
     public GameObject upgradePanel;
 
-    public UpgradeCard repairCard;
-    public UpgradeCard healthUpgradeCard;
+    public CEvent_UpgradeCard upgradeButtonClickEvent;
+
+    [Header("Upgrade Cards")]
+    public UpgradeCard damageCard;
+    public UpgradeCard velocityCard;
+    public UpgradeCard rotationSpeedCard;
     private UpgradeCard _activeUpgradeCard;
 
-    public TextMeshProUGUI wallCurrentHealthTMP;
-    public TextMeshProUGUI wallMaxHealthTMP;
+    [Header("Attribute Value Fields")]
+    public TextMeshProUGUI bulletDamageTMP;
+    public TextMeshProUGUI bulletVelocityTMP;
+    public TextMeshProUGUI towerRotationSpeedTMP;
 
-    public TextMeshProUGUI wallCurrentHealthUpgradeTMP;
-    public TextMeshProUGUI wallMaxHealthUpgradeTMP;
+    [Header("Attribute Upgrade Values Fields")]
+    public TextMeshProUGUI bulletDamageUpgradeTMP;
+    public TextMeshProUGUI bulletVelocityUpgradeTMP;
+    public TextMeshProUGUI towerRotationSpeedUpgradeTMP;
 
     // Start is called before the first frame update
     void Start()
@@ -29,21 +38,20 @@ public class WallUpgradeController : MonoBehaviour
         // repairCard.upgradeCost = wallUpgrades.costToRepair100;
         // healthUpgradeCard.upgradeCost = wallUpgrades.wallUpgradeHealthCosts[wallUpgrades.wallUpgradeCount];
 
-        repairCard.updateCard();
-        healthUpgradeCard.updateCard();
-        
         // wallUpgrades.UpdateWallCurrentHealthCard(repairCard);
         // wallUpgrades.UpdateWallMaxHealthCard(healthUpgradeCard);
 
-        CreateUpgradeButton(repairCard);
-        CreateUpgradeButton(healthUpgradeCard);
+        CreateUpgradeButton(damageCard);
+        CreateUpgradeButton(velocityCard);
+        CreateUpgradeButton(rotationSpeedCard);
     }
 
     // Update is called once per frame
     void Update()
     {
-        wallCurrentHealthTMP.text = gameData.wallCurrentHealth.ToString();
-        wallMaxHealthTMP.text = gameData.wallMaxHealth.ToString();
+        bulletDamageTMP.text = upgrades.Damage.ToString();
+        bulletVelocityTMP.text = "x" + upgrades.BulletVelocityModifier;
+        towerRotationSpeedTMP.text = upgrades.TowerRotationSpeed + "deg/s";
     }
 
     private void CreateUpgradeButton(UpgradeCard info)
@@ -51,10 +59,13 @@ public class WallUpgradeController : MonoBehaviour
         if (info.maxUpgradeReached && !info.createIfMaxUpgradeReachedOnStartup) return;
         
         GameObject card = Instantiate(buttonPrefab, cardGrid.transform.position, buttonPrefab.transform.rotation);
+        card.GetComponent<UpgradeButtonClicked>().upgradeButtonClickedEvent = upgradeButtonClickEvent;
         card.transform.SetParent(cardGrid.transform);
         info.buttonInstance = card;
         
         if ( info.maxUpgradeReached ) card.SetActive(false);
+
+        info.updateCard();
         
         UpgradeButtonInit(card, info);
     }
@@ -71,8 +82,10 @@ public class WallUpgradeController : MonoBehaviour
         if (info == null) return;
         
         // clear the upgrade values from the info panel
-        wallCurrentHealthUpgradeTMP.text = "";
-        wallMaxHealthUpgradeTMP.text = "";
+        
+        bulletDamageUpgradeTMP.text = "";
+        bulletVelocityUpgradeTMP.text = "";
+        towerRotationSpeedUpgradeTMP.text = "";
         
         // check if the max upgrade has been reached for this card
         // if it has, hide the panel
@@ -124,11 +137,14 @@ public class WallUpgradeController : MonoBehaviour
         // switch on the upgrade type of the card so that we can show which attribute is being upgraded
         switch (info.upgradeType)
         {
-            case "Max Health":
-                wallMaxHealthUpgradeTMP.text = "+" + info.getUpgradeValue();
+            case "Damage":
+                bulletDamageUpgradeTMP.text = "+" + info.getUpgradeValue();
                 break;
-            case "Current Health":
-                wallCurrentHealthUpgradeTMP.text = "+" + info.getUpgradeValue();
+            case "Velocity":
+                bulletVelocityUpgradeTMP.text = "+" + info.getUpgradeValue();
+                break;
+            case "Rotation":
+                towerRotationSpeedUpgradeTMP.text = "+" + info.getUpgradeValue();
                 break;
         }
     }

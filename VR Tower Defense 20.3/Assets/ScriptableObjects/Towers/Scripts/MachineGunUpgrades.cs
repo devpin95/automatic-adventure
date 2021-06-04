@@ -58,6 +58,11 @@ public class MachineGunUpgrades : ScriptableObject
     public int[] bulletVelocityUpgradeCosts = { 1000, 2000 };
     public int[] bulletVelocityUpgradeValues = { 16, 17 };
     // *****************************************************************************************************************
+
+    [Header("Upgrade Cards")] 
+    public UpgradeCard damageCard;
+    public UpgradeCard velocityCard;
+    public UpgradeCard rotationCard;
     
     
     public void ResetObject()
@@ -73,6 +78,18 @@ public class MachineGunUpgrades : ScriptableObject
         
         UpgradeProjectile();
         initialized = false;
+        
+        damageCard.upgradeCost = damageUpgradeCosts[0];
+        damageCard.maxUpgradeReached = false;
+        damageCard.buttonInstance = null;
+        
+        velocityCard.upgradeCost = bulletVelocityUpgradeCosts[0];
+        velocityCard.maxUpgradeReached = false;
+        velocityCard.buttonInstance = null;
+        
+        rotationCard.upgradeCost = rotationUpgradeCosts[0];
+        rotationCard.maxUpgradeReached = false;
+        rotationCard.buttonInstance = null;
     }
 
     public void Init()
@@ -83,6 +100,21 @@ public class MachineGunUpgrades : ScriptableObject
         towerRotationSpeed = defaultTowerRotationSpeed;
         bulletVelocityModifier = defaultBulletVelocityModifier;
         initialized = true;
+
+        damageCard.upgradeCost = damageUpgradeCosts[0];
+        damageCard.getUpgradeValue = GetNextBulletDamageUpgradeValue;
+        damageCard.purchase = UpgradeDamage;
+        damageCard.updateCard = UpdateDamageCard;
+
+        velocityCard.upgradeCost = bulletVelocityUpgradeCosts[0];
+        velocityCard.getUpgradeValue = GetNextBulletVelocityUpgradeValue;
+        velocityCard.purchase = UpgradeBulletVelocity;
+        velocityCard.updateCard = UpdateVelocityCard;
+        
+        rotationCard.upgradeCost = rotationUpgradeCosts[0];
+        rotationCard.getUpgradeValue = GetNextRotationSpeedUpgradeValue;
+        rotationCard.purchase = UpgradeRotationSpeed;
+        rotationCard.updateCard = UpdateRotationSpeedCard;
     }
 
     private void UpgradeProjectile()
@@ -90,69 +122,106 @@ public class MachineGunUpgrades : ScriptableObject
         bulletAttributes.damage = damage;
     }
 
-    public int UpgradeDamage()
+    public void UpgradeDamage()
     {
-        if (damageUpgradeStep > damageUpgradeCosts.Length - 1) return 0;
+        if (damageUpgradeStep > damageUpgradeCosts.Length - 1) return;
+        
         if (gameData.gold >= damageUpgradeCosts[damageUpgradeStep])
         {
             Damage = damageUpgradeValues[damageUpgradeStep];
+            gameData.gold -= damageUpgradeCosts[damageUpgradeStep];
             UpgradeProjectile();
-            int cost = damageUpgradeCosts[damageUpgradeStep];
             ++damageUpgradeStep;
-            return cost;
         }
         
-        return 0;
+        UpdateDamageCard();
     }
 
-    public int UpgradeRotationSpeed()
+    public void UpgradeRotationSpeed()
     {
-        if (rotationUpgradeStep > rotationUpgradeCosts.Length - 1) return 0;
+        if (rotationUpgradeStep > rotationUpgradeCosts.Length - 1) return;
         if (gameData.gold >= rotationUpgradeCosts[rotationUpgradeStep])
         {
-
-            int cost = rotationUpgradeCosts[rotationUpgradeStep];
             TowerRotationSpeed = rotationUpgradeValues[rotationUpgradeStep];
+            gameData.gold -= rotationUpgradeCosts[rotationUpgradeStep];
             ++rotationUpgradeStep;
-            return cost;
         }
         
-        return 0;
+        UpdateRotationSpeedCard();
     }
 
-    public int UpgradeBulletVelocity()
+    public void UpgradeBulletVelocity()
     {
-        if (bulletVelocityUpgradeStep > bulletVelocityUpgradeCosts.Length - 1) return 0;
+        if (bulletVelocityUpgradeStep > bulletVelocityUpgradeCosts.Length - 1) return;
         
         if (gameData.gold >= bulletVelocityUpgradeCosts[bulletVelocityUpgradeStep])
         {
             BulletVelocityModifier = bulletVelocityUpgradeValues[bulletVelocityUpgradeStep];
-            Debug.Log("NEW VELOCITY: " + BulletVelocityModifier);
+            gameData.gold -= bulletVelocityUpgradeCosts[bulletVelocityUpgradeStep];
 
-            
-            int cost = bulletVelocityUpgradeCosts[bulletVelocityUpgradeStep];
             ++bulletVelocityUpgradeStep;
-            return cost;
         }
-
-        return 0;
+        
+        UpdateVelocityCard();
     }
 
-    public int GetNextBulletVelocityUpgradeCost()
+    public float GetNextBulletVelocityUpgradeValue()
     {
-        if (bulletVelocityUpgradeStep >= bulletVelocityUpgradeCosts.Length) return 0;
-        else return bulletVelocityUpgradeCosts[bulletVelocityUpgradeStep];
+        if (bulletVelocityUpgradeStep >= bulletVelocityUpgradeValues.Length) return 0;
+        else return bulletVelocityUpgradeValues[bulletVelocityUpgradeStep];
     }
     
-    public int GetNextRotationSpeedUpgradeCost()
+    public float GetNextRotationSpeedUpgradeValue()
     {
-        if (rotationUpgradeStep >= rotationUpgradeCosts.Length) return 0;
-        else return rotationUpgradeCosts[rotationUpgradeStep];
+        if (rotationUpgradeStep >= rotationUpgradeValues.Length) return 0;
+        else return rotationUpgradeValues[rotationUpgradeStep];
     }
     
-    public int GetNextBulletDamageUpgradeCost()
+    public float GetNextBulletDamageUpgradeValue()
     {
-        if (damageUpgradeStep >= damageUpgradeCosts.Length) return 0;
-        else return damageUpgradeCosts[damageUpgradeStep];
+        if (damageUpgradeStep >= damageUpgradeValues.Length) return 0;
+        else return damageUpgradeValues[damageUpgradeStep];
+    }
+
+    public void UpdateDamageCard()
+    {
+        if (damageUpgradeStep >= damageUpgradeValues.Length)
+        {
+            damageCard.maxUpgradeReached = true;
+            damageCard.upgradeCost = 0;
+            damageCard.buttonInstance.gameObject.SetActive(false);
+        }
+        else
+        {
+            damageCard.upgradeCost = damageUpgradeCosts[damageUpgradeStep];
+        }
+    }
+
+    public void UpdateVelocityCard()
+    {
+        if (bulletVelocityUpgradeStep >= bulletVelocityUpgradeValues.Length)
+        {
+            velocityCard.maxUpgradeReached = true;
+            velocityCard.upgradeCost = 0;
+            velocityCard.buttonInstance.gameObject.SetActive(false);
+        }
+        else
+        {
+            velocityCard.upgradeCost = bulletVelocityUpgradeCosts[bulletVelocityUpgradeStep];
+        }
+    }
+
+    public void UpdateRotationSpeedCard()
+    {
+        if (rotationUpgradeStep >= rotationUpgradeValues.Length)
+        {
+            rotationCard.maxUpgradeReached = true;
+            rotationCard.upgradeCost = 0;
+            rotationCard.buttonInstance.gameObject.SetActive(false);
+        }
+        else
+        {
+            rotationCard.upgradeCost = rotationUpgradeCosts[rotationUpgradeStep];
+        }
     }
 }

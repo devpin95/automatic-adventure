@@ -13,8 +13,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Devices _devices;
     [SerializeField] private GameData _gameData;
     [SerializeField] private LevelData _levelData;
-    [SerializeField] private MachineGunUpgrades _machineGunUpgrades;
-    [SerializeField] private RocketLauncherUpgrades _rocketLauncherUpgrades; 
+    // [SerializeField] private MachineGunUpgrades _machineGunUpgrades;
+    // [SerializeField] private RocketLauncherUpgrades _rocketLauncherUpgrades; 
+    // [SerializeField] private WallUpgrades _wallUpgrades;
     private Light mainDirectionLight;
     private GameObject _flareGuns;
     private GameObject _spotLights;
@@ -35,8 +36,9 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
         
-        _machineGunUpgrades.Init();
-        _rocketLauncherUpgrades.Init();
+        // _machineGunUpgrades.Init();
+        // _rocketLauncherUpgrades.Init();
+        // _wallUpgrades.Init();
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += SceneLoaded;
     }
 

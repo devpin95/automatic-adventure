@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameData: {fileID: 11400000, guid: e7db0cc7dc0715249b5a90702fd87cef, type: 2}
   costToRepair100: 100
-  defualtWallHealth: 100
-  wallUpgradeCount: 6
-  wallUpgradeHealthValues: 64000000c80000002c010000f4010000e803000088130000
-  wallUpgradeHealthCosts: 8813000010270000204e000030750000409c000050c30000
+  defaultWallHealth: 100
+  wallUpgradeCount: 0
+  wallUpgradeHealthValues: c8000000fa0000002c010000f4010000e803000088130000
+  wallUpgradeHealthCosts: 88130000f824010010270000204e0000409c000050c30000
   numUpgrades: 6
   wallRepair: {fileID: 11400000, guid: 62790d1fe38554c438046c21d1a71128, type: 2}
   wallMaxHealth: {fileID: 11400000, guid: 1adcb503dc05ee74999583c9d6859200, type: 2}

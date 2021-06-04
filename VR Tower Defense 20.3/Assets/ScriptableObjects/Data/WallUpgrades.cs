@@ -3,24 +3,32 @@ using System.Collections.Generic;
 using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
+using UnityEngine.Serialization;
 
 [CreateAssetMenu(menuName = "ScriptableObjects/Wall Upgrades")]
 public class WallUpgrades : ScriptableObject
 {
     public GameData gameData;
     
-    public int costToRepair100;
+    [FormerlySerializedAs("defaultCostToRepair")]
+    [Header("Repair options")]
+    [FormerlySerializedAs("costToRepair100")] public int defaultCostToRepair10Points;
+    public int defaultRepairPoints = 10;
+    public int upgradedRepairPoints = 100;
+    private int _currentRepairPoints = 10;
 
-    public int defualtWallHealth = 100;
+    [Header("Wall Max Health Upgrades")]
+    [FormerlySerializedAs("defualtWallHealth")] public int defaultWallHealth = 100;
     public int wallUpgradeCount = 0;
+    public int numUpgrades = 6;
     public int[] wallUpgradeHealthValues = {5000, 10000, 15000, 20000, 30000, 50000};
     public int[] wallUpgradeHealthCosts = {200, 300, 400, 500, 600, 700};
-    public int numUpgrades = 6;
 
+    [Header("Upgrade Cards")]
     public UpgradeCard wallRepair;
     public UpgradeCard wallMaxHealth;
 
-    public void UpgradeWallMaxHealth(UpgradeCard info)
+    public void UpgradeWallMaxHealth()
     {
         Debug.Log("U[pgrade max health");
         if (wallUpgradeCount >= numUpgrades) return;
@@ -30,42 +38,105 @@ public class WallUpgrades : ScriptableObject
 
         ++wallUpgradeCount;
 
-        UpdateWallMaxHealthCard(info);
+        if (wallUpgradeCount > 3) _currentRepairPoints = upgradedRepairPoints;
+
+        UpdateWallMaxHealthCard();
+        UpdateWallCurrentHealthCard();
     }
 
-    public void HealWall(UpgradeCard info)
+    public void HealWall()
     {
-        gameData.wallCurrentHealth += 100;
+        gameData.wallCurrentHealth += _currentRepairPoints;
         if (gameData.wallCurrentHealth > gameData.wallMaxHealth) gameData.wallCurrentHealth = gameData.wallMaxHealth;
+        
+        int cost = (_currentRepairPoints / 10) * defaultCostToRepair10Points;
+        gameData.gold -= cost;
+        
+        Debug.Log("HEALING " + _currentRepairPoints + " WALL POINTS FOR " + cost + " CREDITS");
+
+        UpdateWallCurrentHealthCard();
     }
 
-    private void UpdateWallMaxHealthCard(UpgradeCard info)
+    public void UpdateWallMaxHealthCard()
     {
         if (wallUpgradeCount >= numUpgrades)
         {
-            info.upgradeCost = 0;
-            info.maxUpgradeReached = true;
-            info.buttonInstance?.gameObject.SetActive(false);
+            wallMaxHealth.upgradeCost = 0;
+            wallMaxHealth.maxUpgradeReached = true;
+            wallMaxHealth.buttonInstance?.gameObject.SetActive(false);
         }
         else
         {
-            info.upgradeCost = wallUpgradeHealthCosts[wallUpgradeCount];
+            wallMaxHealth.upgradeCost = wallUpgradeHealthCosts[wallUpgradeCount];
         }
     }
 
-    public void UpdateWallCurrentHealthCard(UpgradeCard info)
+    public void UpdateWallCurrentHealthCard()
     {
-        if (gameData.wallCurrentHealth == gameData.wallMaxHealth) info.maxUpgradeReached = true;
+        if (gameData.wallCurrentHealth == gameData.wallMaxHealth)
+        {
+            wallRepair.buttonInstance?.gameObject.SetActive(false);
+            wallRepair.maxUpgradeReached = true;
+        }
+        else
+        {
+            wallRepair.buttonInstance?.gameObject.SetActive(true);
+            wallRepair.maxUpgradeReached = false;
+        }
     }
 
     public void ResetObject()
     {
         wallUpgradeCount = 0;
         
-        gameData.wallCurrentHealth = defualtWallHealth;
-        gameData.wallMaxHealth = defualtWallHealth;
+        gameData.wallCurrentHealth = defaultWallHealth;
+        gameData.wallMaxHealth = defaultWallHealth;
+
+        // wallRepair.getUpgradeValue = null;
+        // wallRepair.updateCard = null;
+        wallRepair.maxUpgradeReached = false;
+        wallRepair.buttonInstance = null;
         
+        // wallMaxHealth.getUpgradeValue = null;
+        // wallMaxHealth.updateCard = null;
         wallMaxHealth.upgradeCost = wallUpgradeHealthValues[0];
         wallMaxHealth.maxUpgradeReached = false;
+        wallMaxHealth.buttonInstance = null;
+
+        _currentRepairPoints = defaultRepairPoints;
+    }
+
+    public void Init()
+    {
+        wallRepair.getUpgradeValue = GetNextHealthUpgradeValue;
+        wallRepair.updateCard = UpdateWallCurrentHealthCard;
+        wallRepair.purchase = HealWall;
+        
+        wallMaxHealth.getUpgradeValue = GetNextMaxHealthUpgradeValue;
+        wallMaxHealth.updateCard = UpdateWallMaxHealthCard;
+        wallMaxHealth.purchase = UpgradeWallMaxHealth;
+    }
+
+    public float GetNextMaxHealthUpgradeValue()
+    {
+        if (wallUpgradeCount >= numUpgrades) return 0;
+        return wallUpgradeHealthValues[wallUpgradeCount] - gameData.wallMaxHealth;
+    }
+
+    public float GetNextHealthUpgradeValue()
+    {
+        float healVal = _currentRepairPoints;
+        
+        float dif = gameData.wallMaxHealth - gameData.wallCurrentHealth;
+
+        if (dif < _currentRepairPoints)
+        {
+            healVal = (int)dif;
+        } else if (dif == 0)
+        {
+            healVal = 0;
+        }
+        
+        return healVal;
     }
 }

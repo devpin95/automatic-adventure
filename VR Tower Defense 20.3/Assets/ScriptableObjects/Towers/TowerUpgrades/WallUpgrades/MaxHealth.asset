@@ -12,19 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 355323babc06fd64ab2b42eed492ebf0, type: 3}
   m_Name: MaxHealth
   m_EditorClassIdentifier: 
-  buttonInstance: {fileID: 0}
   upgradeName: Increase Max Health
   upgradeDescription: Increase the wall's max health
-  upgradeCost: 0
-  maxUpgradeReached: 1
-  maxUpgradeNotification: 
+  upgradeCost: 100
+  maxUpgradeReached: 0
+  upgradeType: Max Health
   purchased:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 11400000, guid: f6febd8af963b3146878e76a76e9b844, type: 2}
         m_TargetAssemblyTypeName: WallUpgrades, Assembly-CSharp
         m_MethodName: UpgradeWallMaxHealth
-        m_Mode: 0
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

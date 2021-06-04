@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wave: 0
   currentActiveTower: 0
-  gold: 99535000
+  gold: 0
   gameDefaultWallHealth: 100
-  wallMaxHealth: 5000
+  wallMaxHealth: 100
   wallCurrentHealth: 100
   easyEnemies:
   - {fileID: 11400000, guid: cf868ba1c553d0e45998b92cd6295f14, type: 2}

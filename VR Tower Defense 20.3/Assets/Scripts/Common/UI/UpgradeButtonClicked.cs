@@ -23,9 +23,4 @@ public class UpgradeButtonClicked : MonoBehaviour
     {
         upgradeButtonClickedEvent.Raise(upgradeCardInfo);
     }
-
-    // public void OnButtonDeselected()
-    // {
-    //     upgradeButtonDeselected.Raise();
-    // }
 }

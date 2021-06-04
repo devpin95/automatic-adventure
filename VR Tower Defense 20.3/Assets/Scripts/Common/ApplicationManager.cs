@@ -10,6 +10,7 @@ public class ApplicationManager : MonoBehaviour
     public Devices devices;
     public MachineGunUpgrades machineGunUpgrades;
     public RocketLauncherUpgrades rocketLauncherUpgrades;
+    public WallUpgrades wallUpgrades;
     private void Awake()
     {
         if (Instance == null)
@@ -21,6 +22,10 @@ public class ApplicationManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        
+        machineGunUpgrades.Init();
+        rocketLauncherUpgrades.Init();
+        wallUpgrades.Init();
     }
 
     private void OnApplicationQuit()
@@ -29,5 +34,6 @@ public class ApplicationManager : MonoBehaviour
         devices.ResetObject();
         machineGunUpgrades.ResetObject();
         rocketLauncherUpgrades.ResetObject();
+        wallUpgrades.ResetObject();
     }
 }

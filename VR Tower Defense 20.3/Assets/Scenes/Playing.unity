@@ -4848,6 +4848,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 395835988}
     - target: {fileID: 613308239306003817, guid: dfce0dfdea1c1524bbf801ee48743052, type: 3}
+      propertyPath: _wallUpgrades
+      value: 
+      objectReference: {fileID: 11400000, guid: f6febd8af963b3146878e76a76e9b844, type: 2}
+    - target: {fileID: 613308239306003817, guid: dfce0dfdea1c1524bbf801ee48743052, type: 3}
       propertyPath: _machineGunUpgrades
       value: 
       objectReference: {fileID: 11400000, guid: af6b88992814005429704d0474036c2c, type: 2}
@@ -5154,6 +5158,7 @@ MonoBehaviour:
   devices: {fileID: 11400000, guid: fc17e951e66ee6f45b322aa8ad13f53f, type: 2}
   machineGunUpgrades: {fileID: 11400000, guid: af6b88992814005429704d0474036c2c, type: 2}
   rocketLauncherUpgrades: {fileID: 11400000, guid: 86d410944bbc39347ab8e3cba918355d, type: 2}
+  wallUpgrades: {fileID: 11400000, guid: f6febd8af963b3146878e76a76e9b844, type: 2}
 --- !u!1001 &5799208247886020626
 PrefabInstance:
   m_ObjectHideFlags: 0
