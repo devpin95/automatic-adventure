@@ -29,9 +29,6 @@ public class WallUpgradeController : MonoBehaviour
         // repairCard.upgradeCost = wallUpgrades.costToRepair100;
         // healthUpgradeCard.upgradeCost = wallUpgrades.wallUpgradeHealthCosts[wallUpgrades.wallUpgradeCount];
 
-        repairCard.updateCard();
-        healthUpgradeCard.updateCard();
-        
         // wallUpgrades.UpdateWallCurrentHealthCard(repairCard);
         // wallUpgrades.UpdateWallMaxHealthCard(healthUpgradeCard);
 
@@ -55,6 +52,8 @@ public class WallUpgradeController : MonoBehaviour
         info.buttonInstance = card;
         
         if ( info.maxUpgradeReached ) card.SetActive(false);
+
+        info.updateCard();
         
         UpgradeButtonInit(card, info);
     }
