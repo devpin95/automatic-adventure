@@ -124,7 +124,7 @@ public class WallUpgradeController : MonoBehaviour
         switch (info.upgradeType)
         {
             case "Max Health":
-                wallMaxHealthUpgradeTMP.text = "+" + info.getUpgradeValue();
+                wallMaxHealthUpgradeTMP.text = "+" + (info.getUpgradeValue() - gameData.wallMaxHealth);
                 break;
             case "Current Health":
                 wallCurrentHealthUpgradeTMP.text = "+" + info.getUpgradeValue();

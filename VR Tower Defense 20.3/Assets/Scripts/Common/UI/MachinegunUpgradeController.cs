@@ -138,13 +138,13 @@ public class MachinegunUpgradeController : MonoBehaviour
         switch (info.upgradeType)
         {
             case "Damage":
-                bulletDamageUpgradeTMP.text = "+" + info.getUpgradeValue();
+                bulletDamageUpgradeTMP.text = "+" + (info.getUpgradeValue() - upgrades.Damage );
                 break;
             case "Velocity":
-                bulletVelocityUpgradeTMP.text = "+" + info.getUpgradeValue();
+                bulletVelocityUpgradeTMP.text = "+" + (info.getUpgradeValue() - upgrades.BulletVelocityModifier);
                 break;
             case "Rotation":
-                towerRotationSpeedUpgradeTMP.text = "+" + info.getUpgradeValue();
+                towerRotationSpeedUpgradeTMP.text = "+" + (info.getUpgradeValue() - upgrades.TowerRotationSpeed);
                 break;
         }
     }

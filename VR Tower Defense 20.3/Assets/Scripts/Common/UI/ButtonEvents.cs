@@ -25,7 +25,7 @@ public class ButtonEvents : MonoBehaviour
         
     }
 
-    public void OnPointerEnter(BaseEventData eventData)
+    public void OnPointerEnter(BaseEventData eventData = null)
     {
         for (int i = 0; i < transform.childCount; ++i)
         {
@@ -34,7 +34,7 @@ public class ButtonEvents : MonoBehaviour
         }
     }
     
-    public void OnPointerExit(BaseEventData eventData)
+    public void OnPointerExit(BaseEventData eventData = null)
     {
         if (_selected) return;
         
@@ -63,5 +63,11 @@ public class ButtonEvents : MonoBehaviour
         _selected = false;
         OnPointerExit(eventData);
         upgradeButtonDeselected?.Raise();
+    }
+
+    public void DeselectButton()
+    {
+        _selected = false;
+        OnPointerExit();
     }
 }

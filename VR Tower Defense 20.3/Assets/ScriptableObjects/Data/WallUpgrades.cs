@@ -119,8 +119,8 @@ public class WallUpgrades : ScriptableObject
 
     public float GetNextMaxHealthUpgradeValue()
     {
-        if (wallUpgradeCount >= numUpgrades) return 0;
-        return wallUpgradeHealthValues[wallUpgradeCount] - gameData.wallMaxHealth;
+        if (wallUpgradeCount + 1 >= numUpgrades) return 0;
+        return wallUpgradeHealthValues[wallUpgradeCount + 1] - gameData.wallMaxHealth;
     }
 
     public float GetNextHealthUpgradeValue()
