@@ -81,7 +81,12 @@ public class WallUpgradeController : MonoBehaviour
             _activeUpgradeCard = null;
             return;
         }
-        
+
+        if (_activeUpgradeCard != info)
+        {
+            upgradePanel.transform.Find("Purchase Button").GetComponent<ButtonEvents>().DeselectButton();
+        }
+
         // otherwise, show the panel and set the current card
         upgradePanel.SetActive(true);
         _activeUpgradeCard = info;
@@ -134,6 +139,7 @@ public class WallUpgradeController : MonoBehaviour
 
     public void HideUpgradeCard()
     {
+        upgradePanel.transform.Find("Purchase Button").GetComponent<ButtonEvents>().DeselectButton();
         upgradePanel.SetActive(false);
     }
 
