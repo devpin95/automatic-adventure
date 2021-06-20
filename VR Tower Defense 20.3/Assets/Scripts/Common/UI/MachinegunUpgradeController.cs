@@ -49,9 +49,9 @@ public class MachinegunUpgradeController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        bulletDamageTMP.text = upgrades.Damage.ToString();
-        bulletVelocityTMP.text = "x" + upgrades.BulletVelocityModifier;
-        towerRotationSpeedTMP.text = upgrades.TowerRotationSpeed + "deg/s";
+        bulletDamageTMP.text = upgrades.Damage.ToString("n0");
+        bulletVelocityTMP.text = "x" + upgrades.BulletVelocityModifier.ToString("n0");
+        towerRotationSpeedTMP.text = upgrades.TowerRotationSpeed.ToString("n0") + "deg/s";
     }
 
     private void CreateUpgradeButton(UpgradeCard info)
@@ -122,7 +122,7 @@ public class MachinegunUpgradeController : MonoBehaviour
         purchaseButtonOnClick.AddListener(PurchaseButtonClicked);
         
         // set the cost value in the panel
-        upgradePanel.transform.Find("Cost").GetComponent<TextMeshProUGUI>().text = "C. " + info.upgradeCost;
+        upgradePanel.transform.Find("Cost").GetComponent<TextMeshProUGUI>().text = "C. " + info.upgradeCost.ToString("n0");
 
         // check if the player has enough credit to purchase the upgrade
         if (gameData.gold >= info.upgradeCost)
@@ -143,13 +143,13 @@ public class MachinegunUpgradeController : MonoBehaviour
         switch (info.upgradeType)
         {
             case "Damage":
-                bulletDamageUpgradeTMP.text = "+" + (info.getUpgradeValue() - upgrades.Damage );
+                bulletDamageUpgradeTMP.text = "+" + (info.getUpgradeValue() - upgrades.Damage ).ToString("n0");
                 break;
             case "Velocity":
-                bulletVelocityUpgradeTMP.text = "+" + (info.getUpgradeValue() - upgrades.BulletVelocityModifier);
+                bulletVelocityUpgradeTMP.text = "+" + (info.getUpgradeValue() - upgrades.BulletVelocityModifier).ToString("n0");
                 break;
             case "Rotation":
-                towerRotationSpeedUpgradeTMP.text = "+" + (info.getUpgradeValue() - upgrades.TowerRotationSpeed);
+                towerRotationSpeedUpgradeTMP.text = "+" + (info.getUpgradeValue() - upgrades.TowerRotationSpeed).ToString("n0");
                 break;
         }
     }

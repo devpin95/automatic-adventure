@@ -136,6 +136,7 @@ MonoBehaviour:
   killed: {fileID: 11400000, guid: 5f0ced62a1eb5b4458d678edd5321b15, type: 2}
   attributes: {fileID: 11400000, guid: cf868ba1c553d0e45998b92cd6295f14, type: 2}
   hitWall: {fileID: 11400000, guid: b561b0d4de5429847b70c2724aba67bf, type: 2}
+  bountyNotificationEvent: {fileID: 11400000, guid: 7811830b7e2c170498ef5ae406cc7d97, type: 2}
 --- !u!114 &3379327279497768639
 MonoBehaviour:
   m_ObjectHideFlags: 0

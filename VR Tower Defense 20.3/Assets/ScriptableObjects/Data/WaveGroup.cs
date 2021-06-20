@@ -7,5 +7,6 @@ using UnityEngine;
 public class WaveGroup
 {
     public int count;
+    public int deferredWave = 0;
     public EnemyAttributes enemy;
 }

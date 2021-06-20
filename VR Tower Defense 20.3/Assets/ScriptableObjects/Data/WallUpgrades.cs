@@ -52,7 +52,7 @@ public class WallUpgrades : ScriptableObject
         int cost = (_currentRepairPoints / 10) * defaultCostToRepair10Points;
         gameData.gold -= cost;
         
-        Debug.Log("HEALING " + _currentRepairPoints + " WALL POINTS FOR " + cost + " CREDITS");
+        // Debug.Log("HEALING " + _currentRepairPoints + " WALL POINTS FOR " + cost + " CREDITS");
 
         UpdateWallCurrentHealthCard();
     }

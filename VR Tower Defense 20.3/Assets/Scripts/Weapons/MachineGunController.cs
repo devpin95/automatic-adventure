@@ -16,6 +16,11 @@ public class MachineGunController : MonoBehaviour
     public Transform handleAnchor;
     public GameObject handleInteractor;
     public Transform gunCenter;
+
+    public CEvent_BountyTrackedData bountyNotification;
+    public BountyTrackedData bountyTrackedData = new BountyTrackedData();
+    private string _fireRoundBountyID = "Machinegun Fire";
+    private string _reloadBountyID = "Machinegun Reload";
     
     [Header("Shooting")]
     public float shotDelay = 0.05f;
@@ -84,7 +89,7 @@ public class MachineGunController : MonoBehaviour
 
                 if (_timeSinceLastShot > shotDelay)
                 {
-                    Debug.Log("Shooting");
+                    // Debug.Log("Shooting");
                     ShootMachinegun();
                 }
             }
@@ -138,12 +143,18 @@ public class MachineGunController : MonoBehaviour
 
     public void OnAmmoLoaded(XRBaseInteractable interactable)
     {
-        Debug.Log("Ammo Loaded");
+        // Debug.Log("Ammo Loaded");
         AmmoBoxController ammoBoxController = interactable.GetComponent<AmmoBoxController>();
         if (ammoBoxController)
         {
+            if (ammoBoxController != _activeAmmoBox)
+            {
+                bountyTrackedData.trackedDataId = _reloadBountyID;
+                bountyTrackedData.bountyType = Bounty.BountyTypes.Action;
+                bountyNotification.Raise(bountyTrackedData);
+            }
             _activeAmmoBox = ammoBoxController;
-            Debug.Log("AMMO: " + _activeAmmoBox.Count + "/" + _activeAmmoBox.Capacity);
+            // Debug.Log("AMMO: " + _activeAmmoBox.Count + "/" + _activeAmmoBox.Capacity);
             _ammoBoxInstalled = true;
         }
     }
@@ -165,10 +176,14 @@ public class MachineGunController : MonoBehaviour
     {
         if (_activeAmmoBox.Count <= 0)
         {
-            Debug.Log("The ammo box is empty");
+            // Debug.Log("The ammo box is empty");
             _shootingSound.Stop();
             return;
         }
+        
+        bountyTrackedData.trackedDataId = _fireRoundBountyID;
+        bountyTrackedData.bountyType = Bounty.BountyTypes.Action;
+        bountyNotification.Raise(bountyTrackedData);
         
         --_activeAmmoBox.Count;
         
@@ -194,19 +209,10 @@ public class MachineGunController : MonoBehaviour
         //GameObject bullet;
         if (_shotCount % tracerSpacing == 0)
         {
-            // shoot a tracer
-            trail.enabled = true;
-            bulletController.canRicochet = true;
-            bulletController.isTracer = true;
-            // bullet = Instantiate(tracerPrefab, fireLocation.position, transform.rotation);
+            bulletController.MakeTracerRound();
+            bulletController.TracerColor(bulletController.defaultTracerColor);
         }
-        else
-        {
-            // shoot a regular bullet
-            bulletController.canRicochet = false;
-            bulletController.isTracer = false;
-            // bullet = Instantiate(bulletPrefab, fireLocation.position, transform.rotation);
-        }
+        else bulletController.MakeDefaultRound();
         
         bullet.SetActive(true);
         bullet.GetComponent<Rigidbody>().AddForce(randDir.normalized * machineGunUpgrades.BulletVelocityModifier, ForceMode.Impulse);

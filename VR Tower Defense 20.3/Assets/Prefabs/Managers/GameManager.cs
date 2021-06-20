@@ -13,9 +13,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Devices _devices;
     [SerializeField] private GameData _gameData;
     [SerializeField] private LevelData _levelData;
+
     // [SerializeField] private MachineGunUpgrades _machineGunUpgrades;
     // [SerializeField] private RocketLauncherUpgrades _rocketLauncherUpgrades; 
     // [SerializeField] private WallUpgrades _wallUpgrades;
+    
     private Light mainDirectionLight;
     private GameObject _flareGuns;
     private GameObject _spotLights;
@@ -23,6 +25,8 @@ public class GameManager : MonoBehaviour
     private bool isPlayingScene = true;
 
     public CEvent FireFlare;
+
+    public int currentStint = 1;
 
     private void Awake()
     {
@@ -87,10 +91,9 @@ public class GameManager : MonoBehaviour
             mainDirectionLight = GameObject.FindWithTag("Sun").GetComponent<Light>();
             _flareGuns = GameObject.FindWithTag("Flare Guns");
             _spotLights = GameObject.FindWithTag("Spot Lights");
-            // Debug.Log(_flareGuns);
-            // Debug.Log(_spotLights);
-            UpdateStintLightSettings(_gameData.Wave / 10);
-            // FireFlare.Raise();
+
+            currentStint = _gameData.Wave / _gameData.stintLength;
+            UpdateStintLightSettings(currentStint);
         }
     }
 

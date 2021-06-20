@@ -25,13 +25,13 @@ public class AmmoBoxLoaderController : MonoBehaviour
     public void OnAmmoBoxSocketed(XRBaseInteractable box)
     {
         _ammoBox = box.GetComponent<AmmoBoxController>();
-        Debug.Log(_ammoBox + " loaded");
+        // Debug.Log(_ammoBox + " loaded");
     }
 
     public void OnAmmoBoxUnsocketed(XRBaseInteractable box)
     {
         _ammoBox = null;
-        Debug.Log("ammo box unloaded");
+        // Debug.Log("ammo box unloaded");
     }
 
     IEnumerator LoadAmmoBox()

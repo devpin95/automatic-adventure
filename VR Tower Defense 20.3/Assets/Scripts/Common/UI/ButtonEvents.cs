@@ -5,11 +5,14 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
+[RequireComponent(typeof(EventTrigger))]
 public class ButtonEvents : MonoBehaviour
 {
     public Color unselectedTextColor;
     public Color selectedTextColor;
     public CEvent upgradeButtonDeselected;
+
+    public List<TextMeshProUGUI> exclusionList = new List<TextMeshProUGUI>();
 
     private bool _selected = false;
     
@@ -30,7 +33,7 @@ public class ButtonEvents : MonoBehaviour
         for (int i = 0; i < transform.childCount; ++i)
         {
             var tmp = transform.GetChild(i).GetComponent<TextMeshProUGUI>();
-            if ( tmp ) tmp.color = selectedTextColor;
+            if ( tmp && !exclusionList.Contains(tmp) ) tmp.color = selectedTextColor;
         }
     }
     
@@ -41,7 +44,7 @@ public class ButtonEvents : MonoBehaviour
         for (int i = 0; i < transform.childCount; ++i)
         {
             var tmp = transform.GetChild(i).GetComponent<TextMeshProUGUI>();
-            if ( tmp ) tmp.color = unselectedTextColor;
+            if ( tmp && !exclusionList.Contains(tmp) ) tmp.color = unselectedTextColor;
         }
     }
 

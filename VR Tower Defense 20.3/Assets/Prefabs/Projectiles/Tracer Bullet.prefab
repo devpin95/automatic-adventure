@@ -133,6 +133,7 @@ MonoBehaviour:
   canRicochet: 1
   isTracer: 0
   tracerBrightness: 0.5
+  defaultTracerColor: {r: 11.984314, g: 11.984314, b: 0, a: 1}
 --- !u!1 &4394071553312653493
 GameObject:
   m_ObjectHideFlags: 0

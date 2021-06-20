@@ -34,17 +34,17 @@ public class WallManager : MonoBehaviour
     public void HitWall(float damage)
     {
         int healthInt = (int) (_gameData.wallCurrentHealth);
-        mainWallHealthText.text = "Integrity " + healthInt;
+        mainWallHealthText.text = "Integrity " + healthInt.ToString("n0");
         // mainWallHealthText.color = healthTextGradient.Evaluate((_gameData.wallCurrentHealth / _gameData.wallMaxHealth));
     }
 
     public void UpdateMoney(int value, bool s = false)
     {
-        wallMoneyValue.text = "Credit " + _gameData.gold;
+        wallMoneyValue.text = "Credit " + _gameData.gold.ToString("n0");
     }
 
     public void UpdateWave(int wave)
     {
-        wallWaveValue.text = "Wave " + (_gameData.Wave + 1);
+        wallWaveValue.text = "Wave " + (_gameData.Wave + 1).ToString("n0");
     }
 }

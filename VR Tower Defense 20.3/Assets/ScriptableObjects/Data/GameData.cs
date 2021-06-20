@@ -12,6 +12,9 @@ public class GameData : ScriptableObject
         set => wave = value;
     }
 
+    public int stintLength = 10;
+    public int bountyCredits = 3;
+
     // player
     public int currentActiveTower;
     public int gold;
@@ -20,12 +23,6 @@ public class GameData : ScriptableObject
     public float gameDefaultWallHealth = 50;
     public float wallMaxHealth;
     public float wallCurrentHealth;
-    
-
-    public EnemyAttributes[] easyEnemies;
-    public EnemyAttributes[] mediumEnemies;
-    public EnemyAttributes[] hardEnemies;
-    public EnemyAttributes[] bossEnemies;
 
     public void ResetObject()
     {

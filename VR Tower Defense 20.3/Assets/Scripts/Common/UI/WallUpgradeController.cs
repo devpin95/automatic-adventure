@@ -39,8 +39,8 @@ public class WallUpgradeController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        wallCurrentHealthTMP.text = gameData.wallCurrentHealth.ToString();
-        wallMaxHealthTMP.text = gameData.wallMaxHealth.ToString();
+        wallCurrentHealthTMP.text = gameData.wallCurrentHealth.ToString("n0");
+        wallMaxHealthTMP.text = gameData.wallMaxHealth.ToString("n0");
     }
 
     private void CreateUpgradeButton(UpgradeCard info)
@@ -108,7 +108,7 @@ public class WallUpgradeController : MonoBehaviour
         purchaseButtonOnClick.AddListener(PurchaseButtonClicked);
         
         // set the cost value in the panel
-        upgradePanel.transform.Find("Cost").GetComponent<TextMeshProUGUI>().text = "C. " + info.upgradeCost;
+        upgradePanel.transform.Find("Cost").GetComponent<TextMeshProUGUI>().text = "C. " + info.upgradeCost.ToString("n0");
 
         // check if the player has enough credit to purchase the upgrade
         if (gameData.gold >= info.upgradeCost)
@@ -129,10 +129,10 @@ public class WallUpgradeController : MonoBehaviour
         switch (info.upgradeType)
         {
             case "Max Health":
-                wallMaxHealthUpgradeTMP.text = "+" + (info.getUpgradeValue() - gameData.wallMaxHealth);
+                wallMaxHealthUpgradeTMP.text = "+" + (info.getUpgradeValue() - gameData.wallMaxHealth).ToString("n0");
                 break;
             case "Current Health":
-                wallCurrentHealthUpgradeTMP.text = "+" + info.getUpgradeValue();
+                wallCurrentHealthUpgradeTMP.text = "+" + info.getUpgradeValue().ToString("n0");
                 break;
         }
     }

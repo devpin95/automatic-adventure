@@ -6,11 +6,15 @@ using UnityEngine;
 public class ApplicationManager : MonoBehaviour
 {
     public static ApplicationManager Instance;
+    
     public GameData gameData;
     public Devices devices;
     public MachineGunUpgrades machineGunUpgrades;
     public RocketLauncherUpgrades rocketLauncherUpgrades;
     public WallUpgrades wallUpgrades;
+    public BountyList bountyList;
+    
+    
     private void Awake()
     {
         if (Instance == null)
@@ -35,5 +39,6 @@ public class ApplicationManager : MonoBehaviour
         machineGunUpgrades.ResetObject();
         rocketLauncherUpgrades.ResetObject();
         wallUpgrades.ResetObject();
+        bountyList.ResetObject();
     }
 }

@@ -13,6 +13,10 @@ public class BulletController : MonoBehaviour
     public bool canRicochet;
     public bool isTracer;
     public float tracerBrightness;
+    
+    [ColorUsageAttribute(true,true,0f,8f,0.125f,3f)]
+    public Color defaultTracerColor = Color.yellow;
+    
     private float live = 0.0f;
     private float killBy = 4.0f;
     private float ricochetChance = 0.175f;
@@ -20,6 +24,8 @@ public class BulletController : MonoBehaviour
     private bool ricocheting = false;
     private TrailRenderer _trailRenderer;
     private Light _tracerLight;
+
+    private Material _materialInstance;
 
     private Rigidbody rb;
     
@@ -29,6 +35,12 @@ public class BulletController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         _trailRenderer = GameObject.Find("Trail").GetComponent<TrailRenderer>();
         _tracerLight = GameObject.Find("Tracer Light").GetComponent<Light>();
+        
+        Renderer renderer = GetComponent<Renderer>();
+        _materialInstance = Instantiate(renderer.material);
+        renderer.material = _materialInstance;
+        _trailRenderer.material = _materialInstance;
+        TracerColor(defaultTracerColor);
     }
 
     // Update is called once per frame
@@ -136,5 +148,23 @@ public class BulletController : MonoBehaviour
         _trailRenderer.Clear();
         _trailRenderer.enabled = true;
         _tracerLight.intensity = tracerBrightness;
+    }
+
+    public void MakeTracerRound()
+    {
+        _trailRenderer.enabled = true;
+        canRicochet = true;
+        isTracer = true;
+    }
+
+    public void MakeDefaultRound()
+    {
+        canRicochet = false;
+        isTracer = false;
+    }
+
+    public void TracerColor(Color color)
+    {
+        _materialInstance.SetColor("Color_190eba34eefa4e28a2fa1387cf5bbe85", color);
     }
 }

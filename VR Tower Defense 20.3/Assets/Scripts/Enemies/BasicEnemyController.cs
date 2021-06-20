@@ -24,6 +24,10 @@ public class BasicEnemyController : MonoBehaviour
     private Vector3 _spawnPos;
     private bool isLaunched = false;
 
+    private BountyTrackedData _bountyTrackedData = new BountyTrackedData();
+    public CEvent_BountyTrackedData bountyNotificationEvent;
+    private GameObject _playerObject;
+
     private float health;
     
     // Start is called before the first frame update
@@ -37,6 +41,7 @@ public class BasicEnemyController : MonoBehaviour
         GetTarget();
 
         health = attributes.startingHealth;
+        _playerObject = GameObject.Find("XR Rig").transform.Find("Camera Offset").gameObject;
     }
 
     // Update is called once per frame
@@ -93,6 +98,16 @@ public class BasicEnemyController : MonoBehaviour
         if (health <= 0)
         {
             killed.Raise(attributes.EnemyValue, attributes.countAsEnemy);
+            
+            _bountyTrackedData.bountyType = Bounty.BountyTypes.Kill;
+            _bountyTrackedData.trackedDataId = "Kill Basic Enemy Distance";
+            _bountyTrackedData.testVal = Vector3.Distance(transform.position, _playerObject.transform.position);
+            bountyNotificationEvent.Raise(_bountyTrackedData);
+
+            _bountyTrackedData.bountyType = Bounty.BountyTypes.Kill;
+            _bountyTrackedData.trackedDataId = "Kill Basic Enemy";
+            bountyNotificationEvent.Raise(_bountyTrackedData);
+
             DisablePooledObject();
         }
     }

@@ -7,7 +7,7 @@ public class SwitchMenu : MonoBehaviour
     public GameObject parentMenu;
     public GameObject switchToMenu;
 
-    public void OnClick()
+    public void Switch()
     {
         //hide parent menu
         parentMenu.SetActive(false);

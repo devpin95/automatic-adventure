@@ -20,7 +20,7 @@ public class UpgradeUIGameValueManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        creditField.text = "C. " + gameData.gold;
+        creditField.text = "C. " + gameData.gold.ToString("n0");
     }
 
     public void DeselectAllButtons()

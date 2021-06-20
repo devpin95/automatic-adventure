@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
+using System.Linq;
 
 public class SpawnManager : MonoBehaviour
 {
@@ -14,7 +16,8 @@ public class SpawnManager : MonoBehaviour
 
     public EnemyAttributes ballLauncherAttributes;
 
-    public GameData gameData;
+    public LayerMask enemyLayer;
+    
     // private int numEnemies = 0;
 
     private float _waitTimeDuration = 5.0f;
@@ -25,6 +28,12 @@ public class SpawnManager : MonoBehaviour
     private bool _waveOver = false;
     private bool _stintOver = false;
     private bool _firstWaveBack = true;
+
+    private bool _hasDeferredWaves = false;
+    private int _currentDeferredWave = 0;
+    private int _deferredWaveCount = 0;
+    private Level _currentLevel;
+    private List<List<WaveGroup>> _deferredWaves = new List<List<WaveGroup>>();
 
     private bool[,] _grid;
     private int _gridCols;
@@ -62,6 +71,31 @@ public class SpawnManager : MonoBehaviour
     {
         if (_stintOver) return;
 
+        if (_hasDeferredWaves)
+        {
+            Debug.Log("Checking spawn area...");
+            if (!EnemiesInSpawnArea())
+            {
+                Debug.Log("No more enemies in the spawn area, spawning deferred wave " + _currentDeferredWave);
+                // we need to spawn the next deferred wave
+                foreach (var group in _currentLevel.waveGroups.Where(t => t.deferredWave == _currentDeferredWave))
+                {
+                    SpawnGroup(group);
+                }
+
+                ++_currentDeferredWave;
+
+                if (_currentDeferredWave >= _deferredWaveCount)
+                {
+                    _hasDeferredWaves = false;
+                    _currentDeferredWave = 0;
+                    _deferredWaveCount = 0;
+                    _currentLevel = null;
+                    _deferredWaves = new List<List<WaveGroup>>();
+                }
+            }
+        }
+
         if (_waveOver)
         {
             _waitTime += Time.deltaTime;
@@ -78,7 +112,7 @@ public class SpawnManager : MonoBehaviour
                 {
                     if (_gridInitialized)
                     {
-                        _grid = new bool[_gridRows, _gridCols];
+                        // _grid = new bool[_gridRows, _gridCols];
                         ResetGrid();
                     }
 
@@ -102,82 +136,41 @@ public class SpawnManager : MonoBehaviour
             return;
         }
 
-        Level level = levelData.levels[wave];
+        _currentLevel = levelData.levels[wave];
 
-        int count = 0;
-        foreach (var group in level.waveGroup)
+        var deferredWaveGroups = _currentLevel.waveGroups.GroupBy(t => t.deferredWave);
+
+        foreach (var thing in deferredWaveGroups)
         {
-            count += group.count;
+            _deferredWaves.Add(thing.ToList());
         }
 
-        foreach (var group in level.waveGroup)
+        if (_deferredWaves.Count > 1)
         {
+            Debug.Log("This level has " + _deferredWaves.Count + " deferred waves.");
+            _hasDeferredWaves = true;
+            _currentDeferredWave = 1;
+            _deferredWaveCount = _deferredWaves.Count;
+        }
+        
 
-            float centerX = 0, centerZ = 0, areaHeight = 0, areaWidth = 0, blockWidth = 0, spacing = 0;
+        // int count = 0;
+        //
+        // foreach (var group in _currentLevel.waveGroups)
+        // {
+        //     count += group.count;
+        // }
 
-            if (group.enemy.isFixed)
-            {
-                centerX = group.enemy.fixedPosition.x;
-                centerZ = group.enemy.fixedPosition.y;
-                areaWidth = group.enemy.fixedPosition.z;
-                blockWidth = areaWidth / group.count; // the width of a block in the spawn area
-                spacing = blockWidth / 2; // half the size of a block
-            }
-            
-            // Debug.Log("Looking for " + group.count + " open slots in the grid");
-            for (int i = 0; i < group.count; ++i)
-            {
-                Quaternion rotation = group.enemy.Prefab.transform.rotation;
-                Vector3 angles = group.enemy.rotation;
-                Quaternion modRotation = Quaternion.Euler(angles.x, angles.y, angles.z);
-
-                if (group.enemy.randomRotation)
-                {
-                    rotation = UnityEngine.Random.rotation;
-                }
-
-                ObjectPool pool = group.enemy.pool;
-                GameObject enemy = pool.GetPooledObject();
-
-                if (enemy)
-                {
-                    if (group.enemy.isFixed)
-                    {
-                        // this enemy has a fixed spawn area
-                        // find x center by doing calc starting at x = 0 in 1D
-                        float currentBlock = i * blockWidth;
-                        float blockXCenter = currentBlock + spacing;
-                        float trueXCenter = blockXCenter + centerX - ( areaWidth / 2 );
-
-                        enemy.transform.position = new Vector3(trueXCenter, 1, centerZ);
-                    }
-                    // else if (count >= _gridThreshold)
-                    // {
-                    //     Vector3 spawn = GridPosition(group.enemy.spawnGridDimensions);
-                    //
-                    //     if (spawn == Vector3.zero)
-                    //     {
-                    //         Debug.Log("We couldnt find a place for this!");
-                    //     }
-                    //     
-                    //     enemy.transform.position = spawn;
-                    // }
-                    else
-                    {
-                        //this enemy can spawn anywhere in the main spawn area
-                        // enemy.transform.position = RandomPosition();
-                        enemy.transform.position = RandomGridPosition(group.enemy.spawnGridDimensions);
-                    }
-
-                    enemy.transform.rotation = rotation * modRotation;
-                    enemy.SetActive(true);
-                    // Debug.Break();
-                    
-                    if ( group.enemy.countAsEnemy ) enemiesLeftInWave += 1;
-                }
-            }
+        Debug.Log("Spawning deferred wave 0");
+        foreach (var group in _currentLevel.waveGroups.Where(t => t.deferredWave == 0))
+        {
+            SpawnGroup(group);
         }
 
+        enemiesLeftInWave = GetTotalEnemiesInWave(_currentLevel);
+        
+        Debug.Log("There is a total of " + enemiesLeftInWave + " enemies across the " + _deferredWaveCount + " deferred waves");
+        
         _waveOver = false;
         waveStartedEvent.Raise(wave);
     }
@@ -308,6 +301,62 @@ public class SpawnManager : MonoBehaviour
         return spawnPos;
     }
 
+    private void SpawnGroup(WaveGroup group)
+    {
+        ResetGrid();
+        
+        float centerX = 0, centerZ = 0, areaHeight = 0, areaWidth = 0, blockWidth = 0, spacing = 0;
+
+        if (group.enemy.isFixed)
+        {
+            centerX = group.enemy.fixedPosition.x;
+            centerZ = group.enemy.fixedPosition.y;
+            areaWidth = group.enemy.fixedPosition.z;
+            blockWidth = areaWidth / group.count; // the width of a block in the spawn area
+            spacing = blockWidth / 2; // half the size of a block
+        }
+        
+        // Debug.Log("Looking for " + group.count + " open slots in the grid");
+        for (int i = 0; i < group.count; ++i)
+        {
+            Quaternion rotation = group.enemy.Prefab.transform.rotation;
+            Quaternion modRotation = Quaternion.Euler(group.enemy.rotation);
+
+            if (group.enemy.randomRotation) rotation = UnityEngine.Random.rotation;
+            
+            Quaternion spawnRotation = rotation * modRotation;
+
+            ObjectPool pool = group.enemy.pool;
+            GameObject enemy = pool.GetPooledObject();
+
+            if (enemy)
+            {
+                if (group.enemy.isFixed)
+                {
+                    // this enemy has a fixed spawn area
+                    // find x center by doing calc starting at x = 0 in 1D
+                    float currentBlock = i * blockWidth;
+                    float blockXCenter = currentBlock + spacing;
+                    float trueXCenter = blockXCenter + centerX - ( areaWidth / 2 );
+
+                    enemy.transform.position = new Vector3(trueXCenter, 1, centerZ);
+                }
+                else
+                {
+                    //this enemy can spawn anywhere in the main spawn area
+                    // enemy.transform.position = RandomPosition();
+                    enemy.transform.position = RandomGridPosition(group.enemy.spawnGridDimensions);
+                }
+
+                enemy.transform.rotation = spawnRotation;
+                enemy.SetActive(true);
+                // Debug.Break();
+                
+                // if ( group.enemy.countAsEnemy ) enemiesLeftInWave += 1;
+            }
+        }
+    }
+    
     private bool EnemyFits(int row, int col, Vector2 size)
     {
         if (col + size.x >= _gridCols || row + size.y >= _gridRows) return false;
@@ -398,5 +447,26 @@ public class SpawnManager : MonoBehaviour
         _gridInitialized = true;
         _nextOpenSlot.x = 0;
         _nextOpenSlot.y = 0;
+    }
+
+    private bool EnemiesInSpawnArea()
+    {
+        Vector3 bounds = new Vector3(spawnGridColumns, 0.5f, spawnGridRows);
+        return Physics.OverlapBox(spawnCenter, bounds, Quaternion.identity, enemyLayer).Length > 0;
+    }
+
+    private int GetTotalEnemiesInWave(Level level)
+    {
+        int count = 0;
+
+        foreach (var group in level.waveGroups)
+        {
+            if (group.enemy.countAsEnemy)
+            {
+                count += group.count;
+            }
+        }
+
+        return count;
     }
 }
