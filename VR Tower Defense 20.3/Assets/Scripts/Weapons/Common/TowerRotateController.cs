@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class TowerRotateController : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class TowerRotateController : MonoBehaviour
     public GameObject towerTrans;
     public GameObject playerRig;
     public Transform towerAnchorPoint;
+    public InputActionReference rotateAction;
     private float lastAngle = 0;
     private bool firstRotationCall = true;
     
@@ -27,26 +29,24 @@ public class TowerRotateController : MonoBehaviour
 
     public void RotateTower(float rotationSpeed)
     {
-        Vector2 joystickVal;
-        if (_devices.RightHand.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxis, out joystickVal))
+        Vector2 joystickVal = rotateAction.action.ReadValue<Vector2>();
+
+        float angle = joystickVal.x * rotationSpeed * Time.deltaTime;
+
+        if (Mathf.Abs(angle) <= Mathf.Abs(lastAngle))
         {
-            float angle = joystickVal.x * rotationSpeed * Time.deltaTime;
-
-            if (Mathf.Abs(angle) <= Mathf.Abs(lastAngle))
-            {
-                angle = Mathf.Lerp(lastAngle, angle, Time.deltaTime * 5);
-            }
-            
-            // if (Mathf.Abs(angle) >= Mathf.Abs(lastAngle))
-            // {
-            //     angle = Mathf.Lerp(angle, lastAngle, Time.deltaTime * 5);
-            // }
-            
-            lastAngle = angle;
-
-            towerTrans.transform.RotateAround(playerRig.transform.position, towerAnchorPoint.up, angle);
-            transform.RotateAround(playerRig.transform.position, towerAnchorPoint.up, angle);
-            playerRig.transform.RotateAround(playerRig.transform.position, playerRig.transform.up, angle);
+            angle = Mathf.Lerp(lastAngle, angle, Time.deltaTime * 5);
         }
+        
+        // if (Mathf.Abs(angle) >= Mathf.Abs(lastAngle))
+        // {
+        //     angle = Mathf.Lerp(angle, lastAngle, Time.deltaTime * 5);
+        // }
+        
+        lastAngle = angle;
+
+        towerTrans.transform.RotateAround(playerRig.transform.position, towerAnchorPoint.up, angle);
+        transform.RotateAround(playerRig.transform.position, towerAnchorPoint.up, angle);
+        playerRig.transform.RotateAround(playerRig.transform.position, playerRig.transform.up, angle);
     }
 }

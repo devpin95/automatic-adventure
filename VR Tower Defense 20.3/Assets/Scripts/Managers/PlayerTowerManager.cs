@@ -58,21 +58,21 @@ public class PlayerTowerManager : MonoBehaviour
         // previousPrimaryButtonDown = primaryButtonDown;
         //
         
-        if (!_devices.RightHandActive && !_devices.LeftHandActive)
-        {
-            Vector2 joystickVal;
-            if (_devices.RightHand.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxis, out joystickVal))
-            {
-                Vector3 translation = new Vector3(joystickVal.x, 0, joystickVal.y);
-                translation = Quaternion.AngleAxis(_playerCamera.transform.eulerAngles.y, Vector3.up) * translation;
-        
-                xrRig.transform.Translate(translation * Time.deltaTime * movementSpeed, Space.World);
-        
-                Vector3 pos = xrRig.transform.position;
-                pos.y = _towers[_currentTower].gameObject.transform.Find("Tower Anchor Point").position.y;
-                xrRig.transform.position = pos;
-            }
-        }
+        // if (!_devices.RightHandActive && !_devices.LeftHandActive)
+        // {
+        //     Vector2 joystickVal;
+        //     if (_devices.RightHand.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxis, out joystickVal))
+        //     {
+        //         Vector3 translation = new Vector3(joystickVal.x, 0, joystickVal.y);
+        //         translation = Quaternion.AngleAxis(_playerCamera.transform.eulerAngles.y, Vector3.up) * translation;
+        //
+        //         xrRig.transform.Translate(translation * Time.deltaTime * movementSpeed, Space.World);
+        //
+        //         Vector3 pos = xrRig.transform.position;
+        //         pos.y = _towers[_currentTower].gameObject.transform.Find("Tower Anchor Point").position.y;
+        //         xrRig.transform.position = pos;
+        //     }
+        // }
         
         //
         // bool secondaryButtonDown;

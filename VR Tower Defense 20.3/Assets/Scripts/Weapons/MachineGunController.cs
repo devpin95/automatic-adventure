@@ -3,9 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
-using UnityEngine.XR;
 using UnityEngine.XR.Interaction.Toolkit;
+using InputDevice = UnityEngine.XR.InputDevice;
 
 public class MachineGunController : MonoBehaviour
 {
@@ -32,6 +33,11 @@ public class MachineGunController : MonoBehaviour
     [Header("Scriptable Objects")] 
     [SerializeField] private Devices _devices;
 
+    [Header("Input Actions")] 
+    public CEvent_Int switchMapEvent;
+    public InputActionReference fire;
+    // fire.action.performed += IAFire;
+
     private int _shotCount = 0; // keeps track of when to shoot a tracer
     private bool initialLoad = true;
     private bool _ammoBoxInstalled = true;
@@ -49,12 +55,8 @@ public class MachineGunController : MonoBehaviour
     private AimController _aimController; // script to aim the gun
     private TowerRotateController _towerRotateController; // script to rotate the tower
     private AudioSource _shootingSound; // sound to play when the gun is firing
-
-    // private ObjectPool _bulletPool;
-
-    // private Vector3 fireDebug;
-
-    // Start is called before the first frame update
+    
+    
     void Start()
     {
         tempHand.SetActive(false);
@@ -65,6 +67,9 @@ public class MachineGunController : MonoBehaviour
         _shootingSound = GetComponent<AudioSource>();
         _haptics = GameObject.Find("HapticsManager").GetComponent<HapticsManager>();
         // _bulletPool = GetComponent<ObjectPool>();
+
+        
+        fire.action.performed += IAFire;
 
         _centerPosition = transform.localPosition;
     }
@@ -113,6 +118,7 @@ public class MachineGunController : MonoBehaviour
         if (_currentInteractor.CompareTag("Left Hand Interactor")) _currentDevice = _devices.LeftHand;
         else _currentDevice = _devices.RightHand;
         
+        switchMapEvent.Raise((int)PlayerActionStateManager.ActionMap.Machinegun);
     }
 
     public void OnGripSelectExit(XRBaseInteractor interactor)
@@ -123,6 +129,7 @@ public class MachineGunController : MonoBehaviour
         tempHand.SetActive(false);
         _currentInteractor = null;
         _shootingSound.Stop();
+        switchMapEvent.Raise((int)PlayerActionStateManager.ActionMap.Freemovement);
     }
 
     public void OnGripActivate(XRBaseInteractor interactor)
@@ -216,5 +223,36 @@ public class MachineGunController : MonoBehaviour
         
         bullet.SetActive(true);
         bullet.GetComponent<Rigidbody>().AddForce(randDir.normalized * machineGunUpgrades.BulletVelocityModifier, ForceMode.Impulse);
+    }
+
+    public void IAFire(InputAction.CallbackContext context)
+    {
+        if (!_selected) return;
+        
+        bool buttonPressed = context.ReadValueAsButton();
+        if (buttonPressed)
+        {
+            if (_ammoBoxInstalled)
+            {
+                _firing = true;
+                _shootingSound.Play();
+            }
+        }
+        else
+        {
+            _firing = false;
+            // _haptics.StopIndefiniteRumble(_currentDevice);
+            _shootingSound.Stop();
+        }
+    }
+
+    private void EnableInputAction()
+    {
+        fire.action.Enable();
+    }
+
+    private void DisableInputActions()
+    {
+        fire.action.Disable();
     }
 }

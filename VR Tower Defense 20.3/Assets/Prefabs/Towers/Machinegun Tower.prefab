@@ -5692,6 +5692,8 @@ MonoBehaviour:
   shotDelay: 0.05
   tracerSpacing: 3
   _devices: {fileID: 11400000, guid: fc17e951e66ee6f45b322aa8ad13f53f, type: 2}
+  switchMapEvent: {fileID: 11400000, guid: 99f72c102a839a8448a7888795a61818, type: 2}
+  fire: {fileID: -6507888124805156893, guid: 8c7d18ecd7252f647a6f5a32b75532e7, type: 3}
 --- !u!114 &7160286923077437845
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5721,6 +5723,7 @@ MonoBehaviour:
   towerTrans: {fileID: 2855314035518397061}
   playerRig: {fileID: 0}
   towerAnchorPoint: {fileID: 2855314035060470522}
+  rotateAction: {fileID: -1111132620944592305, guid: 8c7d18ecd7252f647a6f5a32b75532e7, type: 3}
 --- !u!82 &5199692387276825137
 AudioSource:
   m_ObjectHideFlags: 0

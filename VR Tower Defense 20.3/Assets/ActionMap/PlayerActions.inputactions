@@ -1,0 +1,131 @@
+{
+    "name": "PlayerActions",
+    "maps": [
+        {
+            "name": "Machinegun",
+            "id": "ce67f2b1-5693-4317-a27d-8829e48d42fc",
+            "actions": [
+                {
+                    "name": "Fire",
+                    "type": "Button",
+                    "id": "79f87b12-e4f0-4601-96ac-e86b566027ac",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Rotate Tower",
+                    "type": "Value",
+                    "id": "35316b2d-a80f-447d-bba1-a39b43d08e8c",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "c2ee0786-354f-43fb-8734-adc0fa0f3ead",
+                    "path": "<XRController>{RightHand}/triggerButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Fire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4785ad38-93ce-4de9-86d6-acf8379a7a0c",
+                    "path": "<XRController>{LeftHand}/gripButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Fire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b54820d2-961b-4db8-9973-2fdf5f0a1e1a",
+                    "path": "<XRController>{LeftHand}/primary2DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rotate Tower",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "eb54f5f5-52d5-46f6-bc27-914c747211b6",
+                    "path": "<XRController>{RightHand}/primary2DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rotate Tower",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Free Movement",
+            "id": "b90bbaf9-5784-42ff-9a7a-423e8f70b14e",
+            "actions": [
+                {
+                    "name": "Move",
+                    "type": "Value",
+                    "id": "028910f3-ca6f-409b-ba6f-b2e0e0c48b39",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Pitch",
+                    "type": "Button",
+                    "id": "e0cde1a4-4297-4734-bc64-ea46472bbb6a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "cab40cf3-c83c-4c3e-b832-afb3239eb52b",
+                    "path": "<XRController>{LeftHand}/primary2DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f1873040-6246-417d-b11c-70daea4ce47c",
+                    "path": "<XRController>{RightHand}/primary2DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b5d0131b-75a2-4451-9dae-a98e60d0d4fd",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pitch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
