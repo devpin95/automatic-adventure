@@ -82,9 +82,17 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Pitch",
+                    "name": "PitchUp",
                     "type": "Button",
                     "id": "e0cde1a4-4297-4734-bc64-ea46472bbb6a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "PitchDown",
+                    "type": "Button",
+                    "id": "afe05e87-8512-4c9f-b9d6-556e18637ed2",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -116,11 +124,44 @@
                 {
                     "name": "",
                     "id": "b5d0131b-75a2-4451-9dae-a98e60d0d4fd",
-                    "path": "",
+                    "path": "<XRController>{LeftHand}/primaryButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Pitch",
+                    "action": "PitchUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "292b277d-f941-4dbe-a11e-ce6fdea58cb3",
+                    "path": "<XRController>{RightHand}/primaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PitchUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bbd5bd41-7080-4b7f-9cb9-2a1cd72164dc",
+                    "path": "<XRController>{LeftHand}/secondaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PitchDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3b18c004-f971-4f43-a027-09f04dc3c537",
+                    "path": "<XRController>{RightHand}/secondaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PitchDown",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

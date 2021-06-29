@@ -20,8 +20,8 @@ public class MachineGunController : MonoBehaviour
 
     public CEvent_BountyTrackedData bountyNotification;
     public BountyTrackedData bountyTrackedData = new BountyTrackedData();
-    private string _fireRoundBountyID = "Machinegun Fire";
-    private string _reloadBountyID = "Machinegun Reload";
+    private string _fireRoundBountyID = "Action Machinegun Fire";
+    private string _reloadBountyID = "Action Machinegun Reload";
     
     [Header("Shooting")]
     public float shotDelay = 0.05f;
@@ -43,6 +43,8 @@ public class MachineGunController : MonoBehaviour
     private bool _ammoBoxInstalled = true;
     // private MachineGunAmmoBox _activeAmmoBox; // the current ammo box to take ammo from
     private AmmoBoxController _activeAmmoBox;
+    private AmmoBoxController _previousAmmoBox;
+    private bool _firstAmmoLoad = true;
     private Vector3 _restingPosition;
     private Quaternion _restingRotation; // the rotation to keep when we let go of the gun
     private Vector3 _centerPosition; // the center of the gun to rotate around when aiming
@@ -151,18 +153,20 @@ public class MachineGunController : MonoBehaviour
     public void OnAmmoLoaded(XRBaseInteractable interactable)
     {
         // Debug.Log("Ammo Loaded");
-        AmmoBoxController ammoBoxController = interactable.GetComponent<AmmoBoxController>();
-        if (ammoBoxController)
+        AmmoBoxController loadedAmmoBox = interactable.GetComponent<AmmoBoxController>();
+        if (loadedAmmoBox)
         {
-            if (ammoBoxController != _activeAmmoBox)
+            if (loadedAmmoBox != _previousAmmoBox && !_firstAmmoLoad)
             {
                 bountyTrackedData.trackedDataId = _reloadBountyID;
                 bountyTrackedData.bountyType = Bounty.BountyTypes.Action;
                 bountyNotification.Raise(bountyTrackedData);
             }
-            _activeAmmoBox = ammoBoxController;
-            // Debug.Log("AMMO: " + _activeAmmoBox.Count + "/" + _activeAmmoBox.Capacity);
+            _activeAmmoBox = loadedAmmoBox;
+            _previousAmmoBox = loadedAmmoBox;
+            
             _ammoBoxInstalled = true;
+            _firstAmmoLoad = false;
         }
     }
 
@@ -207,8 +211,12 @@ public class MachineGunController : MonoBehaviour
 
         ++_shotCount;
         _timeSinceLastShot = 0;
-        float ranXrot = UnityEngine.Random.Range(-1.0f, 1.0f);
-        float ranYrot = UnityEngine.Random.Range(-1.0f, 1.0f);
+        
+        float lowerAngle = -machineGunUpgrades.BulletAccuracy;
+        float upperAngle = machineGunUpgrades.BulletAccuracy;
+        
+        float ranXrot = UnityEngine.Random.Range(lowerAngle, upperAngle);
+        float ranYrot = UnityEngine.Random.Range(lowerAngle, upperAngle);
         Vector3 randDir = Quaternion.Euler(ranXrot, ranYrot,  0) * fireLocation.forward;
         
         BulletController bulletController = bullet.GetComponent<BulletController>();

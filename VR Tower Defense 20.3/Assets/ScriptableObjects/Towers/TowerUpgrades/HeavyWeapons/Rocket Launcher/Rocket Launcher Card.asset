@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aeb36c2383407cf43950210bc5d6d5f5, type: 3}
+  m_Name: Rocket Launcher Card
+  m_EditorClassIdentifier: 
+  weaponName: Rocket Launcher
+  description: Heavy weapon that fires fast-travelling rockets and deals a short-range
+    sphere of damage with falloff. Has high accuracy but a slow fire rate.
+  baseDamage: 100
+  rpm: 24
+  isUpgradeable: 1
+  heavyWeaponType: 0
+  cost: 100000
+  purchased: 0
+  prefab: {fileID: 8134332676008314688, guid: 0722bb4de5680a94fbeb7d07a2298758, type: 3}
+  cameraOrthographicSize: 0.8

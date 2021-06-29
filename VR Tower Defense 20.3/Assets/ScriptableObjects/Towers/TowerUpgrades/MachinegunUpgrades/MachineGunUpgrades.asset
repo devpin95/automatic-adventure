@@ -34,6 +34,16 @@ MonoBehaviour:
   bulletVelocityUpgradeStep: 0
   bulletVelocityUpgradeCosts: 88130000204e0000
   bulletVelocityUpgradeValues: 1100000014000000
+  defaultAccuracy: 1
+  bulletAccuracy: 1
+  bulletAccuracyUpgradeStep: 0
+  bulletAccuracyUpgradeCosts: d00700008813000010270000409c0000
+  bulletAccuracyUpgradeValues:
+  - 0.85
+  - 0.7
+  - 0.5
+  - 0.25
   damageCard: {fileID: 11400000, guid: 54e919554d8bbcf4994a63459935a790, type: 2}
   velocityCard: {fileID: 11400000, guid: 455768eabe14fd544a144f16ff42449f, type: 2}
   rotationCard: {fileID: 11400000, guid: 3bc2d43fec45d814f98411ced1ceb5a1, type: 2}
+  accuracyCard: {fileID: 11400000, guid: 1222321291b15b84190a21d854336b1a, type: 2}

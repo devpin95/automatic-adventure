@@ -58,11 +58,28 @@ public class MachineGunUpgrades : ScriptableObject
     public int[] bulletVelocityUpgradeCosts = { 1000, 2000 };
     public int[] bulletVelocityUpgradeValues = { 16, 17 };
     // *****************************************************************************************************************
+    
+    // Accuracy --------------------------------------------------------------------------------------------------------
+    [Header("Accuracy Upgrades")]
+    [FormerlySerializedAs("defaultAccuracyModifier")][SerializeField] private float defaultAccuracy;
+    [SerializeField] private float bulletAccuracy;
+    
+    public float BulletAccuracy
+    {
+        get => bulletAccuracy;
+        set => bulletAccuracy = value;
+    }
+    
+    public int bulletAccuracyUpgradeStep = 0;
+    public int[] bulletAccuracyUpgradeCosts = {  };
+    public float[] bulletAccuracyUpgradeValues = {  };
+    // *****************************************************************************************************************
 
     [Header("Upgrade Cards")] 
     public UpgradeCard damageCard;
     public UpgradeCard velocityCard;
     public UpgradeCard rotationCard;
+    public UpgradeCard accuracyCard;
     
     
     public void ResetObject()
@@ -75,6 +92,9 @@ public class MachineGunUpgrades : ScriptableObject
         
         bulletVelocityModifier = defaultBulletVelocityModifier;
         bulletVelocityUpgradeStep = 0;
+
+        bulletAccuracy = defaultAccuracy;
+        bulletAccuracyUpgradeStep = 0;
         
         UpgradeProjectile();
         initialized = false;
@@ -90,6 +110,10 @@ public class MachineGunUpgrades : ScriptableObject
         rotationCard.upgradeCost = rotationUpgradeCosts[0];
         rotationCard.maxUpgradeReached = false;
         rotationCard.buttonInstance = null;
+        
+        accuracyCard.upgradeCost = bulletAccuracyUpgradeCosts[0];
+        accuracyCard.maxUpgradeReached = false;
+        accuracyCard.buttonInstance = null;
     }
 
     public void Init()
@@ -115,12 +139,21 @@ public class MachineGunUpgrades : ScriptableObject
         rotationCard.getUpgradeValue = GetNextRotationSpeedUpgradeValue;
         rotationCard.purchase = UpgradeRotationSpeed;
         rotationCard.updateCard = UpdateRotationSpeedCard;
+
+        accuracyCard.upgradeCost = bulletAccuracyUpgradeCosts[0];
+        accuracyCard.getUpgradeValue = GetNextBulletAccuracyUpgradeValue;
+        accuracyCard.purchase = UpgradeBulletAccuracy;
+        accuracyCard.updateCard = UpdateBulletAccuracyCard;
+        
     }
 
     private void UpgradeProjectile()
     {
         bulletAttributes.damage = damage;
     }
+    
+    // UPGRADE CARD FUNCTION -------------------------------------------------------------------------------------------
+    // *****************************************************************************************************************
 
     public void UpgradeDamage()
     {
@@ -164,6 +197,26 @@ public class MachineGunUpgrades : ScriptableObject
         
         UpdateVelocityCard();
     }
+    
+    public void UpgradeBulletAccuracy()
+    {
+        if (bulletAccuracyUpgradeStep > bulletAccuracyUpgradeCosts.Length - 1) return;
+        if (gameData.gold >= bulletAccuracyUpgradeCosts[bulletAccuracyUpgradeStep])
+        {
+            bulletAccuracy = bulletAccuracyUpgradeValues[bulletAccuracyUpgradeStep];
+            gameData.gold -= bulletAccuracyUpgradeCosts[bulletAccuracyUpgradeStep];
+            ++bulletAccuracyUpgradeStep;
+        }
+        
+        UpdateBulletAccuracyCard();
+    }
+    
+    // *****************************************************************************************************************
+    // *****************************************************************************************************************
+    
+    
+    // NEXT UPGRADE FUNCTION -------------------------------------------------------------------------------------------
+    // *****************************************************************************************************************
 
     public float GetNextBulletVelocityUpgradeValue()
     {
@@ -182,6 +235,19 @@ public class MachineGunUpgrades : ScriptableObject
         if (damageUpgradeStep >= damageUpgradeValues.Length) return 0;
         else return damageUpgradeValues[damageUpgradeStep];
     }
+    
+    public float GetNextBulletAccuracyUpgradeValue()
+    {
+        if (bulletAccuracyUpgradeStep >= bulletAccuracyUpgradeValues.Length) return 0;
+        else return bulletAccuracyUpgradeValues[bulletAccuracyUpgradeStep];
+    }
+    
+    // *****************************************************************************************************************
+    // *****************************************************************************************************************
+    
+    
+    // UPDATE CARD FUNCTION --------------------------------------------------------------------------------------------
+    // *****************************************************************************************************************
 
     public void UpdateDamageCard()
     {
@@ -224,4 +290,21 @@ public class MachineGunUpgrades : ScriptableObject
             rotationCard.upgradeCost = rotationUpgradeCosts[rotationUpgradeStep];
         }
     }
+    
+    public void UpdateBulletAccuracyCard()
+    {
+        if (bulletAccuracyUpgradeStep >= bulletAccuracyUpgradeValues.Length)
+        {
+            accuracyCard.maxUpgradeReached = true;
+            accuracyCard.upgradeCost = 0;
+            accuracyCard.buttonInstance.gameObject.SetActive(false);
+        }
+        else
+        {
+            accuracyCard.upgradeCost = bulletAccuracyUpgradeCosts[bulletAccuracyUpgradeStep];
+        }
+    }
+    
+    // *****************************************************************************************************************
+    // *****************************************************************************************************************
 }

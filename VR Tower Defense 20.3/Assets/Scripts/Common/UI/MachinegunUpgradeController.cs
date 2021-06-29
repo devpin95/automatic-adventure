@@ -20,17 +20,20 @@ public class MachinegunUpgradeController : MonoBehaviour
     public UpgradeCard damageCard;
     public UpgradeCard velocityCard;
     public UpgradeCard rotationSpeedCard;
+    public UpgradeCard accuracyCard;
     private UpgradeCard _activeUpgradeCard;
 
     [Header("Attribute Value Fields")]
     public TextMeshProUGUI bulletDamageTMP;
     public TextMeshProUGUI bulletVelocityTMP;
     public TextMeshProUGUI towerRotationSpeedTMP;
+    public TextMeshProUGUI bulletAccuracyTMP;
 
     [Header("Attribute Upgrade Values Fields")]
     public TextMeshProUGUI bulletDamageUpgradeTMP;
     public TextMeshProUGUI bulletVelocityUpgradeTMP;
     public TextMeshProUGUI towerRotationSpeedUpgradeTMP;
+    public TextMeshProUGUI bulletAccuracyUpgradeTMP;
 
     // Start is called before the first frame update
     void Start()
@@ -44,6 +47,7 @@ public class MachinegunUpgradeController : MonoBehaviour
         CreateUpgradeButton(damageCard);
         CreateUpgradeButton(velocityCard);
         CreateUpgradeButton(rotationSpeedCard);
+        CreateUpgradeButton(accuracyCard);
     }
 
     // Update is called once per frame
@@ -51,7 +55,8 @@ public class MachinegunUpgradeController : MonoBehaviour
     {
         bulletDamageTMP.text = upgrades.Damage.ToString("n0");
         bulletVelocityTMP.text = "x" + upgrades.BulletVelocityModifier.ToString("n0");
-        towerRotationSpeedTMP.text = upgrades.TowerRotationSpeed.ToString("n0") + "deg/s";
+        towerRotationSpeedTMP.text = upgrades.TowerRotationSpeed.ToString("n0") + "°/s";
+        bulletAccuracyTMP.text = "±" + upgrades.TowerRotationSpeed.ToString("n0") + "°";
     }
 
     private void CreateUpgradeButton(UpgradeCard info)
@@ -65,6 +70,8 @@ public class MachinegunUpgradeController : MonoBehaviour
         
         if ( info.maxUpgradeReached ) card.SetActive(false);
 
+        Debug.Log(info.updateCard);
+        
         info.updateCard();
         
         UpgradeButtonInit(card, info);
@@ -86,6 +93,7 @@ public class MachinegunUpgradeController : MonoBehaviour
         bulletDamageUpgradeTMP.text = "";
         bulletVelocityUpgradeTMP.text = "";
         towerRotationSpeedUpgradeTMP.text = "";
+        bulletAccuracyUpgradeTMP.text = "";
         
         // check if the max upgrade has been reached for this card
         // if it has, hide the panel
@@ -150,6 +158,9 @@ public class MachinegunUpgradeController : MonoBehaviour
                 break;
             case "Rotation":
                 towerRotationSpeedUpgradeTMP.text = "+" + (info.getUpgradeValue() - upgrades.TowerRotationSpeed).ToString("n0");
+                break;
+            case "Accuracy":
+                bulletAccuracyUpgradeTMP.text = "-" + (info.getUpgradeValue() - upgrades.BulletAccuracy).ToString("n2") + "°";
                 break;
         }
     }

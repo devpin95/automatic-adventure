@@ -116,8 +116,13 @@ public class SpawnManager : MonoBehaviour
                         ResetGrid();
                     }
 
-                    SpawnEnemies();
+                    _hasDeferredWaves = false;
+                    _currentDeferredWave = 0;
+                    _deferredWaveCount = 0;
+                    _currentLevel = null;
+                    _deferredWaves = new List<List<WaveGroup>>();
                     
+                    SpawnEnemies();
                 }
 
                 _waitTime = 0.0f;
@@ -256,7 +261,7 @@ public class SpawnManager : MonoBehaviour
         if (!notAFixedEnemy) return;
         
         --enemiesLeftInWave;
-        if (enemiesLeftInWave <= 0)
+        if (enemiesLeftInWave <= 0 && !_waveOver)
         {
             Debug.Log("No More enemies in wave " + wave + ". Moving on to wave " + (wave + 1));
             _waveOver = true;

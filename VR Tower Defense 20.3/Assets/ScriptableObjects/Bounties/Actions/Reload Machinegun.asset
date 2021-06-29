@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Reload Machinegun
   m_EditorClassIdentifier: 
   trackerType: 0
-  bountyActionId: Machinegun Reload
+  bountyActionId: Action Machinegun Reload
   accumulator: 0
   completionVal: 10
   relation: 0

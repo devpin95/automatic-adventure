@@ -39,21 +39,33 @@ public class WaveBountyMonitor : MonoBehaviour
         }
         else
         {
-            _waveEndingWallHealth = gameData.wallCurrentHealth;
-            float healthDif = _waveStartingWallHealth - _waveEndingWallHealth;
-
-            _bountyData.bountyType = Bounty.BountyTypes.Wave;
-            _bountyData.testVal = healthDif;
-            _bountyData.trackedDataId = _wallHealthBountyID;
-            
-            Debug.Log("Sending Wave Health Bounty Notification with Health Dif " + healthDif);
-
-            _waveStartingWallHealth = gameData.wallCurrentHealth;
+            HandleWaveEnd();
         }
     }
 
     public void StintEndHandler()
     {
         WaveStartHandler(0);
+    }
+
+    private void HandleWaveEnd()
+    {
+        SendWaveHealthBounties();
+    }
+
+    private void SendWaveHealthBounties()
+    {
+        _waveEndingWallHealth = gameData.wallCurrentHealth;
+        float healthDif = _waveStartingWallHealth - _waveEndingWallHealth;
+
+        _bountyData.bountyType = Bounty.BountyTypes.Wave;
+        _bountyData.testVal = healthDif;
+        _bountyData.trackedDataId = _wallHealthBountyID;
+            
+        bountyNotification.Raise(_bountyData);
+            
+        Debug.Log("Sending Wave Health Bounty Notification with Health Dif " + healthDif);
+
+        _waveStartingWallHealth = gameData.wallCurrentHealth;
     }
 }

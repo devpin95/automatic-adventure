@@ -18,6 +18,8 @@ public class HeavyWeaponSetup : MonoBehaviour
     [FormerlySerializedAs("cameraFeed")] public CanvasRenderer cameraFeedRenderer;
     private GameObject heavyWeapon;
     private HeavyWeapon heavyWeaponData;
+
+    private bool _weaponEquipped = true;
     
     // Start is called before the first frame update
     void Start()
@@ -47,6 +49,10 @@ public class HeavyWeaponSetup : MonoBehaviour
 
             delayedTexture = heavyWeaponData.renderTexture;
         }
+        else
+        {
+            _weaponEquipped = false;
+        }
         
         // for some reason, we need to wait before we set the material texture
         StartCoroutine(DelayedTexture(delayedTexture));
@@ -60,6 +66,8 @@ public class HeavyWeaponSetup : MonoBehaviour
 
     private void HeavyWeaponGUIInit()
     {
+        if (!_weaponEquipped) return;
+            
         GameObject gui = Instantiate(heavyWeaponData.gui, heavyWeaponGuiAnchor.position, heavyWeaponGuiAnchor.rotation);
         gui.transform.Rotate(0, 0, -90);
         gui.transform.SetParent(guiParentObject.transform);

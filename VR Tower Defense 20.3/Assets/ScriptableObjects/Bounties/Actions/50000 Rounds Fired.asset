@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 50000 Rounds Fired
   m_EditorClassIdentifier: 
   trackerType: 0
-  bountyActionId: Machinegun Fire
+  bountyActionId: Action Machinegun Fire
   accumulator: 0
   completionVal: 5000
   relation: 0
