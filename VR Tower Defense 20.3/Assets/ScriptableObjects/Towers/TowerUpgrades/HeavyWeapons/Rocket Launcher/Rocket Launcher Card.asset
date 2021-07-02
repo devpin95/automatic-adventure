@@ -16,10 +16,12 @@ MonoBehaviour:
   description: Heavy weapon that fires fast-travelling rockets and deals a short-range
     sphere of damage with falloff. Has high accuracy but a slow fire rate.
   baseDamage: 100
+  currentDamage: 0
   rpm: 24
   isUpgradeable: 1
   heavyWeaponType: 0
   cost: 100000
-  purchased: 0
+  purchased: 1
   prefab: {fileID: 8134332676008314688, guid: 0722bb4de5680a94fbeb7d07a2298758, type: 3}
   cameraOrthographicSize: 0.8
+  itemPreview: {fileID: 21300000, guid: 0b6414da8cecf3842a3d252e44d6fa7e, type: 3}

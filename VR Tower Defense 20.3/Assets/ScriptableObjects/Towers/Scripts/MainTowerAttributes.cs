@@ -6,4 +6,5 @@ using UnityEngine;
 public class MainTowerAttributes : ScriptableObject
 {
     public GameObject heavyWeaponPrefab;
+    public HeavyWeaponCard heavyWeaponCard;
 }

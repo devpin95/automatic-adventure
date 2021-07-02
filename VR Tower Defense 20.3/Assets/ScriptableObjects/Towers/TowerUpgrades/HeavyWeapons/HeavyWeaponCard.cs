@@ -22,6 +22,7 @@ public class HeavyWeaponCard : ScriptableObject
     public string weaponName;
     public string description;
     public float baseDamage;
+    public float currentDamage;
     public float rpm;
     public bool isUpgradeable;
     public HeavyWeaponType heavyWeaponType;
@@ -31,4 +32,5 @@ public class HeavyWeaponCard : ScriptableObject
     [Space(11)] 
     public GameObject prefab;
     public float cameraOrthographicSize;
+    public Sprite itemPreview;
 }

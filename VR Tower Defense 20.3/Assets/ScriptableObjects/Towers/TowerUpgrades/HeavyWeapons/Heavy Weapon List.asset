@@ -14,3 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   heavyWeaponsCard:
   - {fileID: 11400000, guid: 38959dd285f37144386a8b88bcb16a38, type: 2}
+  - {fileID: 11400000, guid: 73967b405e67fc64c9649b55c66ad569, type: 2}
+  - {fileID: 11400000, guid: 7ecaa665c7589ed4d83e99c51235f22d, type: 2}
+  - {fileID: 11400000, guid: d40c21cdf61b61f48bf1fc447bd9e834, type: 2}

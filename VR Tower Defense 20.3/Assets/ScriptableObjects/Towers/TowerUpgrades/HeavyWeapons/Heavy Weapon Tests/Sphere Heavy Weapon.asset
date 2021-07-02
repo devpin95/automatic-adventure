@@ -15,10 +15,12 @@ MonoBehaviour:
   weaponName: Sphere Heavy Weapon
   description: This thing is a ball
   baseDamage: 543
+  currentDamage: 0
   rpm: 543
   isUpgradeable: 1
   heavyWeaponType: 2
   cost: 2147483647
-  purchased: 0
+  purchased: 1
   prefab: {fileID: 6677291015408053874, guid: 203b0110c78f01c40b5d9c6c6ca5ed7a, type: 3}
   cameraOrthographicSize: 0.6
+  itemPreview: {fileID: 21300000, guid: d83897af00473f84497cbbb1c6df170f, type: 3}

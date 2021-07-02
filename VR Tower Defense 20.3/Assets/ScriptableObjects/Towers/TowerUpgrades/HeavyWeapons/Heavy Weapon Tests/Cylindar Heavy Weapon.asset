@@ -15,10 +15,12 @@ MonoBehaviour:
   weaponName: Cylander Heavy Weapon
   description: This thing is crazy as heck. You need to use it boiiiii
   baseDamage: 6969
+  currentDamage: 0
   rpm: 420
   isUpgradeable: 1
   heavyWeaponType: 0
   cost: 1000000
-  purchased: 0
+  purchased: 1
   prefab: {fileID: 837705131630932792, guid: 32582cf8b4698414481d0bcc12f6f65d, type: 3}
   cameraOrthographicSize: 1.5
+  itemPreview: {fileID: 21300000, guid: 3ab6ee6b53c42844aae69daf7594378d, type: 3}

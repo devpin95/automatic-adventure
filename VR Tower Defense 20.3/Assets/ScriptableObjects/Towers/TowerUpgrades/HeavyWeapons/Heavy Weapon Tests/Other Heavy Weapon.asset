@@ -15,10 +15,12 @@ MonoBehaviour:
   weaponName: Capsule Heavy Weapon
   description: Dude... take a chile pill
   baseDamage: 123
+  currentDamage: 0
   rpm: 123
   isUpgradeable: 1
   heavyWeaponType: 1
   cost: 123123
-  purchased: 0
+  purchased: 1
   prefab: {fileID: 8921933513304658630, guid: e4ef60b01d75dc146aa8895e920d3116, type: 3}
   cameraOrthographicSize: 1.2
+  itemPreview: {fileID: 21300000, guid: dc21f37b61a0b0643b7b88365d060c4f, type: 3}

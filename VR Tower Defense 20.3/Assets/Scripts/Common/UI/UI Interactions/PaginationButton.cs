@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 public class PaginationButton : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class PaginationButton : MonoBehaviour
     public GameObject paginatorPartner;
     [FormerlySerializedAs("paginateUp")] [Tooltip("True: Page down, False: Page up")] public bool slideUp;
     public float itemHeight;
-    public float itemsPerPage;
+    [FormerlySerializedAs("itemsPerPage")] public int rowsPerPage;
     public float slideSpeed = 2;
     [SerializeField] private float _yMin;
     [SerializeField]  private float _yMax;
@@ -20,6 +21,7 @@ public class PaginationButton : MonoBehaviour
     private float _lerpCounter = 0;
     private Vector3 _oldPos;
     private Vector3 _newPos;
+    private float ySpacing;
 
     // Start is called before the first frame update
     void Start()
@@ -28,8 +30,12 @@ public class PaginationButton : MonoBehaviour
         _yMin = _pageRect.position.y;
         _currentY = _yMin;
         _yMax = _yMin + pager.transform.childCount * itemHeight;
-        _yTransOnPage = (itemsPerPage + 1) * itemHeight;
+        
+        ySpacing = pager.GetComponent<GridLayoutGroup>().spacing.y;
+        _yTransOnPage = (rowsPerPage + 1) * itemHeight + (ySpacing * rowsPerPage);
+        
         if (!slideUp) _yTransOnPage = -_yTransOnPage;
+        
     }
 
     // Update is called once per frame
