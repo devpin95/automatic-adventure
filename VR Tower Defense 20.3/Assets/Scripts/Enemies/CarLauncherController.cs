@@ -98,9 +98,14 @@ public class CarLauncherController : MonoBehaviour
         }
     }
 
-    public void TakeIndirectHit(float damage)
+    public void TakeIndirectHit(float damage, EnemyAttributes.EnemyType projectileTarget)
     {
-        currentHealth -= damage;
+        float actualDamage = damage;
+
+        if (attributes.enemyType == projectileTarget) actualDamage *= GameModifiers.projectileTypeMatchModifier;
+        else actualDamage *= GameModifiers.projectileTypeMismatchModifier;
+        
+        currentHealth -= actualDamage;
 
         if (currentHealth <= (attributes.startingHealth / 2))
         {

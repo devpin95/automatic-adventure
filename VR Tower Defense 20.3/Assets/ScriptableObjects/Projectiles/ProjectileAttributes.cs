@@ -6,4 +6,5 @@ using UnityEngine;
 public class ProjectileAttributes : ScriptableObject
 {
     public float damage;
+    public EnemyAttributes.EnemyType targetType;
 }

@@ -24,13 +24,13 @@ public class BallLauncherController : MonoBehaviour
         }
     }
 
-    public void TakeDirectHit(float damage)
+    public void TakeDirectHit(float damage, EnemyAttributes.EnemyType projectileTarget)
     {
         health -= damage;
         Debug.Log("Ramp has " + health + " health (-" + damage + ")");
     }
 
-    public void TakeIndirectHit(float damage)
+    public void TakeIndirectHit(float damage, EnemyAttributes.EnemyType projectileTarget)
     {
         health -= damage;
         Debug.Log("Ramp has " + health + " health (-" + damage + ")");

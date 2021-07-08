@@ -8,7 +8,6 @@ using UnityEngine.Serialization;
 [CreateAssetMenu(menuName = "Player/Bounties/Bounty")]
 public class Bounty : ScriptableObject
 {
-    
     public enum TrackerType { SimpleAccumulator, PredicatedAccumulator }
     public enum Relations { LessThan, GreaterThan, Equal, LessThanOrEqual, GreaterThanOrEqual, NotEqual }
     public enum BountyTypes { Kill, Wave, Action }
@@ -177,7 +176,7 @@ public class BountyEditor : Editor
         // -------------------------------------------------------------------------------------------------------------
         EditorGUILayout.LabelField("Tracker", EditorStyles.boldLabel);
         // bounty.trackerType = (Bounty.TrackerType)EditorGUILayout.EnumPopup("Tracker Type", bounty.trackerType);
-        EditorGUILayout.PropertyField( m_TrackerType);
+        EditorGUILayout.PropertyField(m_TrackerType);
 
         if (bounty.trackerType == Bounty.TrackerType.PredicatedAccumulator)
         {

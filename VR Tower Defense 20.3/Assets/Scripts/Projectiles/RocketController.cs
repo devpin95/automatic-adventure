@@ -71,7 +71,7 @@ public class RocketController : MonoBehaviour
 
                 if (hitController)
                 {
-                    hitController.indirectHitEvent.Invoke(attributes.damage);
+                    hitController.indirectHitEvent.Invoke(attributes.damage, attributes.targetType);
                 }
             }
         }
@@ -91,7 +91,7 @@ public class RocketController : MonoBehaviour
                     float distance = Vector3.Distance(transform.position, hittable.transform.position);
                     float proportion = Mathf.Abs(distance - rocketDamageRadius);
                     float damage = (proportion / range) * attributes.damage;
-                    hittable.GetComponent<EnemyEventController>().indirectHitEvent.Invoke(Mathf.Abs(damage));
+                    hittable.GetComponent<EnemyEventController>().indirectHitEvent.Invoke(Mathf.Abs(damage), attributes.targetType);
                 }
                 hittable.transform.GetComponent<Rigidbody>()
                     .AddExplosionForce(rocketPower, transform.position, rocketAddForceRadius, 3.0f);

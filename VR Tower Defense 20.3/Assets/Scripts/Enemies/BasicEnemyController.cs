@@ -91,7 +91,7 @@ public class BasicEnemyController : MonoBehaviour
         }
     }
 
-    public void TakeIndirectHit(float damage)
+    public void TakeIndirectHit(float damage, EnemyAttributes.EnemyType projectileTarget)
     {
         health -= damage;
 

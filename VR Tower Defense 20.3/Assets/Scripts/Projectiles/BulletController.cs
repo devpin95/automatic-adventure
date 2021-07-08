@@ -105,7 +105,7 @@ public class BulletController : MonoBehaviour
             EnemyEventController eventController = other.gameObject.GetComponent<EnemyEventController>();
             if (eventController)
             {
-                eventController.directHitEvent.Invoke(attributes.damage);
+                eventController.directHitEvent.Invoke(attributes.damage, attributes.targetType);
             }
         }
         else

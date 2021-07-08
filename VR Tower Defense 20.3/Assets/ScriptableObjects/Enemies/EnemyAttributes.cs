@@ -7,7 +7,15 @@ using UnityEngine.Serialization;
 [CreateAssetMenu(menuName = "Enemies/Attributes")]
 public class EnemyAttributes : ScriptableObject
 {
+    public enum EnemyType
+    {  
+        Basic,
+        Armored
+    }
+    
     public string enemyName;
+
+    public EnemyType enemyType;
     
     [Space(10)]
     

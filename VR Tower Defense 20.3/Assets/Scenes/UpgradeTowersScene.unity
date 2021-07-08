@@ -6585,7 +6585,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &262427915
 RectTransform:
   m_ObjectHideFlags: 0
@@ -20355,7 +20355,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec0305446cdc1c24fa101076fcc45449, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parentMenu: {fileID: 1881974043}
+  parentMenu: {fileID: 999414622}
   switchToMenu: {fileID: 1809743729}
 --- !u!114 &840178267
 MonoBehaviour:
@@ -21719,7 +21719,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &907851702
 RectTransform:
   m_ObjectHideFlags: 0
@@ -42566,7 +42566,7 @@ Camera:
   far clip plane: 1000
   field of view: 19.9
   orthographic: 1
-  orthographic size: 1.18
+  orthographic size: 1.37
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2

@@ -166,6 +166,74 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Sniper Rifle",
+            "id": "10d6382f-ff33-4f19-a75a-51667b670ad0",
+            "actions": [
+                {
+                    "name": "Aim",
+                    "type": "Value",
+                    "id": "06e20884-08b1-4310-982c-3db6cc1b9afe",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Toggle Aim Speed",
+                    "type": "Button",
+                    "id": "3fbb28d5-800f-46ab-8330-695aa8ce40b5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "563aa657-b60d-4407-8c0b-3ec66f8c35d9",
+                    "path": "<XRController>{RightHand}/primary2DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Aim",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d5cff901-44ef-4179-bf4a-ad4552dde332",
+                    "path": "<XRController>{LeftHand}/primary2DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Aim",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "82df97e9-6379-4f20-a636-73b8e10e1e60",
+                    "path": "<XRController>{LeftHand}/primaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Toggle Aim Speed",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bb5c4a72-bf64-43e2-9047-666ab9b852e9",
+                    "path": "<XRController>{RightHand}/primaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Toggle Aim Speed",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

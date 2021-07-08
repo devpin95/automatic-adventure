@@ -5,6 +5,6 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [Serializable]
-public class UE_DirectHit : UnityEvent<float>
+public class UE_DirectHit : UnityEvent<float, EnemyAttributes.EnemyType>
 {
 }

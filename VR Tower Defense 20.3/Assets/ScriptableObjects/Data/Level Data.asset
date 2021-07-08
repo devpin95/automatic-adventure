@@ -105,7 +105,7 @@ MonoBehaviour:
       enemy: {fileID: 11400000, guid: 240ec810ef66d7e4a8971f8dd7eff654, type: 2}
     - count: 20
       deferredWave: 1
-      enemy: {fileID: 11400000, guid: 240ec810ef66d7e4a8971f8dd7eff654, type: 2}
+      enemy: {fileID: 11400000, guid: cf868ba1c553d0e45998b92cd6295f14, type: 2}
   - waveGroups:
     - count: 75
       deferredWave: 0
@@ -124,7 +124,7 @@ MonoBehaviour:
       deferredWave: 0
       enemy: {fileID: 11400000, guid: 240ec810ef66d7e4a8971f8dd7eff654, type: 2}
     - count: 20
-      deferredWave: 0
+      deferredWave: 1
       enemy: {fileID: 11400000, guid: cf868ba1c553d0e45998b92cd6295f14, type: 2}
   - waveGroups:
     - count: 75
@@ -134,7 +134,7 @@ MonoBehaviour:
       deferredWave: 0
       enemy: {fileID: 11400000, guid: 240ec810ef66d7e4a8971f8dd7eff654, type: 2}
     - count: 20
-      deferredWave: 0
+      deferredWave: 1
       enemy: {fileID: 11400000, guid: cf868ba1c553d0e45998b92cd6295f14, type: 2}
   - waveGroups:
     - count: 75
@@ -144,7 +144,7 @@ MonoBehaviour:
       deferredWave: 0
       enemy: {fileID: 11400000, guid: 240ec810ef66d7e4a8971f8dd7eff654, type: 2}
     - count: 20
-      deferredWave: 0
+      deferredWave: 1
       enemy: {fileID: 11400000, guid: cf868ba1c553d0e45998b92cd6295f14, type: 2}
   - waveGroups:
     - count: 75
@@ -154,7 +154,7 @@ MonoBehaviour:
       deferredWave: 0
       enemy: {fileID: 11400000, guid: 240ec810ef66d7e4a8971f8dd7eff654, type: 2}
     - count: 30
-      deferredWave: 0
+      deferredWave: 1
       enemy: {fileID: 11400000, guid: cf868ba1c553d0e45998b92cd6295f14, type: 2}
   - waveGroups:
     - count: 75
@@ -164,7 +164,7 @@ MonoBehaviour:
       deferredWave: 0
       enemy: {fileID: 11400000, guid: 240ec810ef66d7e4a8971f8dd7eff654, type: 2}
     - count: 30
-      deferredWave: 0
+      deferredWave: 1
       enemy: {fileID: 11400000, guid: cf868ba1c553d0e45998b92cd6295f14, type: 2}
   - waveGroups:
     - count: 75
@@ -174,7 +174,7 @@ MonoBehaviour:
       deferredWave: 0
       enemy: {fileID: 11400000, guid: 240ec810ef66d7e4a8971f8dd7eff654, type: 2}
     - count: 30
-      deferredWave: 0
+      deferredWave: 1
       enemy: {fileID: 11400000, guid: cf868ba1c553d0e45998b92cd6295f14, type: 2}
   - waveGroups:
     - count: 75
@@ -184,7 +184,7 @@ MonoBehaviour:
       deferredWave: 0
       enemy: {fileID: 11400000, guid: 240ec810ef66d7e4a8971f8dd7eff654, type: 2}
     - count: 30
-      deferredWave: 0
+      deferredWave: 1
       enemy: {fileID: 11400000, guid: cf868ba1c553d0e45998b92cd6295f14, type: 2}
   - waveGroups:
     - count: 75
@@ -194,36 +194,10 @@ MonoBehaviour:
       deferredWave: 0
       enemy: {fileID: 11400000, guid: 240ec810ef66d7e4a8971f8dd7eff654, type: 2}
     - count: 30
-      deferredWave: 0
+      deferredWave: 1
       enemy: {fileID: 11400000, guid: cf868ba1c553d0e45998b92cd6295f14, type: 2}
   stintLightSettings:
-  - fog: 1
-    fogDensity: 0.0005
-    fogColor: {r: 0.7169812, g: 0.7169812, b: 0.7169812, a: 1}
-    skybox: {fileID: 2100000, guid: fb3b9b55c01d2194c816b2d469854e16, type: 2}
-    skyboxExposure: 1
-    skyboxRotation: 216
-    isNight: 0
-    mainLightIntensity: 1
-    mainLightRotation: {x: 22.525513, y: 14.983504, z: 202.58588}
-    ambientLightIntensity: 1.2
-  - fog: 1
-    fogDensity: 0.001
-    fogColor: {r: 0.7924528, g: 0.7924528, b: 0.7924528, a: 1}
-    skybox: {fileID: 2100000, guid: 7b621f3d20f81af4785f8576da7910e2, type: 2}
-    skyboxExposure: 1
-    skyboxRotation: 14
-    isNight: 0
-    mainLightIntensity: 1
-    mainLightRotation: {x: 75.2124, y: 69.33643, z: 265.42285}
-    ambientLightIntensity: 1.5
-  - fog: 1
-    fogDensity: 0.001
-    fogColor: {r: 0.7169812, g: 0.7169812, b: 0.7169812, a: 1}
-    skybox: {fileID: 2100000, guid: fb3b9b55c01d2194c816b2d469854e16, type: 2}
-    skyboxExposure: 1
-    skyboxRotation: 216
-    isNight: 0
-    mainLightIntensity: 1
-    mainLightRotation: {x: 22.525513, y: 14.983504, z: 202.58588}
-    ambientLightIntensity: 1.2
+  - {fileID: 11400000, guid: 629db019341dc7b42853229c13bce408, type: 2}
+  - {fileID: 11400000, guid: a991c664450f06f4a8cc525d02ac4650, type: 2}
+  - {fileID: 11400000, guid: 744f6650a87b16b4facdd6ff69d8066b, type: 2}
+  - {fileID: 11400000, guid: 629db019341dc7b42853229c13bce408, type: 2}

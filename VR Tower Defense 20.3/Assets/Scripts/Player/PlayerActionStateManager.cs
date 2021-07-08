@@ -8,13 +8,15 @@ public class PlayerActionStateManager : MonoBehaviour
     public enum ActionMap
     {
         Freemovement,
-        Machinegun
+        Machinegun,
+        HeavyWeaponSniperRifle
     }
 
     public Dictionary<ActionMap, string> ActionMapNames = new Dictionary<ActionMap, string> 
     {
         {ActionMap.Freemovement, "Free Movement"},
-        {ActionMap.Machinegun, "Machinegun"}
+        {ActionMap.Machinegun, "Machinegun"},
+        {ActionMap.HeavyWeaponSniperRifle, "Sniper Rifle"}
     };
     
     public InputActionAsset inputActions;

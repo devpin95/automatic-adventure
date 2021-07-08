@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27c054574fc6391419ba68f88db460fa, type: 3}
+  m_Name: Mid Day Moderate Fog
+  m_EditorClassIdentifier: 
+  fog: 1
+  fogDensity: 0.002
+  fogColor: {r: 0.8207547, g: 0.8207547, b: 0.8207547, a: 1}
+  skybox: {fileID: 2100000, guid: b22d7be7b41d68745aecdfce4c70c426, type: 2}
+  skyboxExposure: 1.2
+  skyboxRotation: 92
+  isNight: 0
+  mainLightIntensity: 1
+  mainLightRotation: {x: 90, y: 20, z: 0}
+  ambientLightIntensity: 1

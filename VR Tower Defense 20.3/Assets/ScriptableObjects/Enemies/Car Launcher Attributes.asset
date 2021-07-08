@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Car Launcher Attributes
   m_EditorClassIdentifier: 
   enemyName: Car Launcher
+  enemyType: 1
   wallHitDamage: 0
   randomRotation: 0
   rotation: {x: 0, y: 180, z: 0}
