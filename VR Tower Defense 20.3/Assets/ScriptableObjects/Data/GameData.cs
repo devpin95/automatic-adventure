@@ -33,4 +33,8 @@ public class GameData : ScriptableObject
         wallMaxHealth = gameDefaultWallHealth;
         wallCurrentHealth = wallMaxHealth;
     }
+
+    [Header("Debugging")]
+    public bool debugMode = false;
+    public bool bootToUpgrades = false;
 }

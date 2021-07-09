@@ -33,4 +33,5 @@ public class HeavyWeaponCard : ScriptableObject
     public GameObject prefab;
     public float cameraOrthographicSize;
     public Sprite itemPreview;
+    public Vector3 previewOffset;
 }

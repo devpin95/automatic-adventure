@@ -96,12 +96,16 @@ public class WallUpgrades : ScriptableObject
         // wallRepair.updateCard = null;
         wallRepair.maxUpgradeReached = false;
         wallRepair.buttonInstance = null;
+        wallRepair.getUpgradeValue = null;
+        wallRepair.getCurrentValue = null;
         
         // wallMaxHealth.getUpgradeValue = null;
         // wallMaxHealth.updateCard = null;
         wallMaxHealth.upgradeCost = wallUpgradeHealthValues[0];
         wallMaxHealth.maxUpgradeReached = false;
         wallMaxHealth.buttonInstance = null;
+        wallMaxHealth.getUpgradeValue = null;
+        wallMaxHealth.getCurrentValue = null;
 
         _currentRepairPoints = defaultRepairPoints;
     }
@@ -109,10 +113,12 @@ public class WallUpgrades : ScriptableObject
     public void Init()
     {
         wallRepair.getUpgradeValue = GetNextHealthUpgradeValue;
+        wallRepair.getCurrentValue = () => { return gameData.wallCurrentHealth; };
         wallRepair.updateCard = UpdateWallCurrentHealthCard;
         wallRepair.purchase = HealWall;
         
         wallMaxHealth.getUpgradeValue = GetNextMaxHealthUpgradeValue;
+        wallMaxHealth.getCurrentValue = () => { return gameData.wallMaxHealth; };
         wallMaxHealth.updateCard = UpdateWallMaxHealthCard;
         wallMaxHealth.purchase = UpgradeWallMaxHealth;
     }

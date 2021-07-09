@@ -86,10 +86,21 @@ public class RocketLauncherUpgrades : ScriptableObject
     public int twoRocketUpgradeCost = 15000;
     // *****************************************************************************************************************
 
+    [Header("Cards")] 
+    public UpgradeCard damageCard;
+    public UpgradeCard radiusCard;
+    public UpgradeCard velocityCard;
+    public UpgradeCard reloadCard;
+    
     public void ResetObject()
     {
         Damage = defaultDamage;
         damageUpgradeStep = 0;
+        damageCard.maxUpgradeReached = false;
+        damageCard.upgradeCost = damageUpgradeCosts[0];
+        damageCard.getCurrentValue = null;
+        damageCard.getUpgradeValue = null;
+        damageCard.updateCard = null;
 
         ExplosionRadius = defaultExplosionRadius;
         radiusUpgradeStep = 0;
@@ -117,115 +128,195 @@ public class RocketLauncherUpgrades : ScriptableObject
         ExplosionRadius = defaultExplosionRadius;
         ReloadSpeed = defaultReloadSpeed;
         NumberOfShots = defaultNumberOfShots;
+
+        damageCard.upgradeCost = damageUpgradeCosts[0];
+        damageCard.getUpgradeValue = GetNextDamageUpgrade;
+        damageCard.getCurrentValue = () => { return Damage; };
+        damageCard.purchase = UpgradeDamage;
+        damageCard.updateCard = UpdateDamageCard;
+        
+        radiusCard.upgradeCost = radiusUpgradeCosts[0];
+        radiusCard.getUpgradeValue = GetNextExplosionRadiusUpgrade;
+        radiusCard.getCurrentValue = () => { return ExplosionRadius; };
+        radiusCard.purchase = UpgradeRadius;
+        radiusCard.updateCard = UpdateRadiusCard;
+        
+        velocityCard.upgradeCost = velocityUpgradeCosts[0];
+        velocityCard.getUpgradeValue = GetNextVelocityUpgrade;
+        velocityCard.getCurrentValue = () => { return Velocity; };
+        velocityCard.purchase = UpgradeVelocity;
+        velocityCard.updateCard = UpdateVelocityCard;
+        
+        reloadCard.upgradeCost = reloadSpeedUpgradeCosts[0];
+        reloadCard.getUpgradeValue = GetNextReloadSpeedUpgrade;
+        reloadCard.getCurrentValue = () => { return ReloadSpeed; };
+        reloadCard.purchase = UpgradeReloadSpeed;
+        reloadCard.updateCard = UpdateReloadSpeedCard;
         
         initialized = true;
     }
 
-    public int UpgradeDamage()
+    public void UpgradeDamage()
     {
-        if (damageUpgradeStep > damageUpgradeCosts.Length - 1) return 0;
+        if (damageUpgradeStep > damageUpgradeCosts.Length - 1) return;
         if (gameData.gold >= damageUpgradeCosts[damageUpgradeStep])
         {
             Damage = damageUpgradeValues[damageUpgradeStep];
+            
             UpgradeProjectile();
+            
             int cost = damageUpgradeCosts[damageUpgradeStep];
+            gameData.gold -= cost;
             ++damageUpgradeStep;
-            return cost;
+            // return cost;
         }
         
-        return 0;
+        // return 0;
     }
     
-    public int UpgradeVelocity()
+    public void UpgradeVelocity()
     {
-        if (velocityUpgradeStep > velocityUpgradeCosts.Length - 1) return 0;
+        if (velocityUpgradeStep > velocityUpgradeCosts.Length - 1) return;
         
         if (gameData.gold >= velocityUpgradeCosts[velocityUpgradeStep])
         {
             Velocity = velocityUpgradeValues[velocityUpgradeStep];
-            Debug.Log("NEW VELOCITY: " + Velocity);
-
-            
             int cost = velocityUpgradeCosts[velocityUpgradeStep];
+            
+            gameData.gold -= cost;
             ++velocityUpgradeStep;
-            return cost;
         }
-
-        return 0;
+        
     }
     
-    public int UpgradeRadius()
+    public void UpgradeRadius()
     {
-        if (radiusUpgradeStep > radiusUpgradeCosts.Length - 1) return 0;
+        if (radiusUpgradeStep > radiusUpgradeCosts.Length - 1) return;
         
         if (gameData.gold >= radiusUpgradeCosts[radiusUpgradeStep])
         {
             ExplosionRadius = radiusUpgradeValues[radiusUpgradeStep];
 
             int cost = radiusUpgradeCosts[radiusUpgradeStep];
+            gameData.gold -= cost;
+            
             ++radiusUpgradeStep;
-            return cost;
         }
-
-        return 0;
     }
     
-    public int UpgradeReloadSpeed()
+    public void UpgradeReloadSpeed()
     {
-        if (reloadSpeedUpgradeStep > reloadSpeedUpgradeCosts.Length - 1) return 0;
+        if (reloadSpeedUpgradeStep > reloadSpeedUpgradeCosts.Length - 1) return;
         
         if (gameData.gold >= reloadSpeedUpgradeCosts[reloadSpeedUpgradeStep])
         {
             ReloadSpeed = reloadSpeedUpgradeValues[reloadSpeedUpgradeStep];
 
             int cost = reloadSpeedUpgradeCosts[reloadSpeedUpgradeStep];
+            gameData.gold -= cost;
             ++reloadSpeedUpgradeStep;
-            return cost;
         }
-
-        return 0;
     }
     
-    public int UpgradeTwoRockets()
-    {
-        if (twoRocketUpgradePurchased) return 0;
-        
-        NumberOfShots = 2;
-        twoRocketUpgradePurchased = true;
-        return twoRocketUpgradeCost;
-    }
+    // public int UpgradeTwoRockets()
+    // {
+    //     if (twoRocketUpgradePurchased) return 0;
+    //     
+    //     NumberOfShots = 2;
+    //     twoRocketUpgradePurchased = true;
+    //     return twoRocketUpgradeCost;
+    // }
 
     private void UpgradeProjectile()
     {
         rocketAttributes.damage = Damage;
     }
 
-    public int GetNextDamageUpgrade()
+    public float GetNextDamageUpgrade()
     {
         if (damageUpgradeStep >= damageUpgradeCosts.Length) return 0;
-        else return damageUpgradeCosts[damageUpgradeStep];
+        else return damageUpgradeValues[damageUpgradeStep];
     }
     
-    public int GetNextVelocityUpgrade()
+    public float GetNextVelocityUpgrade()
     {
         if (velocityUpgradeStep >= velocityUpgradeCosts.Length) return 0;
-        else return velocityUpgradeCosts[velocityUpgradeStep];
+        else return velocityUpgradeValues[velocityUpgradeStep];
     }
     
-    public int GetNextExplosionRadiusUpgrade()
+    public float GetNextExplosionRadiusUpgrade()
     {
         if (radiusUpgradeStep >= radiusUpgradeCosts.Length) return 0;
-        else return radiusUpgradeCosts[radiusUpgradeStep];
+        else return radiusUpgradeValues[radiusUpgradeStep];
     }
     
-    public int GetNextReloadSpeedUpgrade()
+    public float GetNextReloadSpeedUpgrade()
     {
         if (reloadSpeedUpgradeStep >= reloadSpeedUpgradeCosts.Length) return 0;
-        else return reloadSpeedUpgradeCosts[reloadSpeedUpgradeStep];
+        else return reloadSpeedUpgradeValues[reloadSpeedUpgradeStep];
     }
 
-    public int GetTwoRocketUpgradeCost()
+    // public int GetTwoRocketUpgradeCost()
+    // {
+    //     return twoRocketUpgradeCost;
+    // }
+    
+    // UPDATE CARD FUNCTION --------------------------------------------------------------------------------------------
+    // *****************************************************************************************************************
+
+    public void UpdateDamageCard()
     {
-        return twoRocketUpgradeCost;
+        if (damageUpgradeStep >= damageUpgradeValues.Length)
+        {
+            damageCard.maxUpgradeReached = true;
+            damageCard.upgradeCost = 0;
+            damageCard.buttonInstance.gameObject.SetActive(false);
+        }
+        else
+        {
+            damageCard.upgradeCost = damageUpgradeCosts[damageUpgradeStep];
+        }
+    }
+
+    public void UpdateVelocityCard()
+    {
+        if (velocityUpgradeStep >= velocityUpgradeValues.Length)
+        {
+            velocityCard.maxUpgradeReached = true;
+            velocityCard.upgradeCost = 0;
+            velocityCard.buttonInstance.gameObject.SetActive(false);
+        }
+        else
+        {
+            velocityCard.upgradeCost = velocityUpgradeCosts[velocityUpgradeStep];
+        }
+    }
+    
+    public void UpdateRadiusCard()
+    {
+        if (radiusUpgradeStep >= radiusUpgradeCosts.Length)
+        {
+            radiusCard.maxUpgradeReached = true;
+            radiusCard.upgradeCost = 0;
+            radiusCard.buttonInstance.gameObject.SetActive(false);
+        }
+        else
+        {
+            radiusCard.upgradeCost = radiusUpgradeCosts[radiusUpgradeStep];
+        }
+    }
+    
+    public void UpdateReloadSpeedCard()
+    {
+        if (reloadSpeedUpgradeStep >= reloadSpeedUpgradeCosts.Length)
+        {
+            radiusCard.maxUpgradeReached = true;
+            radiusCard.upgradeCost = 0;
+            radiusCard.buttonInstance.gameObject.SetActive(false);
+        }
+        else
+        {
+            radiusCard.upgradeCost = reloadSpeedUpgradeCosts[reloadSpeedUpgradeStep];
+        }
     }
 }

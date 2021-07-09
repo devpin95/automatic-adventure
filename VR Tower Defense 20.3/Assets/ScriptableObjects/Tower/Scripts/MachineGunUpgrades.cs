@@ -102,18 +102,26 @@ public class MachineGunUpgrades : ScriptableObject
         damageCard.upgradeCost = damageUpgradeCosts[0];
         damageCard.maxUpgradeReached = false;
         damageCard.buttonInstance = null;
+        damageCard.getUpgradeValue = null;
+        damageCard.getCurrentValue = null;
         
         velocityCard.upgradeCost = bulletVelocityUpgradeCosts[0];
         velocityCard.maxUpgradeReached = false;
         velocityCard.buttonInstance = null;
+        velocityCard.getUpgradeValue = null;
+        velocityCard.getCurrentValue = null;
         
         rotationCard.upgradeCost = rotationUpgradeCosts[0];
         rotationCard.maxUpgradeReached = false;
         rotationCard.buttonInstance = null;
+        rotationCard.getUpgradeValue = null;
+        rotationCard.getCurrentValue = null;
         
         accuracyCard.upgradeCost = bulletAccuracyUpgradeCosts[0];
         accuracyCard.maxUpgradeReached = false;
         accuracyCard.buttonInstance = null;
+        accuracyCard.getUpgradeValue = null;
+        accuracyCard.getCurrentValue = null;
     }
 
     public void Init()
@@ -127,21 +135,25 @@ public class MachineGunUpgrades : ScriptableObject
 
         damageCard.upgradeCost = damageUpgradeCosts[0];
         damageCard.getUpgradeValue = GetNextBulletDamageUpgradeValue;
+        damageCard.getCurrentValue = () => { return Damage; };
         damageCard.purchase = UpgradeDamage;
         damageCard.updateCard = UpdateDamageCard;
 
         velocityCard.upgradeCost = bulletVelocityUpgradeCosts[0];
         velocityCard.getUpgradeValue = GetNextBulletVelocityUpgradeValue;
+        velocityCard.getCurrentValue = () => { return BulletVelocityModifier; };
         velocityCard.purchase = UpgradeBulletVelocity;
         velocityCard.updateCard = UpdateVelocityCard;
         
         rotationCard.upgradeCost = rotationUpgradeCosts[0];
         rotationCard.getUpgradeValue = GetNextRotationSpeedUpgradeValue;
+        rotationCard.getCurrentValue = () => { return TowerRotationSpeed; };
         rotationCard.purchase = UpgradeRotationSpeed;
         rotationCard.updateCard = UpdateRotationSpeedCard;
 
         accuracyCard.upgradeCost = bulletAccuracyUpgradeCosts[0];
         accuracyCard.getUpgradeValue = GetNextBulletAccuracyUpgradeValue;
+        accuracyCard.getCurrentValue = () => { return BulletAccuracy; };
         accuracyCard.purchase = UpgradeBulletAccuracy;
         accuracyCard.updateCard = UpdateBulletAccuracyCard;
         

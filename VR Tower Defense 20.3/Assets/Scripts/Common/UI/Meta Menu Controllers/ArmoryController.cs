@@ -57,7 +57,7 @@ public class ArmoryController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        heavyWeaponList.ResetObject();
+        // heavyWeaponList.ResetObject();
         _activeItems = heavyWeaponList.GetActiveCardList();
 
         if ( _activeItems != null )
@@ -182,7 +182,7 @@ public class ArmoryController : MonoBehaviour
         if ( _itemPreviewInstance != null ) Destroy(_itemPreviewInstance);
 
         _itemPreviewInstance =
-            Instantiate(_currentCard.prefab, itemAttachPoint.position, _currentCard.prefab.transform.rotation);
+            Instantiate(_currentCard.prefab, itemAttachPoint.position + _currentCard.previewOffset, _currentCard.prefab.transform.rotation);
 
         costField.text = "C." + _currentCard.cost.ToString("n0");
 

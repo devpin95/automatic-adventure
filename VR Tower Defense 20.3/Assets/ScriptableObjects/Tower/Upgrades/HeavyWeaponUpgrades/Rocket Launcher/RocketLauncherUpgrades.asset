@@ -47,3 +47,7 @@ MonoBehaviour:
   defaultNumberOfShots: 1
   twoRocketUpgradePurchased: 0
   twoRocketUpgradeCost: 25000
+  damageCard: {fileID: 11400000, guid: 15bb0b5d99dda824b9aa27c1945f2ba2, type: 2}
+  radiusCard: {fileID: 11400000, guid: 94e64a9749bed25469b34604ba419f9b, type: 2}
+  velocityCard: {fileID: 11400000, guid: 956bdbdd278fd0047a9001cbe016c34f, type: 2}
+  reloadCard: {fileID: 11400000, guid: 28666f830c0fa0a49aebdfa1b7a9f230, type: 2}

@@ -88,6 +88,12 @@ public class GameManager : MonoBehaviour
         if (scene.buildIndex == 0)
         {
             Debug.Log("Loading the playing scene");
+
+            if (_gameData.debugMode && _gameData.bootToUpgrades)
+            {
+                HandleStintEndedCEvent();
+            }
+            
             mainDirectionLight = GameObject.FindWithTag("Sun").GetComponent<Light>();
             _flareGuns = GameObject.FindWithTag("Flare Guns");
             _spotLights = GameObject.FindWithTag("Spot Lights");
