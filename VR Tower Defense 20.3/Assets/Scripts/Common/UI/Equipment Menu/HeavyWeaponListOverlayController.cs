@@ -53,7 +53,7 @@ public class HeavyWeaponListOverlayController : MonoBehaviour
         
         if (mainTowerAttributes.heavyWeaponCard == null)
         {
-            _availableWeapons = heavyWeaponList.heavyWeaponsCard;
+            _availableWeapons = heavyWeaponList.heavyWeaponsCard.Where(t => t.purchased).ToList();
             
             currentWeaponName.text = "Slot Empty";
             currentWeaponType.text = "";

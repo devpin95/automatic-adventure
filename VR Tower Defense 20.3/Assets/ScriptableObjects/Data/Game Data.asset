@@ -20,5 +20,5 @@ MonoBehaviour:
   gameDefaultWallHealth: 100
   wallMaxHealth: 100
   wallCurrentHealth: 100
-  debugMode: 1
+  debugMode: 0
   bootToUpgrades: 1

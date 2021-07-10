@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 376b0b3783b2c8542b16d0392f213f76, type: 3}
   m_Name: Main Tower Attributes
   m_EditorClassIdentifier: 
-  heavyWeaponPrefab: {fileID: 0}
-  heavyWeaponCard: {fileID: 0}
+  heavyWeaponPrefab: {fileID: 8134332676008314688, guid: 0722bb4de5680a94fbeb7d07a2298758, type: 3}
+  heavyWeaponCard: {fileID: 11400000, guid: 38959dd285f37144386a8b88bcb16a38, type: 2}

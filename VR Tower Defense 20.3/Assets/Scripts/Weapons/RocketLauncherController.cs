@@ -5,6 +5,7 @@ using Cinemachine;
 using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -14,6 +15,8 @@ public class RocketLauncherController : MonoBehaviour
 
     public GameObject mainTower;
     private HeavyWeaponController _heavyWeaponController;
+    
+    [Header("Camera Properties")]
     public Camera cameraFeed;
     public CinemachineVirtualCamera cinemachineVirtualCamera;
     private CinemachineBasicMultiChannelPerlin _noise;
@@ -28,6 +31,10 @@ public class RocketLauncherController : MonoBehaviour
     // private float _cameraShakeFallRate = 0.001f;
     private float _cameraShakeDuration = 0.5f;
     private float _cameraShakeTime = 0.5f;
+
+    [Header("Actions")] 
+    public CEvent_Int switchActionMap;
+    public InputActionReference aimAction;
     
     [Header("Interaction Variables")]
     public float shotDelay;
@@ -63,8 +70,6 @@ public class RocketLauncherController : MonoBehaviour
     {
         GetGUIObjects();
         
-        _heavyWeaponController = mainTower.transform.Find("Heavy Weapon Terminal").GetComponent<HeavyWeaponController>();
-        
         _chambers = new bool[upgrades.NumberOfShots];
 
         for (int i = 0; i < _chambers.Length; ++i)
@@ -94,42 +99,12 @@ public class RocketLauncherController : MonoBehaviour
     void Update()
     {
         centerPosition = transform.position;
-        if (selected && _devices.IsReady)
-        {
-            RaycastHit hit;
-            validHit = false;
-            if (Physics.Raycast(_firingPoint.position, _firingPoint.forward, out hit, Mathf.Infinity, shootableLayers))
-            {
-                Vector3 impactPoint = hit.point;
-                _rangeText.text = Vector3.Distance(_firingPoint.position, impactPoint).ToString("F2") + "m";
-                validHit = true;
-            }
-            else _rangeText.text = "--";
-            
-            Vector2 joystickVal;
-            if (_devices.RightHand.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxis, out joystickVal))
-            {
-                float angle = joystickVal.x * majorRotationSpeed * Time.deltaTime;
-                transform.RotateAround(rotationCenter.transform.position, transform.up, angle);
-                
-                angle = -joystickVal.y * minorRotationSpeed * Time.deltaTime;
-                transform.RotateAround(rotationCenter.transform.position, transform.right, angle);
 
-                // cancel out any rotation on the z, there's probably a better way to do this
-                transform.Rotate(0, 0, -transform.eulerAngles.z);
-            }
-        }
-
-        _cameraShakeTime += Time.deltaTime;
-        _noise.m_AmplitudeGain = Mathf.Lerp(cameraShakeMaxAmplitude, 0, _cameraShakeTime / _cameraShakeDuration);
-        _noise.m_FrequencyGain = Mathf.Lerp(cameraShakeMaxFrequency, 0, _cameraShakeTime / _cameraShakeDuration);
+        CastTarget();
+        MoveCamera();
+        ShakeCamera();
     }
-
-    public void OnSelectEvent(bool s)
-    {
-        selected = s;
-    }
-
+    
     private void SetReadyText()
     {
         for (int i = 0; i < _chambers.Length; ++i)
@@ -228,5 +203,52 @@ public class RocketLauncherController : MonoBehaviour
             _readyTexts[i] = rstates[i].GetComponent<TextMeshProUGUI>();
             _readyTexts[i].SetText("PPPUPU " + i);
         }
+    }
+
+    private void MoveCamera()
+    {
+        Vector2 joystickVal = aimAction.action.ReadValue<Vector2>();
+        float angle = joystickVal.x * majorRotationSpeed * Time.deltaTime;
+        transform.RotateAround(rotationCenter.transform.position, transform.up, angle);
+                
+        angle = -joystickVal.y * minorRotationSpeed * Time.deltaTime;
+        transform.RotateAround(rotationCenter.transform.position, transform.right, angle);
+
+        // cancel out any rotation on the z, there's probably a better way to do this
+        transform.Rotate(0, 0, -transform.eulerAngles.z);
+    }
+    
+    public void WeaponSelected(bool selected)
+    {
+        if (selected)
+        {
+            // the weapon is now being controlled
+            switchActionMap.Raise((int)PlayerActionStateManager.ActionMap.HeavyWeaponRocketLauncher);
+        }
+        else
+        {
+            // the weapon is no longer being controlled
+            switchActionMap.Raise((int)PlayerActionStateManager.ActionMap.Freemovement);
+        }
+    }
+
+    private void CastTarget()
+    {
+        RaycastHit hit;
+        validHit = false;
+        if (Physics.Raycast(_firingPoint.position, _firingPoint.forward, out hit, Mathf.Infinity, shootableLayers))
+        {
+            Vector3 impactPoint = hit.point;
+            _rangeText.text = Vector3.Distance(_firingPoint.position, impactPoint).ToString("F2") + "m";
+            validHit = true;
+        }
+        else _rangeText.text = "--";
+    }
+
+    private void ShakeCamera()
+    {
+        _cameraShakeTime += Time.deltaTime;
+        _noise.m_AmplitudeGain = Mathf.Lerp(cameraShakeMaxAmplitude, 0, _cameraShakeTime / _cameraShakeDuration);
+        _noise.m_FrequencyGain = Mathf.Lerp(cameraShakeMaxFrequency, 0, _cameraShakeTime / _cameraShakeDuration);
     }
 }

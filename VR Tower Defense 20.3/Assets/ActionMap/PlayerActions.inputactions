@@ -234,6 +234,44 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Rocket Launcher",
+            "id": "00497277-2c5b-4787-bfc0-1a71c4f1341c",
+            "actions": [
+                {
+                    "name": "Aim",
+                    "type": "Value",
+                    "id": "83570fcd-8c52-486c-87d4-b09be5143717",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "e8f909e2-884e-4737-b6a0-66d9adfd977f",
+                    "path": "<XRController>{RightHand}/primary2DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Aim",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "afb07c56-bb6f-4065-8e98-e377259a3dbf",
+                    "path": "<XRController>{LeftHand}/primary2DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Aim",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

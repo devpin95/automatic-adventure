@@ -632,6 +632,8 @@ MonoBehaviour:
   maxZoom: 90
   cameraShakeMaxFrequency: 10
   cameraShakeMaxAmplitude: 10
+  switchActionMap: {fileID: 11400000, guid: 99f72c102a839a8448a7888795a61818, type: 2}
+  aimAction: {fileID: 2867698481203542634, guid: 8c7d18ecd7252f647a6f5a32b75532e7, type: 3}
   shotDelay: 0
   majorRotationSpeed: 25
   minorRotationSpeed: 25
@@ -705,7 +707,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 631504016070014914}
         m_TargetAssemblyTypeName: RocketLauncherController, Assembly-CSharp
-        m_MethodName: OnSelectEvent
+        m_MethodName: WeaponSelected
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

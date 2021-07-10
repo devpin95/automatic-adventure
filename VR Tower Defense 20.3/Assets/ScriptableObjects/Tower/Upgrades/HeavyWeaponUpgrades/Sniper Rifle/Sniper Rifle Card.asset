@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Sniper Rifle
   description: Long range weapon with high accuracy, fast-travelling projectiles.
-  baseDamage: 10
-  currentDamage: 10
+  baseDamage: 45
+  currentDamage: 45
   rpm: 1.5
   isUpgradeable: 0
   heavyWeaponType: 1

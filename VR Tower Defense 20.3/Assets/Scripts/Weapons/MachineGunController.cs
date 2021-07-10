@@ -243,7 +243,7 @@ public class MachineGunController : MonoBehaviour
             if (_ammoBoxInstalled)
             {
                 _firing = true;
-                _shootingSound.Play();
+                _shootingSound?.Play();
             }
         }
         else

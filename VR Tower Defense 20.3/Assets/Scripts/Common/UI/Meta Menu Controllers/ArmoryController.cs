@@ -53,12 +53,23 @@ public class ArmoryController : MonoBehaviour
     private float _cameraOrthoSizeCounter = 0;
     private float _currentOrthoSize;
     private float _targetOrthoSize;
+    private bool _firstEnable = true;
     
     // Start is called before the first frame update
     void Start()
     {
+        InitializeUI();
+    }
+
+    private void InitializeUI()
+    {
         // heavyWeaponList.ResetObject();
         _activeItems = heavyWeaponList.GetActiveCardList();
+
+        foreach (var thing in _activeItems)
+        {
+            Debug.Log(thing.weaponName);
+        }
 
         if ( _activeItems != null )
         {
@@ -75,7 +86,7 @@ public class ArmoryController : MonoBehaviour
         _pageRightButtonCG = pageRightButtonObj.GetComponent<CanvasGroup>();
         _pageRightButton.onClick.AddListener(PageRight);
 
-        ShowItemCard();
+        // ShowItemCard();
     }
 
     // Update is called once per frame
@@ -105,6 +116,17 @@ public class ArmoryController : MonoBehaviour
                 _fadingIn = false;
             }
         }
+    }
+
+    private void OnEnable()
+    {
+        if (_firstEnable)
+        {
+            _firstEnable = false;
+            return;
+        }
+        
+        ShowItemCard();
     }
 
     private void PageLeft()
@@ -157,6 +179,7 @@ public class ArmoryController : MonoBehaviour
     {
         if (_activeItems == null || _activeItems.Count == 0 || _currentCard == null)
         {
+            Debug.Log("Something wrong!");
             infoPanel.SetActive(false);
             emptyItemPanel.SetActive(true);
 

@@ -97,103 +97,103 @@ MonoBehaviour:
       deferredWave: 0
       enemy: {fileID: 11400000, guid: 240ec810ef66d7e4a8971f8dd7eff654, type: 2}
   - waveGroups:
-    - count: 75
+    - count: 60
       deferredWave: 0
       enemy: {fileID: 11400000, guid: cf868ba1c553d0e45998b92cd6295f14, type: 2}
-    - count: 5
-      deferredWave: 0
-      enemy: {fileID: 11400000, guid: 240ec810ef66d7e4a8971f8dd7eff654, type: 2}
-    - count: 20
-      deferredWave: 1
-      enemy: {fileID: 11400000, guid: cf868ba1c553d0e45998b92cd6295f14, type: 2}
-  - waveGroups:
-    - count: 75
-      deferredWave: 0
-      enemy: {fileID: 11400000, guid: cf868ba1c553d0e45998b92cd6295f14, type: 2}
-    - count: 6
+    - count: 2
       deferredWave: 0
       enemy: {fileID: 11400000, guid: 240ec810ef66d7e4a8971f8dd7eff654, type: 2}
-    - count: 20
-      deferredWave: 1
-      enemy: {fileID: 11400000, guid: cf868ba1c553d0e45998b92cd6295f14, type: 2}
-  - waveGroups:
-    - count: 75
-      deferredWave: 0
-      enemy: {fileID: 11400000, guid: cf868ba1c553d0e45998b92cd6295f14, type: 2}
-    - count: 7
-      deferredWave: 0
-      enemy: {fileID: 11400000, guid: 240ec810ef66d7e4a8971f8dd7eff654, type: 2}
-    - count: 20
-      deferredWave: 1
-      enemy: {fileID: 11400000, guid: cf868ba1c553d0e45998b92cd6295f14, type: 2}
-  - waveGroups:
-    - count: 75
-      deferredWave: 0
-      enemy: {fileID: 11400000, guid: cf868ba1c553d0e45998b92cd6295f14, type: 2}
-    - count: 8
-      deferredWave: 0
-      enemy: {fileID: 11400000, guid: 240ec810ef66d7e4a8971f8dd7eff654, type: 2}
-    - count: 20
-      deferredWave: 1
-      enemy: {fileID: 11400000, guid: cf868ba1c553d0e45998b92cd6295f14, type: 2}
-  - waveGroups:
-    - count: 75
-      deferredWave: 0
-      enemy: {fileID: 11400000, guid: cf868ba1c553d0e45998b92cd6295f14, type: 2}
-    - count: 9
-      deferredWave: 0
-      enemy: {fileID: 11400000, guid: 240ec810ef66d7e4a8971f8dd7eff654, type: 2}
-    - count: 20
-      deferredWave: 1
-      enemy: {fileID: 11400000, guid: cf868ba1c553d0e45998b92cd6295f14, type: 2}
-  - waveGroups:
-    - count: 75
-      deferredWave: 0
-      enemy: {fileID: 11400000, guid: cf868ba1c553d0e45998b92cd6295f14, type: 2}
     - count: 10
+      deferredWave: 1
+      enemy: {fileID: 11400000, guid: cf868ba1c553d0e45998b92cd6295f14, type: 2}
+  - waveGroups:
+    - count: 60
+      deferredWave: 0
+      enemy: {fileID: 11400000, guid: cf868ba1c553d0e45998b92cd6295f14, type: 2}
+    - count: 2
+      deferredWave: 0
+      enemy: {fileID: 11400000, guid: 240ec810ef66d7e4a8971f8dd7eff654, type: 2}
+    - count: 20
+      deferredWave: 1
+      enemy: {fileID: 11400000, guid: cf868ba1c553d0e45998b92cd6295f14, type: 2}
+  - waveGroups:
+    - count: 60
+      deferredWave: 0
+      enemy: {fileID: 11400000, guid: cf868ba1c553d0e45998b92cd6295f14, type: 2}
+    - count: 2
       deferredWave: 0
       enemy: {fileID: 11400000, guid: 240ec810ef66d7e4a8971f8dd7eff654, type: 2}
     - count: 30
       deferredWave: 1
       enemy: {fileID: 11400000, guid: cf868ba1c553d0e45998b92cd6295f14, type: 2}
   - waveGroups:
-    - count: 75
+    - count: 60
       deferredWave: 0
       enemy: {fileID: 11400000, guid: cf868ba1c553d0e45998b92cd6295f14, type: 2}
-    - count: 11
+    - count: 2
       deferredWave: 0
       enemy: {fileID: 11400000, guid: 240ec810ef66d7e4a8971f8dd7eff654, type: 2}
-    - count: 30
+    - count: 40
+      deferredWave: 1
+      enemy: {fileID: 11400000, guid: cf868ba1c553d0e45998b92cd6295f14, type: 2}
+  - waveGroups:
+    - count: 60
+      deferredWave: 0
+      enemy: {fileID: 11400000, guid: cf868ba1c553d0e45998b92cd6295f14, type: 2}
+    - count: 2
+      deferredWave: 0
+      enemy: {fileID: 11400000, guid: 240ec810ef66d7e4a8971f8dd7eff654, type: 2}
+    - count: 50
+      deferredWave: 1
+      enemy: {fileID: 11400000, guid: cf868ba1c553d0e45998b92cd6295f14, type: 2}
+  - waveGroups:
+    - count: 60
+      deferredWave: 0
+      enemy: {fileID: 11400000, guid: cf868ba1c553d0e45998b92cd6295f14, type: 2}
+    - count: 3
+      deferredWave: 0
+      enemy: {fileID: 11400000, guid: 240ec810ef66d7e4a8971f8dd7eff654, type: 2}
+    - count: 60
       deferredWave: 1
       enemy: {fileID: 11400000, guid: cf868ba1c553d0e45998b92cd6295f14, type: 2}
   - waveGroups:
     - count: 75
       deferredWave: 0
       enemy: {fileID: 11400000, guid: cf868ba1c553d0e45998b92cd6295f14, type: 2}
-    - count: 12
+    - count: 3
       deferredWave: 0
       enemy: {fileID: 11400000, guid: 240ec810ef66d7e4a8971f8dd7eff654, type: 2}
-    - count: 30
+    - count: 25
       deferredWave: 1
       enemy: {fileID: 11400000, guid: cf868ba1c553d0e45998b92cd6295f14, type: 2}
   - waveGroups:
-    - count: 75
+    - count: 80
       deferredWave: 0
       enemy: {fileID: 11400000, guid: cf868ba1c553d0e45998b92cd6295f14, type: 2}
-    - count: 13
+    - count: 3
       deferredWave: 0
       enemy: {fileID: 11400000, guid: 240ec810ef66d7e4a8971f8dd7eff654, type: 2}
-    - count: 30
+    - count: 25
       deferredWave: 1
       enemy: {fileID: 11400000, guid: cf868ba1c553d0e45998b92cd6295f14, type: 2}
   - waveGroups:
-    - count: 75
+    - count: 85
       deferredWave: 0
       enemy: {fileID: 11400000, guid: cf868ba1c553d0e45998b92cd6295f14, type: 2}
-    - count: 14
+    - count: 3
       deferredWave: 0
       enemy: {fileID: 11400000, guid: 240ec810ef66d7e4a8971f8dd7eff654, type: 2}
-    - count: 30
+    - count: 25
+      deferredWave: 1
+      enemy: {fileID: 11400000, guid: cf868ba1c553d0e45998b92cd6295f14, type: 2}
+  - waveGroups:
+    - count: 90
+      deferredWave: 0
+      enemy: {fileID: 11400000, guid: cf868ba1c553d0e45998b92cd6295f14, type: 2}
+    - count: 3
+      deferredWave: 0
+      enemy: {fileID: 11400000, guid: 240ec810ef66d7e4a8971f8dd7eff654, type: 2}
+    - count: 25
       deferredWave: 1
       enemy: {fileID: 11400000, guid: cf868ba1c553d0e45998b92cd6295f14, type: 2}
   stintLightSettings:
